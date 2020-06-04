@@ -42,11 +42,11 @@ class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>
 
     override fun onOK(model: ListModel) {
         isLoading = false
-        model.results.addAll(0, this.model)
-        this.model = model.results
+        this.model.addAll(model.results)
+        updateView()
         view()?.hideProgress()
 
-        if (model.results.isEmpty()){
+        if (this.model.isEmpty()){
             isEmpty = true
             view()?.showEmpty()
         } else {
