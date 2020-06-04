@@ -12,10 +12,14 @@ object MoviesRepositoryImpl : MoviesRepository {
     private val service: APIService = ServiceGenerator.createService(APIService::class.java)
 
     override fun getList(page: Int, callback: ModelCallback<ListModel>) {
-        service.getList(Constants.AUTH_PREFIX + Constants.TOKEN, page)
+        service.getMoviesPopular(Constants.AUTH_PREFIX + Constants.TOKEN, page)
             .enqueue(object : Callback<ListModel> {
                 override fun onResponse(call: Call<ListModel>, response: Response<ListModel>) {
-                    ResponseHelper<ListModel>().processResponse(response, callback)
+                    if (response.isSuccessful) {
+                        ResponseHelper<ListModel>().processResponse(response, callback)
+                    } else {
+                        callback.onFail(ErrorModel(response.code(), Constants.HTTP_ERROR))
+                    }
                 }
 
                 override fun onFailure(call: Call<ListModel>, t: Throwable) {

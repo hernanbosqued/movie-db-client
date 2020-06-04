@@ -17,7 +17,7 @@ class MoviesClient(val repo: MoviesRepository) {
             }
 
             override fun onFail(errorModel: ErrorModel) {
-                callback.onError(errorModel.message)
+                callback.onError(errorModel.code.toString() + " - " + errorModel.message)
             }
         })
     }

@@ -53,9 +53,10 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
 
     private fun prepareRecyclerView(view: View) {
         recyclerView = view.findViewById<View>(R.id.recycler_view) as RecyclerView
-        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = linearLayoutManager
-        recyclerView.addItemDecoration(DividerItemDecoration(context!!))
+        //recyclerView.addItemDecoration(DividerItemDecoration(context!!))
+
         adapter = ItemsAdapter()
         adapter.listener = this
         recyclerView.adapter = adapter

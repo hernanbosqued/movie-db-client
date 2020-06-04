@@ -1,15 +1,10 @@
 package com.hernanbosqued.movie_db_client
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
 import com.hernanbosqued.domain.model.ResultModel
 
 
@@ -21,9 +16,12 @@ class ItemViewHolder(view: View, itemType: ITEM_TYPE) : BaseViewHolder<ResultMod
     override fun bind(model: ResultModel) {
         titleTextView.text = model.originalTitle
         voteTextView.text = model.voteAverage
+
+        val imagePath = "https://image.tmdb.org/t/p/w300" + model.posterPath
+
         Glide
             .with(itemView.context)
-            .load("https://image.tmdb.org/t/p/w300/" + model.backdropPath )
+            .load(imagePath)
             .into(backgroundImageView)
     }
 
