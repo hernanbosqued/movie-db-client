@@ -2,4 +2,11 @@ package com.hernanbosqued.domain.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResultModel(@SerializedName("original_title") val originalTitle: String)
+class ResultModel{
+    @SerializedName("original_title")
+    val originalTitle: String = ""
+    @SerializedName("vote_average")
+    val voteAverage: String = ""
+    @SerializedName("backdrop_path")
+    val backdropPath: String = ""
+}

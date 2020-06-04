@@ -55,10 +55,10 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
         recyclerView = view.findViewById<View>(R.id.recycler_view) as RecyclerView
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = linearLayoutManager
-        recyclerView.addItemDecoration(DividerItemDecoration(context, 0))
+        recyclerView.addItemDecoration(DividerItemDecoration(context!!))
         adapter = ItemsAdapter()
-        recyclerView.adapter = adapter
         adapter.listener = this
+        recyclerView.adapter = adapter
     }
 
     private fun prepareDialog() {

@@ -3,30 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/margin8"
-    android:paddingLeft="@dimen/margin5"
-    android:paddingRight="@dimen/margin5"
-    android:paddingTop="@dimen/margin8">
+    android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@mipmap/ic_launcher"/>
     <TextView
-        android:id="@+id/header"
+        android:id="@+id/title"
         style="@style/titleStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin8"
+        android:layout_margin="@dimen/margin8"
         tools:text="ATLANTA"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:includeFontPadding="false" />
 
     <TextView
-        android:id="@+id/status"
+        android:id="@+id/vote"
         style="@style/statusStyle"
         tools:text="ATLANTA"
+        android:layout_margin="@dimen/margin8"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintEnd_toEndOf="parent"
         android:includeFontPadding="false"/>
 
