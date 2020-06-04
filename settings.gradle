@@ -1,2 +1,5 @@
+include ':domain'
+include ':repo'
+include ':repo'
 include ':app'
 rootProject.name = "movie db client"

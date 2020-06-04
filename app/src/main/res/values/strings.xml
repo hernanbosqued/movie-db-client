@@ -1,3 +1,6 @@
-<resources>
-    <string name="app_name">movie db client</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="MissingTranslation">Movies DB Client</string>
+    <string name="search">Search</string>
+    <string name="from">from</string>
+    <string name="no_results_found">No results found</string>
 </resources>

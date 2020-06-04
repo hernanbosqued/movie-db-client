@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin5">5dp</dimen>
+    <dimen name="margin8">8dp</dimen>
+    <dimen name="font_size">15sp</dimen>
+    <dimen name="avatar_size">50dp</dimen>
+    <dimen name="attached_height">140dp</dimen>
+</resources>
