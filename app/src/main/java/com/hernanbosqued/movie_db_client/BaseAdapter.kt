@@ -2,20 +2,21 @@ package com.hernanbosqued.movie_db_client
 
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
+import kotlin.collections.ArrayList
 
-internal abstract class BaseAdapter<M, VH : BaseViewHolder<M>?> : RecyclerView.Adapter<VH>() {
+abstract class BaseAdapter<M, VH : BaseViewHolder<M>> : RecyclerView.Adapter<VH>() {
 
     var listener: BaseAdapterListener? = null
 
-    private var entities: List<M> = ArrayList()
+    private var entities: MutableList<M> = ArrayList()
 
     fun setData(entities: List<M>) {
-        this.entities = entities
-        notifyDataSetChanged()
+        this.entities.addAll(entities)
+        notifyItemRangeInserted(this.entities.size - entities.size, entities.size)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder!!.bind(entities[position])
+        holder.bind(entities[position])
         if (position == entities.size - 1) {
             listener?.onBottom()
         }
