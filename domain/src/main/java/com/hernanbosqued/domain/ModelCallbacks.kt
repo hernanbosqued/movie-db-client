@@ -2,7 +2,7 @@ package com.hernanbosqued.domain
 
 import com.hernanbosqued.domain.model.ErrorModel
 
-interface ModelCallback<T> {
+interface ModelCallbacks<T> {
     fun onSuccess(data: T)
     fun onFail(errorModel: ErrorModel)
 }

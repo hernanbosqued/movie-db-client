@@ -1,29 +1,29 @@
 package com.hernanbosqued.movie_db_client
 
+import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.domain.MoviesClient
+import com.hernanbosqued.domain.TVClient
 import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.domain.model.ResultModel
-import com.hernanbosqued.repo.MoviesRepositoryImpl
+import com.hernanbosqued.repo.RepositoryImpl
 
-class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>(mutableListOf()), MainContract.Presenter, MoviesClient.Callback {
-    private var client: MoviesClient = MoviesClient(MoviesRepositoryImpl)
+class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>(mutableListOf()), MainContract.Presenter {
+    private var client: MoviesClient = MoviesClient(RepositoryImpl)
     private var isLoading = false
     private var isEmpty = false
-    private var page = 1
 
     override fun processQuery(query: String) {
         isLoading = true
         view()?.showProgress()
-        client.getList(page, this)
+        //client.getList(0, this)
     }
 
-    override fun loadMore() {
-        view()?.showProgress()
-        //client.getList(++page, this)
+    override fun prepareLists() {
+        view()?.addCarousel(MoviesClient(RepositoryImpl), "Peliculas Populares")
+        view()?.addCarousel(TVClient(RepositoryImpl), "Series Populares")
     }
 
     override fun updateView() {
-        //view()?.showItems(model)
     }
 
     override fun bindView(view: MainContract.View) {
@@ -36,30 +36,30 @@ class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>
         }
         if (model.isNotEmpty()) {
             updateView()
-        }
-        //client.getList(page, this)
-        //client.getMoviesPopular(page, this)
-    }
-
-    override fun onOK(model: ListModel) {
-        isLoading = false
-        view()?.hideProgress()
-
-        this.model.addAll(model.results)
-        view()?.showItems(model.results)
-
-        if (this.model.isEmpty()) {
-            isEmpty = true
-            view()?.showEmpty()
-        } else {
-            isEmpty = false
-            view()?.hideEmpty()
+        }else{
+            prepareLists()
         }
     }
 
-    override fun onError(error: String) {
-        isLoading = false
-        view()?.showMessage(error)
-        view()?.hideProgress()
-    }
+//    override fun onOK(model: ListModel) {
+//        isLoading = false
+//        view()?.hideProgress()
+//
+//        this.model.addAll(model.results)
+//        view()?.showItems(model.results)
+//
+//        if (this.model.isEmpty()) {
+//            isEmpty = true
+//            view()?.showEmpty()
+//        } else {
+//            isEmpty = false
+//            view()?.hideEmpty()
+//        }
+//    }
+//
+//    override fun onError(error: String) {
+//        isLoading = false
+//        view()?.showMessage(error)
+//        view()?.hideProgress()
+//    }
 }

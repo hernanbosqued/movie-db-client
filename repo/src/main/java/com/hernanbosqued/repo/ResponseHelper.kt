@@ -1,6 +1,6 @@
 package com.hernanbosqued.repo
 
-import com.hernanbosqued.domain.ModelCallback
+import com.hernanbosqued.domain.ModelCallbacks
 import com.hernanbosqued.domain.model.ErrorModel
 import com.hernanbosqued.domain.model.ErrorsModel
 import okhttp3.ResponseBody
@@ -16,16 +16,16 @@ internal class ResponseHelper<T> {
         }
     }
 
-    fun processResponse(response: Response<T>, callback: ModelCallback<T>) {
+    fun processResponse(response: Response<T>, callbacks: ModelCallbacks<T>) {
         if (response.isSuccessful) {
             val body = response.body()
             if (body != null) {
-                callback.onSuccess(body)
+                callbacks.onSuccess(body)
             } else {
-                callback.onFail(ErrorModel(Constants.CUSTOM_ERROR_CODE, Constants.NULL_RESPONSE_MESSAGE))
+                callbacks.onFail(ErrorModel(Constants.CUSTOM_ERROR_CODE, Constants.NULL_RESPONSE_MESSAGE))
             }
         } else {
-            callback.onFail(parseError(response.errorBody()!!))
+            callbacks.onFail(parseError(response.errorBody()!!))
         }
     }
 }

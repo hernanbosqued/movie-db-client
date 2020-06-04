@@ -14,7 +14,7 @@ class ItemViewHolder(view: View, itemType: ITEM_TYPE) : BaseViewHolder<ResultMod
     private val backgroundImageView: ImageView = view.findViewById<View>(R.id.background) as ImageView
 
     override fun bind(model: ResultModel) {
-        titleTextView.text = model.originalTitle
+        titleTextView.text = model.name
         voteTextView.text = model.voteAverage
 
         val imagePath = "https://image.tmdb.org/t/p/w300" + model.posterPath

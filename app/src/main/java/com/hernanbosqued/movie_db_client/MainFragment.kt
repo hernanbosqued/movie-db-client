@@ -7,10 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.hernanbosqued.domain.Client
+import com.hernanbosqued.domain.MoviesClient
+import com.hernanbosqued.domain.TVClient
 import com.hernanbosqued.domain.model.ResultModel
 import com.hernanbosqued.movie_db_client.BaseFragmentActivity.BackPressedCallbacks
+import com.hernanbosqued.repo.RepositoryImpl
+import kotlinx.android.synthetic.main.fragment_main.view.*
 
-class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbacks, MainContract.View, BaseAdapterListener {
+class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbacks, MainContract.View{
     private lateinit var dialog: Dialog
     private lateinit var presenter: MainPresenter
     private lateinit var emptyView: View
@@ -19,6 +24,11 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
         super.onCreate(savedInstanceState)
         retainInstance = true
         presenter = MainPresenter()
+    }
+
+    override fun addCarousel(client: Client, title: String) {
+        val container = view?.findViewById<LinearLayout>(R.id.container)
+        container?.addView(CarouselView(context!!, client, title))
     }
 
     override fun onResume() {
@@ -41,9 +51,6 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
 
         prepareDialog()
         prepareEmptyView(view)
-        val container = view.findViewById<LinearLayout>(R.id.container)
-        container.addView(CarouselView(view.context))
-        container.addView(CarouselView(view.context))
     }
 
     private fun prepareEmptyView(view: View) {
@@ -86,10 +93,6 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
 
     override fun onBackPressedCallback(): Boolean {
         return false
-    }
-
-    override fun onBottom() {
-        //presenter.loadMore()
     }
 
     interface Callbacks {

@@ -13,4 +13,7 @@ internal interface APIService {
 
     @GET("movie/popular")
     fun getMoviesPopular(@Header("Authorization") authorization: String, @Query("page") page: Int): Call<ListModel>
+
+    @GET("tv/popular")
+    fun getTVPopular(@Header("Authorization") authorization: String, @Query("page") page: Int): Call<ListModel>
 }

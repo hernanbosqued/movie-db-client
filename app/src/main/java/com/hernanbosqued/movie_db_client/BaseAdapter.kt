@@ -1,12 +1,11 @@
 package com.hernanbosqued.movie_db_client
 
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 import kotlin.collections.ArrayList
 
 abstract class BaseAdapter<M, VH : BaseViewHolder<M>> : RecyclerView.Adapter<VH>() {
 
-    var listener: BaseAdapterListener? = null
+    var reachLastItemListener: ReachLastItemListener? = null
 
     private var entities: MutableList<M> = ArrayList()
 
@@ -18,7 +17,7 @@ abstract class BaseAdapter<M, VH : BaseViewHolder<M>> : RecyclerView.Adapter<VH>
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(entities[position])
         if (position == entities.size - 1) {
-            listener?.onBottom()
+            reachLastItemListener?.onLastItemReached()
         }
     }
 

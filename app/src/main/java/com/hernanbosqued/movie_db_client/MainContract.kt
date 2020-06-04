@@ -1,5 +1,6 @@
 package com.hernanbosqued.movie_db_client
 
+import com.hernanbosqued.domain.Client
 import com.hernanbosqued.domain.model.ResultModel
 
 class MainContract {
@@ -10,10 +11,11 @@ class MainContract {
         fun hideProgress()
         fun showEmpty()
         fun hideEmpty()
+        fun addCarousel(client: Client, title: String)
     }
 
     interface Presenter {
         fun processQuery(query: String)
-        fun loadMore()
+        fun prepareLists()
     }
 }
