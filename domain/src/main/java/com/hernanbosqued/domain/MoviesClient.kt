@@ -22,4 +22,15 @@ class MoviesClient(val repo: MoviesRepository) {
         })
     }
 
+    fun getMoviesPopular(page: Int, callback: Callback) {
+        repo.getMoviesPopular(page, object : ModelCallback<ListModel> {
+            override fun onSuccess(data: ListModel) {
+                callback.onOK(data)
+            }
+
+            override fun onFail(errorModel: ErrorModel) {
+                callback.onError(errorModel.code.toString() + " - " + errorModel.message)
+            }
+        })
+    }
 }

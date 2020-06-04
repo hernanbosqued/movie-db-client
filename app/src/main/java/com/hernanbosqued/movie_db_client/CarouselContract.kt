@@ -2,7 +2,7 @@ package com.hernanbosqued.movie_db_client
 
 import com.hernanbosqued.domain.model.ResultModel
 
-class MainContract {
+class CarouselContract {
     interface View {
         fun showItems(model: List<ResultModel>)
         fun showMessage(message: String)
@@ -13,7 +13,7 @@ class MainContract {
     }
 
     interface Presenter {
-        fun processQuery(query: String)
+        fun load()
         fun loadMore()
     }
 }

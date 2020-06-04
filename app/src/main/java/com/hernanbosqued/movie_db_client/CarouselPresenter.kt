@@ -5,28 +5,27 @@ import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.domain.model.ResultModel
 import com.hernanbosqued.repo.MoviesRepositoryImpl
 
-class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>(mutableListOf()), MainContract.Presenter, MoviesClient.Callback {
+class CarouselPresenter : BasePresenter<MutableList<ResultModel>, CarouselContract.View>(mutableListOf()), CarouselContract.Presenter, MoviesClient.Callback {
     private var client: MoviesClient = MoviesClient(MoviesRepositoryImpl)
     private var isLoading = false
     private var isEmpty = false
     private var page = 1
 
-    override fun processQuery(query: String) {
-        isLoading = true
+    override fun load() {
         view()?.showProgress()
-        client.getList(page, this)
+        client.getMoviesPopular(page, this)
     }
 
     override fun loadMore() {
         view()?.showProgress()
-        //client.getList(++page, this)
+        client.getMoviesPopular(++page, this)
     }
 
     override fun updateView() {
-        //view()?.showItems(model)
+        view()?.showItems(model)
     }
 
-    override fun bindView(view: MainContract.View) {
+    override fun bindView(view: CarouselContract.View) {
         super.bindView(view)
         if (isEmpty) {
             view()?.showEmpty()
@@ -38,7 +37,7 @@ class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>
             updateView()
         }
         //client.getList(page, this)
-        //client.getMoviesPopular(page, this)
+        //client.getMoviesPopular(page, this)    }
     }
 
     override fun onOK(model: ListModel) {
@@ -48,7 +47,7 @@ class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>
         this.model.addAll(model.results)
         view()?.showItems(model.results)
 
-        if (this.model.isEmpty()) {
+        if (this.model.isEmpty()){
             isEmpty = true
             view()?.showEmpty()
         } else {

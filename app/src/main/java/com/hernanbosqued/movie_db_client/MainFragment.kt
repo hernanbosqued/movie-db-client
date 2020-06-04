@@ -5,19 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.hernanbosqued.domain.model.ResultModel
 import com.hernanbosqued.movie_db_client.BaseFragmentActivity.BackPressedCallbacks
 
 class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbacks, MainContract.View, BaseAdapterListener {
     private lateinit var dialog: Dialog
     private lateinit var presenter: MainPresenter
-    private lateinit var adapter: ItemsAdapter
     private lateinit var emptyView: View
-    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,24 +38,16 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prepareRecyclerView(view)
+
         prepareDialog()
         prepareEmptyView(view)
+        val container = view.findViewById<LinearLayout>(R.id.container)
+        container.addView(CarouselView(view.context))
+        container.addView(CarouselView(view.context))
     }
 
     private fun prepareEmptyView(view: View) {
         emptyView = view.findViewById(R.id.empty_view)
-    }
-
-    private fun prepareRecyclerView(view: View) {
-        recyclerView = view.findViewById<View>(R.id.recycler_view) as RecyclerView
-        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.layoutManager = linearLayoutManager
-        //recyclerView.addItemDecoration(DividerItemDecoration(context!!))
-
-        adapter = ItemsAdapter()
-        adapter.listener = this
-        recyclerView.adapter = adapter
     }
 
     private fun prepareDialog() {
@@ -73,7 +61,7 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
     }
 
     override fun showItems(model: List<ResultModel>) {
-        adapter.setData(model)
+        //adapter.setData(model)
     }
 
     override fun showMessage(message: String) {
@@ -96,16 +84,12 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
         emptyView.visibility = View.GONE
     }
 
-    override fun scrollToTop() {
-        recyclerView.smoothScrollToPosition(0)
-    }
-
     override fun onBackPressedCallback(): Boolean {
         return false
     }
 
     override fun onBottom() {
-        presenter.loadMore()
+        //presenter.loadMore()
     }
 
     interface Callbacks {

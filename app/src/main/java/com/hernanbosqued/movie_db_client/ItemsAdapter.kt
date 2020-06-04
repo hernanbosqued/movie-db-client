@@ -29,9 +29,9 @@ class ItemsAdapter : BaseAdapter<ResultModel, ItemViewHolder>() {
         val animatorSet = AnimatorSet()
 
         itemView.alpha = 0f
-        itemView.translationX = itemView.x + 200
+        itemView.translationY = itemView.y - 200
 
-        val translate: ObjectAnimator = ObjectAnimator.ofFloat(itemView, "translationX", 0f)
+        val translate: ObjectAnimator = ObjectAnimator.ofFloat(itemView, "translationY", 0f)
         val alpha = ObjectAnimator.ofFloat(itemView, "alpha", 1f)
 
         animatorSet.duration = 300
