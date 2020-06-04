@@ -40,26 +40,4 @@ class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>
             prepareLists()
         }
     }
-
-//    override fun onOK(model: ListModel) {
-//        isLoading = false
-//        view()?.hideProgress()
-//
-//        this.model.addAll(model.results)
-//        view()?.showItems(model.results)
-//
-//        if (this.model.isEmpty()) {
-//            isEmpty = true
-//            view()?.showEmpty()
-//        } else {
-//            isEmpty = false
-//            view()?.hideEmpty()
-//        }
-//    }
-//
-//    override fun onError(error: String) {
-//        isLoading = false
-//        view()?.showMessage(error)
-//        view()?.hideProgress()
-//    }
 }
