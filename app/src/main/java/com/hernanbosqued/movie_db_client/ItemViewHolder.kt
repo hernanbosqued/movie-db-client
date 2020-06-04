@@ -5,7 +5,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.hernanbosqued.domain.model.ResultModel
+import com.hernanbosqued.repo.Constants
 
 
 class ItemViewHolder(view: View, itemType: ITEM_TYPE) : BaseViewHolder<ResultModel>(view) {
@@ -17,11 +20,12 @@ class ItemViewHolder(view: View, itemType: ITEM_TYPE) : BaseViewHolder<ResultMod
         titleTextView.text = model.name
         voteTextView.text = model.voteAverage
 
-        val imagePath = "https://image.tmdb.org/t/p/w300" + model.posterPath
+        val imagePath = Constants.IMAGE_BASE_URL + model.posterPath
 
         Glide
             .with(itemView.context)
             .load(imagePath)
+            .transform(CenterCrop(), RoundedCorners(itemView.resources.getDimension(R.dimen.rounded_size).toInt()))
             .into(backgroundImageView)
     }
 

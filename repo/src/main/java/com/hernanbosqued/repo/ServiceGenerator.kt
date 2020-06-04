@@ -19,18 +19,17 @@ object ServiceGenerator{
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
         retrofit = Retrofit.Builder()
             .client(client)
-            .baseUrl(Constants.BASE_API)
+            .baseUrl(Constants.API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 
-    fun <T> createService(serviceClass: Class<T>?): T {
+    fun <T> createService(serviceClass: Class<T>): T {
         return retrofit.create(serviceClass)
     }
 
-    fun <T> parseResponse(type: Class<T>, responseBody: ResponseBody?): T {
+    fun <T> parseResponse(type: Class<T>, responseBody: ResponseBody): T {
         val responseBodyObjectConverter: Converter<ResponseBody, T> = retrofit.responseBodyConverter(type, arrayOfNulls(0))
-        return responseBodyObjectConverter.convert(responseBody)
-
+        return responseBodyObjectConverter.convert(responseBody)!!
     }
 }
