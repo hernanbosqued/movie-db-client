@@ -2,7 +2,7 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
-### Requerimientos ###
+## Requerimientos ##
 
 * Películas y/o Series categorizadas por Popular y Top Rated.
 
@@ -28,18 +28,18 @@ This README would normally document whatever steps are necessary to get your app
 
 * La App debe ser escalable, con lo cual toda buena práctica que conozca aplíquela.
 
-* * Usar algún patrón de arquitectura: ej. MVVM, MVP, etc.
+    * Usar algún patrón de arquitectura: ej. MVVM, MVP, etc.
 
-* * Inyectar dependencias. Si se usa alguna biblioteca mejor.
+    * Inyectar dependencias. Si se usa alguna biblioteca mejor.
 
-*  Detalla cómo harías todo aquello que no hayas llegado a completar en el README.md del proyecto. 
+*  Detalla cómo harías todo aquello que no ha§yas llegado a completar en el README.md del proyecto. 
 
-### Entregables ###
+## Entregables ##
 
-* Archivo APK.
-
+* Archivo APK.§
+§
 * Link de Github/Bitbucket/Gitlab/Otro.
 
-## Sugerencia ##
+### Sugerencia ###§
 
 * realizar el ejercicio durante el fin de semana.
