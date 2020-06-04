@@ -2,28 +2,44 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+### Requerimientos ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Películas y/o Series categorizadas por Popular y Top Rated.
 
-### How do I get set up? ###
+* Detalle de Película y/o Serie.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* Buscador de Películas y/o Series por nombre.
 
-### Contribution guidelines ###
+* Visualización de Videos en el detalle.
 
-* Writing tests
-* Code review
-* Other guidelines
+* La App debe poder funcionar offline.
 
-### Who do I talk to? ###
+* Pruebas Unitarias.
 
-* Repo owner or admin
-* Other community or team contact
+* Transiciones/Animaciones.
+
+* API: https://developers.themoviedb.org/
+
+* Usar Kotlin.
+
+* No hay restricción de bibliotecas externas.
+
+* Subir el proyecto a Github/Bitbucket/Gitlab o cualquier otro que utilice Git.
+
+* La App debe ser escalable, con lo cual toda buena práctica que conozca aplíquela.
+
+* * Usar algún patrón de arquitectura: ej. MVVM, MVP, etc.
+
+* * Inyectar dependencias. Si se usa alguna biblioteca mejor.
+
+*  Detalla cómo harías todo aquello que no hayas llegado a completar en el README.md del proyecto. 
+
+### Entregables ###
+
+* Archivo APK.
+
+* Link de Github/Bitbucket/Gitlab/Otro.
+
+## Sugerencia ##
+
+* realizar el ejercicio durante el fin de semana.
