@@ -3,6 +3,7 @@ package com.hernanbosqued.movie_db_client
 import android.content.Context
 import androidx.fragment.app.Fragment
 
+
 @Suppress("UNCHECKED_CAST")
 abstract class BaseFragment<T> : Fragment() {
     var callbacks: T? = null

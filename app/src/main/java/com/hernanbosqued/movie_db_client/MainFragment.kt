@@ -3,15 +3,17 @@ package com.hernanbosqued.movie_db_client
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.SearchView
 import android.widget.Toast
 import com.hernanbosqued.domain.Client
 import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.movie_db_client.BaseFragmentActivity.BackPressedCallbacks
 
-class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbacks, MainContract.View{
+class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbacks, MainContract.View {
     private lateinit var dialog: Dialog
     private lateinit var presenter: MainPresenter
     private lateinit var emptyView: View
@@ -72,9 +74,21 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
 
     override fun addCarousel(client: (Int, ClientCallbacks) -> Unit, title: String) {
         val container = view?.findViewById<LinearLayout>(R.id.container)
-        container?.addView(CarouselView(context!!, client, title))    }
+        container?.addView(CarouselView(context!!, client, title))
+        container?.addView(SearchView(context!!))
+    }
 
     override fun onBackPressedCallback(): Boolean {
+        return false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.check_all -> {
+                item.isChecked = !item.isChecked
+                return true
+            }
+        }
         return false
     }
 
