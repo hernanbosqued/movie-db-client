@@ -8,12 +8,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.hernanbosqued.domain.Client
-import com.hernanbosqued.domain.MoviesClient
-import com.hernanbosqued.domain.TVClient
-import com.hernanbosqued.domain.model.ResultModel
+import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.movie_db_client.BaseFragmentActivity.BackPressedCallbacks
-import com.hernanbosqued.repo.RepositoryImpl
-import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbacks, MainContract.View{
     private lateinit var dialog: Dialog
@@ -24,11 +20,6 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
         super.onCreate(savedInstanceState)
         retainInstance = true
         presenter = MainPresenter()
-    }
-
-    override fun addCarousel(client: Client, title: String) {
-        val container = view?.findViewById<LinearLayout>(R.id.container)
-        container?.addView(CarouselView(context!!, client, title))
     }
 
     override fun onResume() {
@@ -78,6 +69,10 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
     override fun hideProgress() {
         dialog.dismiss()
     }
+
+    override fun addCarousel(client: (Int, ClientCallbacks) -> Unit, title: String) {
+        val container = view?.findViewById<LinearLayout>(R.id.container)
+        container?.addView(CarouselView(context!!, client, title))    }
 
     override fun onBackPressedCallback(): Boolean {
         return false

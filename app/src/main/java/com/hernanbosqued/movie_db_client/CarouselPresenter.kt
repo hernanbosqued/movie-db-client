@@ -5,20 +5,20 @@ import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.domain.model.ResultModel
 
-class CarouselPresenter(private val client: Client) : BasePresenter<MutableList<ResultModel>, CarouselContract.View>(mutableListOf()), CarouselContract.Presenter, ClientCallbacks {
+class CarouselPresenter(val client: (Int, ClientCallbacks) -> Unit) : BasePresenter<MutableList<ResultModel>, CarouselContract.View>(mutableListOf()), CarouselContract.Presenter, ClientCallbacks {
     private var page = 1
 
     override fun load() {
         if (model.isEmpty()) {
             page = 1
             view()?.showProgress()
-            client.get(page, this)
+            client(page, this)
         }
     }
 
     override fun loadMore() {
         view()?.showProgress()
-        client.get(++page, this)
+        client(++page, this)
     }
 
     override fun bindView(view: CarouselContract.View) {
@@ -26,16 +26,16 @@ class CarouselPresenter(private val client: Client) : BasePresenter<MutableList<
 
         if (model.isNotEmpty()) {
             updateView()
-        } else {
-            view()?.showEmpty()
         }
     }
 
     override fun onOK(model: ListModel) {
         view()?.hideProgress()
 
-        this.model.addAll(model.results)
-        view()?.showItems(model.results)
+        model.results?.let{
+            this.model.addAll(it)
+            view()?.showItems(it)
+        }
 
         if (this.model.isEmpty()) {
             view()?.showEmpty()

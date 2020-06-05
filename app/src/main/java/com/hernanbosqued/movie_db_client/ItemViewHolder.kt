@@ -26,6 +26,8 @@ class ItemViewHolder(view: View) : BaseViewHolder<ResultModel>(view) {
 
         val imagePath = Constants.IMAGE_BASE_URL + model.posterPath
 
+        itemView.progress.visibility = View.VISIBLE
+
         Glide
             .with(itemView.context)
             .load(imagePath)

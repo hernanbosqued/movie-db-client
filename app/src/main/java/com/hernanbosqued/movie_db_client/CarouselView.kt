@@ -5,12 +5,12 @@ import android.content.Context
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hernanbosqued.domain.Client
+import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.domain.model.ResultModel
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 @SuppressLint("ViewConstructor")
-class CarouselView(context: Context, client: Client, name: String) : ConstraintLayout(context), ReachLastItemListener, CarouselContract.View {
+class CarouselView(context: Context, client: (Int, ClientCallbacks) -> Unit, name: String) : ConstraintLayout(context), ReachLastItemListener, CarouselContract.View {
 
     private var adapter: ItemsAdapter = ItemsAdapter()
     private var presenter: CarouselPresenter = CarouselPresenter(client)
