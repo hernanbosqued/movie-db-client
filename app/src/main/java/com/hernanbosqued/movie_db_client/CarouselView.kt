@@ -2,14 +2,8 @@ package com.hernanbosqued.movie_db_client
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.hernanbosqued.domain.Client
 import com.hernanbosqued.domain.model.ResultModel
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
