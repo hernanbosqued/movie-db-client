@@ -23,10 +23,10 @@ internal interface APIService {
     @GET("tv/top_rated")
     fun getTVTopRated(@Header("Authorization") authorization: String, @Query("page") page: Int): Call<ListModel>
 
-    @GET("search/movie")
+    @GET("search/tv")
     fun searchTVShows(@Header("Authorization") authorization: String, @Query("page") page: Int, @Query("query")query: String): Call<ListModel>
 
-    @GET("search/tv")
+    @GET("search/movie")
     fun searchMovies(@Header("Authorization") authorization: String, @Query("page") page: Int, @Query("query")query: String): Call<ListModel>
 
     @GET("search/multi")
