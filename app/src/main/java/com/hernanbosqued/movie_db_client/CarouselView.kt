@@ -2,6 +2,7 @@ package com.hernanbosqued.movie_db_client
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hernanbosqued.domain.Client
@@ -16,18 +17,18 @@ class CarouselView(context: Context, client: Client, name: String) : ConstraintL
 
     init {
         val viewGroup = inflate(getContext(), R.layout.layout_carrousel, this)
-
+        viewGroup.setBackgroundColor(resources.getColor(R.color.gray))
         adapter.reachLastItemListener = this
         viewGroup.name.text = name
         viewGroup.recycler_view.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
         viewGroup.recycler_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         viewGroup.recycler_view.adapter = adapter
-        presenter.load()
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         presenter.bindView(this)
+        presenter.load()
     }
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
@@ -45,15 +46,18 @@ class CarouselView(context: Context, client: Client, name: String) : ConstraintL
     }
 
     override fun showProgress() {
-
+        progress.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
+        progress.visibility = View.INVISIBLE
     }
 
     override fun showEmpty() {
+        empty_view.visibility = View.VISIBLE
     }
 
-    override fun hideEmpty() {
+    override fun hideEmpty(){
+        empty_view.visibility = View.INVISIBLE
     }
 }

@@ -67,10 +67,6 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
         presenter.processQuery(query)
     }
 
-    override fun showItems(model: List<ResultModel>) {
-        //adapter.setData(model)
-    }
-
     override fun showMessage(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
@@ -81,14 +77,6 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
 
     override fun hideProgress() {
         dialog.dismiss()
-    }
-
-    override fun showEmpty() {
-        emptyView.visibility = View.VISIBLE
-    }
-
-    override fun hideEmpty() {
-        emptyView.visibility = View.GONE
     }
 
     override fun onBackPressedCallback(): Boolean {

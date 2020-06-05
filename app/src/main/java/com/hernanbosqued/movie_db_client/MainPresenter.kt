@@ -8,12 +8,8 @@ import com.hernanbosqued.domain.model.ResultModel
 import com.hernanbosqued.repo.RepositoryImpl
 
 class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>(mutableListOf()), MainContract.Presenter {
-    private var client: MoviesClient = MoviesClient(RepositoryImpl)
-    private var isLoading = false
-    private var isEmpty = false
 
     override fun processQuery(query: String) {
-        isLoading = true
         view()?.showProgress()
         //client.getList(0, this)
     }
@@ -21,6 +17,7 @@ class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>
     override fun prepareLists() {
         view()?.addCarousel(MoviesClient(RepositoryImpl), "Peliculas Populares")
         view()?.addCarousel(TVClient(RepositoryImpl), "Series Populares")
+        model.add(ResultModel())
     }
 
     override fun updateView() {
@@ -28,15 +25,8 @@ class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>
 
     override fun bindView(view: MainContract.View) {
         super.bindView(view)
-        if (isEmpty) {
-            view()?.showEmpty()
-        }
-        if (isLoading) {
-            view()?.showProgress()
-        }
-        if (model.isNotEmpty()) {
-            updateView()
-        }else{
+
+        if (model.isEmpty()) {
             prepareLists()
         }
     }

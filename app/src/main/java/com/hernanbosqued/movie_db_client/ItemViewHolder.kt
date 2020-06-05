@@ -2,17 +2,21 @@ package com.hernanbosqued.movie_db_client
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.hernanbosqued.domain.model.ResultModel
 import com.hernanbosqued.repo.Constants
 import kotlinx.android.synthetic.main.layout_item.view.*
-
 
 class ItemViewHolder(view: View) : BaseViewHolder<ResultModel>(view) {
 
@@ -26,6 +30,17 @@ class ItemViewHolder(view: View) : BaseViewHolder<ResultModel>(view) {
             .with(itemView.context)
             .load(imagePath)
             .transform(CenterCrop(), RoundedCorners(itemView.resources.getDimension(R.dimen.rounded_size).toInt()))
+            .listener( object : RequestListener<Drawable>{
+                override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
+                    itemView.progress.visibility = View.INVISIBLE
+                    return false
+                }
+
+                override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    itemView.progress.visibility = View.INVISIBLE
+                    return false
+                }
+            })
             .into(itemView.poster)
 
         setAnimation()
