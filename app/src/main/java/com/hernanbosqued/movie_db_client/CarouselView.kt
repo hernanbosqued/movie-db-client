@@ -26,7 +26,7 @@ class CarouselView(context: Context, client: Client, name: String) : ConstraintL
         adapter.reachLastItemListener = this
         viewGroup.name.text = name
         viewGroup.recycler_view.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
-        viewGroup.recycler_view.layoutManager = LinearLaxyoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        viewGroup.recycler_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         viewGroup.recycler_view.adapter = adapter
         presenter.load()
     }
