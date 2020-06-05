@@ -26,33 +26,8 @@ class CarouselView(context: Context, client: Client, name: String) : ConstraintL
         adapter.reachLastItemListener = this
         viewGroup.name.text = name
         viewGroup.recycler_view.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
-        viewGroup.recycler_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        viewGroup.recycler_view.layoutManager = LinearLaxyoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         viewGroup.recycler_view.adapter = adapter
-        
-            //orientation = VERTICAL
-
-//        val params = MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-//        params.topMargin = resources.getDimension(R.dimen.margin16).toInt()
-//        params.leftMargin = resources.getDimension(R.dimen.margin16).toInt()
-//        val textView = TextView(ContextThemeWrapper(getContext(), R.style.nameStyle), null, 0)
-//        textView.text = name
-//        textView.layoutParams = params
-//        addView(textView)
-
-
-
-//        val recyclerView = RecyclerView(context)
-//        params.leftMargin = 0
-//        params.bottomMargin = resources.getDimension(R.dimen.margin16).toInt()
-//        recyclerView.layoutParams = params
-//        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        recyclerView.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
-//        recyclerView.adapter = adapter
-//        addView(recyclerView)
-
-//        val progressBar = ProgressBar(context)
-//        addView(progressBar)
-
         presenter.load()
     }
 

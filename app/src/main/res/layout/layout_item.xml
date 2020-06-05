@@ -3,29 +3,33 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="150dp"
-    android:layout_height="225dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/poster"
+        android:layout_width="@dimen/poster_width"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="2:3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:scaleType="centerCrop"
-        tools:src="@mipmap/ic_launcher"/>
+        tools:src="@mipmap/ic_launcher" />
+
     <TextView
         android:id="@+id/title"
         style="@style/titleStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin8"
-        android:gravity="right"
+        android:gravity="end"
         tools:text="ATLANTA"
-        app:layout_constraintTop_toTopOf="@id/background"
-        app:layout_constraintEnd_toEndOf="@id/background"
+        android:ellipsize="end"
+        app:layout_constraintTop_toTopOf="@id/poster"
+        app:layout_constraintRight_toRightOf="@id/poster"
+        app:layout_constraintLeft_toLeftOf="@id/poster"
         android:includeFontPadding="false"
         android:shadowColor="@color/black"
         android:shadowDx="4"
@@ -33,14 +37,16 @@
         android:shadowRadius="5"/>
 
     <TextView
-        android:id="@+id/vote"
+        android:id="@+id/ranking"
         style="@style/subtitleStyle"
         tools:text="ATLANTA"
         android:layout_margin="@dimen/margin8"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="end"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintEnd_toEndOf="@id/background"
+        app:layout_constraintEnd_toEndOf="@id/poster"
+        app:layout_constraintStart_toStartOf="@id/poster"
         android:includeFontPadding="false"
         android:shadowColor="@color/black"
         android:shadowDx="2"

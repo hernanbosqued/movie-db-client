@@ -1,5 +1,7 @@
 package com.hernanbosqued.movie_db_client
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,16 +11,14 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.hernanbosqued.domain.model.ResultModel
 import com.hernanbosqued.repo.Constants
+import kotlinx.android.synthetic.main.layout_item.view.*
 
 
-class ItemViewHolder(view: View, itemType: ITEM_TYPE) : BaseViewHolder<ResultModel>(view) {
-    private val titleTextView: TextView = view.findViewById<View>(R.id.title) as TextView
-    private val voteTextView: TextView = view.findViewById<View>(R.id.vote) as TextView
-    private val backgroundImageView: ImageView = view.findViewById<View>(R.id.background) as ImageView
+class ItemViewHolder(view: View) : BaseViewHolder<ResultModel>(view) {
 
     override fun bind(model: ResultModel) {
-        titleTextView.text = model.name
-        voteTextView.text = model.voteAverage
+        itemView.title.text = model.name
+        itemView.ranking.text = model.voteAverage
 
         val imagePath = Constants.IMAGE_BASE_URL + model.posterPath
 
@@ -26,14 +26,22 @@ class ItemViewHolder(view: View, itemType: ITEM_TYPE) : BaseViewHolder<ResultMod
             .with(itemView.context)
             .load(imagePath)
             .transform(CenterCrop(), RoundedCorners(itemView.resources.getDimension(R.dimen.rounded_size).toInt()))
-            .into(backgroundImageView)
+            .into(itemView.poster)
+
+        setAnimation()
     }
 
-    init {
-        val color: Int = when (itemType) {
-            ITEM_TYPE.ROW_ODD -> ContextCompat.getColor(view.context, R.color.light_gray)
-            ITEM_TYPE.ROW_EVEN -> ContextCompat.getColor(view.context, R.color.gray)
-        }
-        view.setBackgroundColor(color)
+    private fun setAnimation() {
+        val animatorSet = AnimatorSet()
+
+        itemView.alpha = 0f
+        itemView.translationY = itemView.y - 300
+
+        val translate: ObjectAnimator = ObjectAnimator.ofFloat(itemView, "translationY", 0f)
+        val alpha = ObjectAnimator.ofFloat(itemView, "alpha", 1f)
+
+        animatorSet.duration = 500
+        animatorSet.playTogether(translate, alpha)
+        animatorSet.start()
     }
 }
