@@ -1,8 +1,6 @@
 package com.hernanbosqued.domain
 
-import com.hernanbosqued.domain.model.ListModel
-
-interface ClientCallbacks {
-    fun onOK(model: ListModel)
+interface ClientCallbacks<T> {
+    fun onOK(model: T)
     fun onError(error: String)
 }

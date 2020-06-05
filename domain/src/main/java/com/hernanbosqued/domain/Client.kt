@@ -7,51 +7,40 @@ object Client {
 
     lateinit var repo: Repository
 
-    fun getMoviesPopular(page: Int, callback: ClientCallbacks) {
-        repo.getMoviesPopular(page, object : ModelCallbacks<ListModel> {
-            override fun onSuccess(data: ListModel) {
-                callback.onOK(data)
-            }
-
-            override fun onFail(errorModel: ErrorModel) {
-                callback.onError(errorModel.code.toString() + " - " + errorModel.message)
-            }
-        })
+    fun getMoviesPopular(page: Int, callback: ClientCallbacks<ListModel>) {
+        repo.getMoviesPopular(page, ModelCallbacksImpl(callback))
     }
 
-    fun getMoviesTopRated(page: Int, callback: ClientCallbacks) {
-        repo.getMoviesTopRated(page, object : ModelCallbacks<ListModel> {
-            override fun onSuccess(data: ListModel) {
-                callback.onOK(data)
-            }
-
-            override fun onFail(errorModel: ErrorModel) {
-                callback.onError(errorModel.code.toString() + " - " + errorModel.message)
-            }
-        })
+    fun getMoviesTopRated(page: Int, callback: ClientCallbacks<ListModel>) {
+        repo.getMoviesTopRated(page, ModelCallbacksImpl(callback))
     }
 
-    fun getTVPopular(page: Int, callback: ClientCallbacks) {
-        repo.getTVPopular(page, object : ModelCallbacks<ListModel> {
-            override fun onSuccess(data: ListModel) {
-                callback.onOK(data)
-            }
-
-            override fun onFail(errorModel: ErrorModel) {
-                callback.onError(errorModel.code.toString() + " - " + errorModel.message)
-            }
-        })
+    fun getTVPopular(page: Int, callback: ClientCallbacks<ListModel>) {
+        repo.getTVPopular(page, ModelCallbacksImpl(callback))
     }
 
-    fun getTVTopRated(page: Int, callback: ClientCallbacks) {
-        repo.getTVTopRated(page, object : ModelCallbacks<ListModel> {
-            override fun onSuccess(data: ListModel) {
-                callback.onOK(data)
-            }
+    fun getTVTopRated(page: Int, callback: ClientCallbacks<ListModel>) {
+        repo.getTVTopRated(page, ModelCallbacksImpl(callback))
+    }
 
-            override fun onFail(errorModel: ErrorModel) {
-                callback.onError(errorModel.code.toString() + " - " + errorModel.message)
-            }
-        })
+    fun searchTVShows(page: Int, query:String, callback: ClientCallbacks<ListModel>) {
+        repo.searchTVShows(page, query, ModelCallbacksImpl(callback))
+    }
+    fun searchMovies(page: Int, query:String,callback: ClientCallbacks<ListModel>) {
+        repo.searchMovies(page, query, ModelCallbacksImpl(callback))
+    }
+    fun searchBoth(page: Int, query:String,callback: ClientCallbacks<ListModel>) {
+        repo.searchBoth(page, query, ModelCallbacksImpl(callback))
+    }
+
+    class ModelCallbacksImpl<T>(private val callbacks: ClientCallbacks<T>) : ModelCallbacks<T>{
+
+        override fun onSuccess(data: T) {
+            callbacks.onOK(data)
+        }
+
+        override fun onFail(errorModel: ErrorModel) {
+            callbacks.onError(errorModel.code.toString() + " - " + errorModel.message)
+        }
     }
 }

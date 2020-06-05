@@ -3,15 +3,14 @@ package com.hernanbosqued.movie_db_client
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.SearchView
 import android.widget.Toast
-import com.hernanbosqued.domain.Client
 import com.hernanbosqued.domain.ClientCallbacks
+import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.movie_db_client.BaseFragmentActivity.BackPressedCallbacks
+import kotlinx.android.synthetic.main.activity_base.*
 
 class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbacks, MainContract.View {
     private lateinit var dialog: Dialog
@@ -41,7 +40,6 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         prepareDialog()
         prepareEmptyView(view)
     }
@@ -56,8 +54,8 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
         dialog.setContentView(R.layout.progress_dialog)
     }
 
-    fun performSearch(query: String) {
-        presenter.processQuery(query)
+    fun performSearch(query: String, includeMovies: Boolean, includeTVShows: Boolean) {
+        presenter.processQuery(query, includeMovies, includeTVShows)
     }
 
     override fun showMessage(message: String) {
@@ -72,23 +70,17 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
         dialog.dismiss()
     }
 
-    override fun addCarousel(client: (Int, ClientCallbacks) -> Unit, title: String) {
+    override fun addCarousel(client: (Int, String, ClientCallbacks<ListModel>) -> Unit, title: String, query: String) {
+        val container = view?.findViewById<LinearLayout>(R.id.container)
+        container?.addView(CarouselView(context!!, client, title, query), 0)
+    }
+
+    override fun addCarousel(client: (Int, ClientCallbacks<ListModel>) -> Unit, title: String) {
         val container = view?.findViewById<LinearLayout>(R.id.container)
         container?.addView(CarouselView(context!!, client, title))
-        container?.addView(SearchView(context!!))
     }
 
     override fun onBackPressedCallback(): Boolean {
-        return false
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.check_all -> {
-                item.isChecked = !item.isChecked
-                return true
-            }
-        }
         return false
     }
 

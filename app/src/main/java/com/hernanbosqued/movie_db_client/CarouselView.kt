@@ -6,23 +6,34 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hernanbosqued.domain.ClientCallbacks
+import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.domain.model.ResultModel
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 @SuppressLint("ViewConstructor")
-class CarouselView(context: Context, client: (Int, ClientCallbacks) -> Unit, name: String) : ConstraintLayout(context), ReachLastItemListener, CarouselContract.View {
+class CarouselView(context: Context) : ConstraintLayout(context), ReachLastItemListener, CarouselContract.View {
 
     private var adapter: ItemsAdapter = ItemsAdapter()
-    private var presenter: CarouselPresenter = CarouselPresenter(client)
+    private lateinit var presenter: CarouselPresenter
 
-    init {
-        val viewGroup = inflate(getContext(), R.layout.layout_carrousel, this)
-        viewGroup.setBackgroundColor(resources.getColor(R.color.gray))
+    //TODO no escala( invocar al client en el mainPresenter y cargar la CarouselView directamente con los datos?)
+    constructor(context: Context, client: (Int, ClientCallbacks<ListModel>) -> Unit, name: String) : this(context) {
+        presenter = CarouselPresenter(client)
+        initViews(name)
+    }
+
+    constructor(context: Context, client: (Int, String, ClientCallbacks<ListModel>) -> Unit, name: String, query: String) : this(context) {
+        presenter = CarouselPresenter(client, query)
+        initViews(name)
+    }
+
+    private fun initViews(name: String) {
+        val viewGroup = inflate(context, R.layout.layout_carrousel, this)
         adapter.reachLastItemListener = this
-        viewGroup.name.text = name
         viewGroup.recycler_view.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
         viewGroup.recycler_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         viewGroup.recycler_view.adapter = adapter
+        viewGroup.name.text = name
     }
 
     override fun onAttachedToWindow() {

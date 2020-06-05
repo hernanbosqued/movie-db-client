@@ -5,14 +5,19 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
         android:title="@string/search"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
     <item
-        android:id="@+id/check_all"
+        android:id="@+id/movies"
         android:checkable="true"
         android:title="@string/movies"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/tv_shows"
+        android:checkable="true"
+        android:title="@string/tv_shows"
         app:showAsAction="always" />
 </menu>

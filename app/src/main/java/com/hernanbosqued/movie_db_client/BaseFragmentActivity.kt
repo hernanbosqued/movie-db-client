@@ -11,19 +11,13 @@ abstract class BaseFragmentActivity<F:Fragment> : AppCompatActivity() {
     }
 
     protected abstract val fragment: F
-    protected abstract val actionBarTitle: String
-
-    private fun setToolbarTitle() {
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        //supportActionBar?.title = actionBarTitle
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         savedInstanceState?:run{
-            setToolbarTitle()
             initFragment()
         }
     }

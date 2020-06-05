@@ -1,25 +1,37 @@
 package com.hernanbosqued.movie_db_client
 
-import com.hernanbosqued.domain.Client
 import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.domain.model.ResultModel
 
-class CarouselPresenter(val client: (Int, ClientCallbacks) -> Unit) : BasePresenter<MutableList<ResultModel>, CarouselContract.View>(mutableListOf()), CarouselContract.Presenter, ClientCallbacks {
+class CarouselPresenter : BasePresenter<MutableList<ResultModel>, CarouselContract.View>, CarouselContract.Presenter, ClientCallbacks<ListModel> {
     private var page = 1
+    private var query = ""
+    private var clientView: ((Int, ClientCallbacks<ListModel>) -> Unit)? = null
+    private var clientSearch: ((Int, String, ClientCallbacks<ListModel>) -> Unit)? = null
+
+    constructor(client: (Int, ClientCallbacks<ListModel>) -> Unit) : super(mutableListOf()) {
+        this.clientView = client
+    }
+
+    constructor(client: (Int, String, ClientCallbacks<ListModel>) -> Unit, query: String) : super(mutableListOf()) {
+        this.clientSearch = client
+        this.query = query
+    }
 
     override fun load() {
         if (model.isEmpty()) {
             page = 1
             view()?.showProgress()
-            client(page, this)
+            clientView?.let { it(page, this) }
+            clientSearch?.let { it(page, query, this) }
         }
     }
 
     override fun loadMore() {
         view()?.showProgress()
-        client(++page, this)
-    }
+        clientView?.let { it(++page, this) }
+        clientSearch?.let { it(++page, query, this) }    }
 
     override fun bindView(view: CarouselContract.View) {
         super.bindView(view)

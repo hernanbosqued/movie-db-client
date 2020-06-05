@@ -3,51 +3,73 @@ package com.hernanbosqued.movie_db_client
 import android.app.SearchManager
 import android.os.Bundle
 import android.view.Menu
-import android.widget.SearchView
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.CompoundButton
+import android.widget.LinearLayout
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import kotlinx.android.synthetic.main.activity_base.*
 
-class MainActivity : BaseFragmentActivity<MainFragment>(), SearchView.OnQueryTextListener {
-    private lateinit var searchView: SearchView
+
+class MainActivity : BaseFragmentActivity<MainFragment>(), SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
     private var query: String? = null
-    private val KEY = "query"
+    private val key = "query"
 
     override val fragment: MainFragment
         get() = MainFragment()
 
-    override val actionBarTitle: String
-        get() = getString(R.string.app_name)
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(KEY, searchView.query.toString())
+        outState.putString(key, search_view.query.toString())
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        query = savedInstanceState.getString(KEY)
+        query = savedInstanceState.getString(key)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        searchView = menu.getItem(0).actionView as SearchView
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         prepareSearchView()
-        return true
+        prepareCheckboxes()
+    }
+
+    private fun prepareCheckboxes() {
+        checkbox_movies.setOnCheckedChangeListener { _, _ ->
+            if (!checkbox_tv.isChecked) {
+                checkbox_movies.isChecked = true
+            }
+        }
+        checkbox_tv.setOnCheckedChangeListener { _, _ ->
+            if (!checkbox_movies.isChecked) {
+                checkbox_tv.isChecked = true
+            }
+        }
+
+        checkbox_movies.isChecked = true
     }
 
     private fun prepareSearchView() {
         val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        search_view.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
         if (!query.isNullOrEmpty()) {
-            searchView.isIconified = false
-            searchView.setQuery(query, false)
-            searchView.clearFocus()
+            search_view.isIconified = true
+            search_view.setQuery(query, false)
+            search_view.clearFocus()
         }
-        searchView.setOnQueryTextListener(this)
+
+        search_view.setOnQueryTextListener(this)
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        searchView.clearFocus()
-        currentFragment?.performSearch(query!!)
+    override fun onQueryTextSubmit(query: String): Boolean {
+        search_view.clearFocus()
+        currentFragment?.performSearch(query,checkbox_movies.isChecked, checkbox_tv.isChecked)
         return false
     }
 
