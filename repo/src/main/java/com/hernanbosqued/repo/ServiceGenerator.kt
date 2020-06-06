@@ -1,27 +1,104 @@
 package com.hernanbosqued.repo
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.google.gson.GsonBuilder
-import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
+import okhttp3.*
+import okhttp3.CacheControl
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
+import java.util.concurrent.TimeUnit
 
-object ServiceGenerator{
+infix fun <T> T?.ifNull(block: () -> Unit) {
+    if (this == null) block()
+}
+
+object ServiceGenerator {
+    private const val HEADER_CACHE_CONTROL = "Cache-Control"
+    private const val HEADER_PRAGMA = "Pragma"
+    private var cache: Cache? = null
     private val retrofit: Retrofit
 
     init {
         val interceptor = HttpLoggingInterceptor()
+
         interceptor.level = HttpLoggingInterceptor.Level.BODY;
 
         val gson = GsonBuilder().setLenient().create()
-        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .addInterceptor(provideOfflineCacheInterceptor())
+            .addNetworkInterceptor(provideCacheInterceptor())
+            .cache(provideCache())
+            .build()
+
         retrofit = Retrofit.Builder()
-            .client(client)
+            .client(okHttpClient)
             .baseUrl(Constants.API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
+    }
+
+    private fun provideCacheInterceptor(): Interceptor {
+        return Interceptor { chain ->
+            val response = chain.proceed(chain.request())
+
+            val cacheControl: CacheControl = if (isConnected()) {
+                CacheControl.Builder()
+                    .maxAge(60, TimeUnit.SECONDS)
+                    .build()
+            } else {
+                CacheControl.Builder()
+                    .maxStale(7, TimeUnit.DAYS)
+                    .build()
+            }
+
+            response.newBuilder()
+                .removeHeader(HEADER_PRAGMA)
+                .removeHeader(HEADER_CACHE_CONTROL)
+                .header(HEADER_CACHE_CONTROL, cacheControl.toString())
+                .build()
+        }
+    }
+
+    private fun provideCache(): Cache {
+        cache.ifNull {
+            val file = File( RepoContext.context.filesDir, "http_cache")
+            this.cache = Cache(file, 100 * 1024 * 1024)
+        }
+        return this.cache!!
+    }
+
+    private fun provideOfflineCacheInterceptor(): Interceptor {
+        return Interceptor { chain: Interceptor.Chain ->
+
+            var request: Request = chain.request()
+
+            if (!isConnected()) {
+                val cacheControl = CacheControl
+                    .Builder()
+                    .maxStale(7, TimeUnit.DAYS)
+                    .build()
+
+                request = request
+                    .newBuilder()
+                    .removeHeader(HEADER_PRAGMA)
+                    .removeHeader(HEADER_CACHE_CONTROL)
+                    .cacheControl(cacheControl)
+                    .build()
+            }
+            chain.proceed(request)
+        }
+    }
+
+    private fun isConnected(): Boolean {
+        val systemService = RepoContext.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = systemService.activeNetworkInfo
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting
     }
 
     fun <T> createService(serviceClass: Class<T>): T {

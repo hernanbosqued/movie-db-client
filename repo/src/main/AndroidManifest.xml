@@ -1,5 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hernanbosqued.repo">
 
-    /
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <application>
+        <provider
+            android:exported="false"
+            android:enabled="true"
+            android:authorities="{$applicationId}}.ContextContentProvider"
+            android:name=".ContextContentProvider"/>
+    </application>
 </manifest>

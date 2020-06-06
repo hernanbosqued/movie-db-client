@@ -6,12 +6,7 @@ enum class ITEM_TYPE(private val itemType: Int) {
     companion object {
         @JvmStatic
         fun valueOf(itemType: Int): ITEM_TYPE {
-            return values().firstOrNull{ it.itemType == itemType }.let {
-                when(it){
-                    null->ROW_ODD
-                    else->it
-                }
-            }
+            return values().first { itemType == it.itemType }
         }
     }
 }

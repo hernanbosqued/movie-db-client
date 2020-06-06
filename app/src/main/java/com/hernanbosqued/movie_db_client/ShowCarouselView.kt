@@ -1,6 +1,5 @@
 package com.hernanbosqued.movie_db_client
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -10,7 +9,6 @@ import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.domain.model.ResultModel
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
-@SuppressLint("ViewConstructor")
 class ShowCarouselView(context: Context) : ConstraintLayout(context), ReachLastItemListener, CarouselContract.View{
 
     private var adapter: ItemsAdapter = ItemsAdapter()
