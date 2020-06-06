@@ -11,19 +11,13 @@ import com.hernanbosqued.domain.model.ResultModel
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 @SuppressLint("ViewConstructor")
-class CarouselView(context: Context) : ConstraintLayout(context), ReachLastItemListener, CarouselContract.View {
+class ShowCarouselView(context: Context) : ConstraintLayout(context), ReachLastItemListener, CarouselContract.View{
 
     private var adapter: ItemsAdapter = ItemsAdapter()
-    private lateinit var presenter: CarouselPresenter
+    private lateinit var presenter: ShowCarouselPresenter
 
-    //TODO no escala( invocar al client en el mainPresenter y cargar la CarouselView directamente con los datos?)
     constructor(context: Context, client: (Int, ClientCallbacks<ListModel>) -> Unit, name: String) : this(context) {
-        presenter = CarouselPresenter(client)
-        initViews(name)
-    }
-
-    constructor(context: Context, client: (Int, String, ClientCallbacks<ListModel>) -> Unit, name: String, query: String) : this(context) {
-        presenter = CarouselPresenter(client, query)
+        presenter = ShowCarouselPresenter(client)
         initViews(name)
     }
 

@@ -9,8 +9,8 @@ class MainContract {
         fun showMessage(message: String)
         fun showProgress()
         fun hideProgress()
-        fun addCarousel(client: (Int, String, ClientCallbacks<ListModel>) -> Unit, title: String, query: String)
-        fun addCarousel(client: (Int, ClientCallbacks<ListModel>) -> Unit, title: String)
+        fun addSearchCarousel(client: (Int, String, ClientCallbacks<ListModel>) -> Unit, title: String, query: String)
+        fun addViewCarousel(client: (Int, ClientCallbacks<ListModel>) -> Unit, title: String)
     }
 
     interface Presenter {
