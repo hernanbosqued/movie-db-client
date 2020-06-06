@@ -1,9 +1,12 @@
 package com.hernanbosqued.movie_db_client
 
 import androidx.recyclerview.widget.RecyclerView
+import com.hernanbosqued.domain.ClickCallback
+import com.hernanbosqued.domain.model.ResultModel
 import kotlin.collections.ArrayList
 
 abstract class BaseAdapter<M, VH : BaseViewHolder<M>> : RecyclerView.Adapter<VH>() {
+    val clickCallback: ClickCallback<ResultModel>? = null
 
     var reachLastItemListener: ReachLastItemListener? = null
 

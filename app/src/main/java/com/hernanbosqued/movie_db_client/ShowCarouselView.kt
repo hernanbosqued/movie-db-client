@@ -11,10 +11,11 @@ import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 class ShowCarouselView(context: Context) : ConstraintLayout(context), ReachLastItemListener, CarouselContract.View{
 
-    private var adapter: ItemsAdapter = ItemsAdapter()
+    private lateinit var adapter: ItemsAdapter
     private lateinit var presenter: ShowCarouselPresenter
 
-    constructor(context: Context, client: (Int, ClientCallbacks<ListModel>) -> Unit, name: String) : this(context) {
+    constructor(context: Context, client: (Int, ClientCallbacks<ListModel>) -> Unit, name: String, listener: ItemClickListener) : this(context) {
+        adapter = ItemsAdapter(listener)
         presenter = ShowCarouselPresenter(client)
         initViews(name)
     }

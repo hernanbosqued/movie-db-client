@@ -9,9 +9,10 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.domain.model.ListModel
+import com.hernanbosqued.domain.model.ResultModel
 import com.hernanbosqued.movie_db_client.BaseFragmentActivity.BackPressedCallbacks
 
-class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbacks, MainContract.View {
+class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbacks, MainContract.View, ItemClickListener {
     private lateinit var dialog: Dialog
     private lateinit var presenter: MainPresenter
     private lateinit var emptyView: View
@@ -71,12 +72,12 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
 
     override fun addSearchCarousel(client: (Int, String, ClientCallbacks<ListModel>) -> Unit, title: String, query: String) {
         val container = view?.findViewById<LinearLayout>(R.id.container)
-        container?.addView(SearchCarouselView(context!!, client, title, query), 0)
+        container?.addView(SearchCarouselView(context!!, client, title, query, this), 0)
     }
 
     override fun addViewCarousel(client: (Int, ClientCallbacks<ListModel>) -> Unit, title: String) {
         val container = view?.findViewById<LinearLayout>(R.id.container)
-        container?.addView(ShowCarouselView(context!!, client, title))
+        container?.addView(ShowCarouselView(context!!, client, title, this))
     }
 
     override fun onBackPressedCallback(): Boolean {
@@ -91,4 +92,8 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), BackPressedCallbac
         get() = object : Callbacks {
             override fun fromMainFragment() {}
         }
+
+    override fun onItemClick(model: ResultModel) {
+        showMessage(model.name)
+    }
 }

@@ -36,6 +36,12 @@ abstract class BaseCarouselPresenter : BasePresenter<MutableList<ResultModel>, C
     override fun onError(error: String) {
         view()?.showMessage(error)
         view()?.hideProgress()
+
+        if (this.model.isEmpty()) {
+            view()?.showEmpty()
+        } else {
+            view()?.hideEmpty()
+        }
     }
 
     override fun updateView() {

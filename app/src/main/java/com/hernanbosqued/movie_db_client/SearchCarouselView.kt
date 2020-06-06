@@ -11,10 +11,11 @@ import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 class SearchCarouselView(context: Context) : ConstraintLayout(context), ReachLastItemListener, CarouselContract.View {
 
-    private var adapter: ItemsAdapter = ItemsAdapter()
+    private lateinit var adapter: ItemsAdapter
     private lateinit var presenter: SearchCarouselPresenter
 
-    constructor(context: Context, client: (Int, String, ClientCallbacks<ListModel>) -> Unit, name: String, query: String) : this(context) {
+    constructor(context: Context, client: (Int, String, ClientCallbacks<ListModel>) -> Unit, name: String, query: String, listener: ItemClickListener) : this(context) {
+        adapter = ItemsAdapter(listener)
         presenter = SearchCarouselPresenter(client, query)
         initViews(name)
     }
@@ -33,10 +34,12 @@ class SearchCarouselView(context: Context) : ConstraintLayout(context), ReachLas
         presenter.bindView(this)
         presenter.load()
     }
+
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         presenter.unbindView()
     }
+
     override fun onLastItemReached() {
         presenter.loadMore()
     }
@@ -60,7 +63,7 @@ class SearchCarouselView(context: Context) : ConstraintLayout(context), ReachLas
         empty_view.visibility = View.VISIBLE
     }
 
-    override fun hideEmpty(){
+    override fun hideEmpty() {
         empty_view.visibility = View.INVISIBLE
     }
 }

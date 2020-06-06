@@ -38,19 +38,19 @@ object RepositoryImpl : Repository {
             .enqueue(CallbackImpl(callbacks))
     }
 
-    override fun searchTVShows(page: Int, query: String, callbacks: Client.ModelCallbacksImpl<ListModel>) {
+    override fun searchTVShows(page: Int, query: String, modelCallbacksImpl: Client.ModelCallbacksImpl<ListModel>) {
         service.searchTVShows(Constants.AUTH_PREFIX + Constants.TOKEN, page, query)
-            .enqueue(CallbackImpl(callbacks))
+            .enqueue(CallbackImpl(modelCallbacksImpl))
     }
 
-    override fun searchMovies(page: Int, query: String, callbacks: Client.ModelCallbacksImpl<ListModel>) {
+    override fun searchMovies(page: Int, query: String, modelCallbacksImpl: Client.ModelCallbacksImpl<ListModel>) {
         service.searchMovies(Constants.AUTH_PREFIX + Constants.TOKEN, page, query)
-            .enqueue(CallbackImpl(callbacks))
+            .enqueue(CallbackImpl(modelCallbacksImpl))
     }
 
-    override fun searchBoth(page: Int, query: String, callbacks: Client.ModelCallbacksImpl<ListModel>) {
+    override fun searchBoth(page: Int, query: String, modelCallbacksImpl: Client.ModelCallbacksImpl<ListModel>) {
         service.searchBoth(Constants.AUTH_PREFIX + Constants.TOKEN, page, query)
-            .enqueue(CallbackImpl(callbacks))
+            .enqueue(CallbackImpl(modelCallbacksImpl))
     }
 
     class CallbackImpl<T>(private val modelCallbacks: ModelCallbacks<T>) : Callback<T> {

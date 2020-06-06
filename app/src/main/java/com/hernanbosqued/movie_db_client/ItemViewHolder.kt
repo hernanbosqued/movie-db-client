@@ -16,7 +16,7 @@ import com.hernanbosqued.domain.model.ResultModel
 import com.hernanbosqued.repo.Constants
 import kotlinx.android.synthetic.main.layout_item.view.*
 
-class ItemViewHolder(view: View, itemType: ITEM_TYPE) : BaseViewHolder<ResultModel>(view) {
+class ItemViewHolder(view: View, itemType: ITEM_TYPE, private val listener: ItemClickListener) : BaseViewHolder<ResultModel>(view) {
 
     init {
         val color: Int = when (itemType) {
@@ -52,6 +52,8 @@ class ItemViewHolder(view: View, itemType: ITEM_TYPE) : BaseViewHolder<ResultMod
             .into(itemView.poster)
 
         setAnimation()
+
+        itemView.setOnClickListener { listener.onItemClick(model) }
     }
 
     private fun setAnimation() {

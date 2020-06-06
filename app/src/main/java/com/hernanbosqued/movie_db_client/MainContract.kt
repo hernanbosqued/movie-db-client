@@ -1,6 +1,5 @@
 package com.hernanbosqued.movie_db_client
 
-import android.widget.CheckBox
 import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.domain.model.ListModel
 
