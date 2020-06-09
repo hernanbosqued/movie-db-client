@@ -6,6 +6,7 @@ class MainContract {
         fun showProgress()
         fun hideProgress()
         fun addCarousel(model: CarouselModel)
+        fun addCarousel(model: List<CarouselModel>)
         fun scrollTop()
     }
 

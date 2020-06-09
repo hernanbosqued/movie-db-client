@@ -3,38 +3,46 @@ package com.hernanbosqued.movie_db_client
 import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.domain.model.ListModel
 
-class CarouselPresenter( model: CarouselModel, view: CarouselContract.View)
-    : BasePresenter<CarouselModel, CarouselContract.View>(model), CarouselContract.Presenter, ClientCallbacks<ListModel> {
+class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselModel, CarouselContract.View>(view), CarouselContract.Presenter, ClientCallbacks<ListModel> {
 
-    private var page = 0
+    private var page = 1
     private var maxPages: Int = 0
+    private var continueLoading: Boolean = true
 
-    var areItemsRemainingToLoad: Boolean = true
+    fun setModel(model: CarouselModel) {
+        this.model = model
+        view()?.setTitle(model.title)
+        load(page)
+    }
 
-    init {
-        this.model.title = model.title
-        bindView(view)
+    private fun load(page: Int) {
+        view()?.showProgress()
+
+        model?.let {
+            it.client.invoke(page, it.query, this)
+        }
     }
 
     override fun load() {
-        view()?.showProgress()
-        model.client?.invoke(++page, model.query, this)
+        if (continueLoading) {
+            load(++page)
+        }
     }
 
     override fun onCarouselClicked() {
-        view()?.showCarouselData(this.model.response)
+        model?.response?.let { view()?.showCarouselData(it) }
     }
 
-    override fun onOK(model: ListModel) {
+    override fun onOK(response: ListModel) {
         view()?.hideProgress()
 
-        this.maxPages = model.totalPages
-        this.areItemsRemainingToLoad = page <= maxPages
-        this.model.response.results.addAll(model.results)
+        this.maxPages = response.totalPages
+        this.continueLoading = page < maxPages
+        this.model?.response = response
 
-        view()?.addData(model)
+        view()?.addData(response)
 
-        if (this.model.response.results.isEmpty()) {
+        if (this.model?.response?.results?.isEmpty()!!) {
             view()?.showEmpty()
         } else {
             view()?.hideEmpty()
@@ -45,7 +53,7 @@ class CarouselPresenter( model: CarouselModel, view: CarouselContract.View)
         view()?.showMessage(error)
         view()?.hideProgress()
 
-        if (this.model.response.results.isEmpty()) {
+        if (this.model?.response?.results?.isEmpty()!!) {
             view()?.showEmpty()
         } else {
             view()?.hideEmpty()

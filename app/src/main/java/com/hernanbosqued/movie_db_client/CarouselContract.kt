@@ -11,6 +11,7 @@ class CarouselContract {
         fun showEmpty()
         fun hideEmpty()
         fun showCarouselData(model: ListModel)
+        fun setTitle(title: String)
     }
 
     interface Presenter {

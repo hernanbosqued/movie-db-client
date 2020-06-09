@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 class SpacingItemDecoration(private val spacingSize: Int) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        val position = parent.getChildLayoutPosition(view);
+        val position = parent.getChildLayoutPosition(view)
         //outRect.top = spacingSize;
         //outRect.bottom = spacingSize;
-        outRect.left = spacingSize;
+        outRect.left = spacingSize
         if (position == parent.childCount) {
-            outRect.right = spacingSize;
+            outRect.right = spacingSize
         }
 
     }

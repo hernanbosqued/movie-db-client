@@ -25,8 +25,10 @@ object ServiceGenerator {
     init {
         val interceptor = HttpLoggingInterceptor()
 
-        interceptor.level = HttpLoggingInterceptor.Level.BODY;
+        var dispatcher = Dispatcher()
+        dispatcher.maxRequests = 10
 
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
         val gson = GsonBuilder().setLenient().create()
 
         val okHttpClient = OkHttpClient.Builder()
@@ -34,6 +36,7 @@ object ServiceGenerator {
             .addInterceptor(provideOfflineCacheInterceptor())
             .addNetworkInterceptor(provideCacheInterceptor())
             .cache(provideCache())
+            .dispatcher(dispatcher)
             .build()
 
         retrofit = Retrofit.Builder()

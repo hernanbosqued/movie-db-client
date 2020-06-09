@@ -1,14 +1,13 @@
 package com.hernanbosqued.movie_db_client
 
 import com.hernanbosqued.domain.Client
-import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.repo.RepositoryImpl
 
-class MainPresenter(val view: MainContract.View) : BasePresenter<ListModel, MainContract.View>(ListModel()), MainContract.Presenter {
+class MainPresenter(val view: MainContract.View) : BasePresenter<ListModel, MainContract.View>(view), MainContract.Presenter {
 
     init {
-        bindView(view)
+        Client.repo = RepositoryImpl
     }
 
     override fun processQuery(query: String, includeMovies: Boolean, includeTVShows: Boolean) {
@@ -22,22 +21,16 @@ class MainPresenter(val view: MainContract.View) : BasePresenter<ListModel, Main
             }
 
         view()?.addCarousel(carousel)
-        view()?.scrollTop()
     }
 
     override fun addCarousels() {
-        Client.repo = RepositoryImpl
 
         val list: MutableList<CarouselModel> = ArrayList()
         list.add(CarouselModel(Client::getMoviesPopular, "popular movies", null))
         list.add(CarouselModel(Client::getMoviesTopRated, "Top rated movies", null))
         list.add(CarouselModel(Client::getTVPopular, "Popular TV shows", null))
-        list.add(CarouselModel(Client::getTVTopRated, "Top rated TV shows", null))
+        list.add(CarouselModel(Client::getTVTopRated, "Top rated TV show", null))
 
-        list.forEach { carousel ->
-            view()?.addCarousel(carousel)
-        }
-
-        view()?.scrollTop()
+        view()?.addCarousel(list)
     }
 }

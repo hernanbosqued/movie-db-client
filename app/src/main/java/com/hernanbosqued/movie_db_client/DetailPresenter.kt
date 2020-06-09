@@ -1,5 +1,3 @@
 package com.hernanbosqued.movie_db_client
 
-class DetailPresenter(isFirstTime: Boolean) {
-
-}
+class DetailPresenter(isFirstTime: Boolean)

@@ -7,19 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.domain.model.ResultModel
-import com.hernanbosqued.movie_db_client.adapter.CarouselsAdapter
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener, MainContract.View, CarouselListeners {
-    private val adapter: CarouselsAdapter = CarouselsAdapter(this)
     private val presenter: MainPresenter = MainPresenter(this)
 
     private lateinit var dialog: Dialog
-    private lateinit var emptyView: View
 
     private var query: String? = null
 
@@ -44,27 +39,26 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQuery
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        query = savedInstanceState?.getString("query")
         prepareDialog()
-        prepareEmptyView(view)
         prepareSearchView()
         prepareCheckboxes()
-        prepareRecyclerView()
 
         if (savedInstanceState == null) {
             presenter.addCarousels()
         }
     }
 
-    private fun prepareRecyclerView() {
-        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        container.layoutManager = linearLayoutManager
-        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        container.adapter = adapter
+    override fun addCarousel(model: CarouselModel) {
+        val view= CarouselView(context!!, this)
+        view.bind(model)
+        container.addView(view,0)
+        scrollTop()
     }
 
-    override fun addCarousel(model: CarouselModel) {
-        adapter.add(model)
+    override fun addCarousel(model: List<CarouselModel>) {
+        for (item in model) {
+            addCarousel(item)
+        }
     }
 
     override fun onItemClicked(model: ResultModel) {
@@ -73,7 +67,7 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQuery
 
     override fun onCarouselClicked(model: ListModel) {
         //delete a list?
-        showMessage(model.title)
+        model.title?.let { showMessage(it) }
     }
 
     private fun prepareCheckboxes() {
@@ -92,7 +86,7 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQuery
     }
 
     override fun scrollTop() {
-        container.smoothScrollToPosition(0)
+        scroll_view.smoothScrollTo(0,0)
     }
 
     private fun prepareSearchView() {
@@ -108,16 +102,12 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQuery
     override fun onQueryTextSubmit(query: String): Boolean {
         search_view.clearFocus()
         presenter.processQuery(query, checkbox_movies.isChecked, checkbox_tv.isChecked)
-        return true
+        return false
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         //do nothing
         return false
-    }
-
-    private fun prepareEmptyView(view: View) {
-        emptyView = view.findViewById(R.id.empty_view)
     }
 
     private fun prepareDialog() {
