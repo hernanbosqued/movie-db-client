@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.layout_carrousel.view.progress
 @SuppressLint("ViewConstructor")
 class CarouselView(context: Context, private val listener: CarouselListeners) : ConstraintLayout(context), CarouselContract.View, ScrollListener {
     private var presenter: CarouselPresenter = CarouselPresenter(this)
-
     private var adapter = ItemsAdapter(this, listener)
 
     init {
@@ -47,7 +46,6 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
     }
 
     fun bind(model: CarouselModel) {
-
         if (presenter.model == null) {
             presenter.setModel(model)
         }
@@ -57,7 +55,7 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
         carousel_title.text = title
     }
 
-    override fun showCarouselData(model: ListModel) {
+    override fun showCarouselData(model: CarouselModel) {
         listener.onCarouselClicked(model)
     }
 

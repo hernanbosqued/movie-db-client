@@ -1,22 +1,16 @@
 package com.hernanbosqued.movie_db_client
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.domain.model.ResultModel
 import kotlinx.android.synthetic.main.fragment_main.*
 
-class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener, MainContract.View, CarouselListeners {
+class MainFragment : BaseFragment<MainFragment.Callbacks>(), SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener, MainContract.View, CarouselListeners {
     private val presenter: MainPresenter = MainPresenter(this)
-
-    private lateinit var dialog: Dialog
-
-    private var query: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +33,6 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQuery
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prepareDialog()
         prepareSearchView()
         prepareCheckboxes()
 
@@ -49,15 +42,15 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQuery
     }
 
     override fun addCarousel(model: CarouselModel) {
-        val view= CarouselView(context!!, this)
+        val view = CarouselView(context!!, this)
         view.bind(model)
-        container.addView(view,0)
+        container.addView(view, 0)
         scrollTop()
     }
 
-    override fun addCarousel(model: List<CarouselModel>) {
-        for (item in model) {
-            addCarousel(item)
+    override fun addCarousels(models: List<CarouselModel>) {
+        for (model in models) {
+            addCarousel(model)
         }
     }
 
@@ -65,9 +58,9 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQuery
         callbacks?.fromMainFragment(model)
     }
 
-    override fun onCarouselClicked(model: ListModel) {
+    override fun onCarouselClicked(model: CarouselModel) {
         //delete a list?
-        model.title?.let { showMessage(it) }
+        showMessage(model.title)
     }
 
     private fun prepareCheckboxes() {
@@ -86,16 +79,12 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQuery
     }
 
     override fun scrollTop() {
-        scroll_view.smoothScrollTo(0,0)
+        scroll_view.smoothScrollTo(0, 0)
     }
 
     private fun prepareSearchView() {
-        if (!query.isNullOrEmpty()) {
-            search_view.isIconified = true
-            search_view.setQuery(query, false)
-            search_view.clearFocus()
-        }
-
+        search_view.isIconified = true
+        search_view.clearFocus()
         search_view.setOnQueryTextListener(this)
     }
 
@@ -110,22 +99,8 @@ class MainFragment : BaseFragment<MainFragment.Callbacks?>(), SearchView.OnQuery
         return false
     }
 
-    private fun prepareDialog() {
-        dialog = Dialog(activity!!, R.style.TransparentDialog)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.progress_dialog)
-    }
-
     override fun showMessage(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showProgress() {
-        dialog.show()
-    }
-
-    override fun hideProgress() {
-        dialog.dismiss()
     }
 
     interface Callbacks {

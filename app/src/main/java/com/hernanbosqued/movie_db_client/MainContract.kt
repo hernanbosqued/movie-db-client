@@ -3,10 +3,8 @@ package com.hernanbosqued.movie_db_client
 class MainContract {
     interface View {
         fun showMessage(message: String)
-        fun showProgress()
-        fun hideProgress()
         fun addCarousel(model: CarouselModel)
-        fun addCarousel(model: List<CarouselModel>)
+        fun addCarousels(models: List<CarouselModel>)
         fun scrollTop()
     }
 

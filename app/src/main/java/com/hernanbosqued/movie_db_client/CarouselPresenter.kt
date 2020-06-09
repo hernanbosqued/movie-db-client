@@ -30,7 +30,7 @@ class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselMod
     }
 
     override fun onCarouselClicked() {
-        model?.response?.let { view()?.showCarouselData(it) }
+        model?.let { view()?.showCarouselData(it) }
     }
 
     override fun onOK(response: ListModel) {

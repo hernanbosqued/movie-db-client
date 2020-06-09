@@ -31,6 +31,6 @@ class MainPresenter(val view: MainContract.View) : BasePresenter<ListModel, Main
         list.add(CarouselModel(Client::getTVPopular, "Popular TV shows", null))
         list.add(CarouselModel(Client::getTVTopRated, "Top rated TV show", null))
 
-        view()?.addCarousel(list)
+        view()?.addCarousels(list)
     }
 }

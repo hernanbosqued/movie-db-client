@@ -10,7 +10,7 @@ class CarouselContract {
         fun hideProgress()
         fun showEmpty()
         fun hideEmpty()
-        fun showCarouselData(model: ListModel)
+        fun showCarouselData(model: CarouselModel)
         fun setTitle(title: String)
     }
 

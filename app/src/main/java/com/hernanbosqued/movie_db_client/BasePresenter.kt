@@ -2,9 +2,9 @@ package com.hernanbosqued.movie_db_client
 
 import java.lang.ref.WeakReference
 
-abstract class BasePresenter<M, V>(view: V){
+abstract class BasePresenter<M, V>() {
 
-    init {
+    constructor(view: V) : this() {
         bindView(view)
     }
 
