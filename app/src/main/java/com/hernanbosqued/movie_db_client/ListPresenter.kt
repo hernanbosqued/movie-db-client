@@ -4,7 +4,7 @@ import com.hernanbosqued.domain.Client
 import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.repo.RepositoryImpl
 
-class MainPresenter(val view: MainContract.View) : BasePresenter<ListModel, MainContract.View>(view), MainContract.Presenter {
+class ListPresenter(val view: ListContract.View) : BasePresenter<ListModel, ListContract.View>(view), ListContract.Presenter {
 
     init {
         Client.repo = RepositoryImpl

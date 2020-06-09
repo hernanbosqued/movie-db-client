@@ -7,6 +7,10 @@ object Client {
 
     lateinit var repo: Repository
 
+    fun getDetails(id: Int, callback: ClientCallbacks<ListModel>) {
+        repo.getDetails(id, ClientCallbackImpl(callback))
+    }
+
     fun getMoviesPopular(page: Int, query: String?, callback: ClientCallbacks<ListModel>) {
         repo.getMoviesPopular(page, ClientCallbackImpl(callback))
     }
@@ -35,7 +39,7 @@ object Client {
         repo.searchBoth(page, query, ClientCallbackImpl(callback))
     }
 
-    class ClientCallbackImpl<T>(private val callbacks: ClientCallbacks<T>) : ModelCallbacks<T> {
+    class ClientCallbackImpl<T>(public val callbacks: ClientCallbacks<T>) : ModelCallbacks<T> {
 
         override fun onSuccess(data: T) {
             callbacks.onOK(data)

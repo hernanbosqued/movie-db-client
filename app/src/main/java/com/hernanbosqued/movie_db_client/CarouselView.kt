@@ -7,14 +7,16 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.manager.LifecycleListener
 import com.hernanbosqued.domain.model.ListModel
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 import kotlinx.android.synthetic.main.layout_carrousel.view.progress
 
 
 @SuppressLint("ViewConstructor")
-class CarouselView(context: Context, private val listener: CarouselListeners) : ConstraintLayout(context), CarouselContract.View, ScrollListener {
+class CarouselView(context: Context, private val listener: CarouselListeners) : ConstraintLayout(context), CarouselContract.View, ScrollListener, LifecycleObserver {
     private var presenter: CarouselPresenter = CarouselPresenter(this)
     private var adapter = ItemsAdapter(this, listener)
 

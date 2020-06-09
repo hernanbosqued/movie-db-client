@@ -1,6 +1,6 @@
 package com.hernanbosqued.movie_db_client
 
-class MainContract {
+class ListContract {
     interface View {
         fun showMessage(message: String)
         fun addCarousel(model: CarouselModel)

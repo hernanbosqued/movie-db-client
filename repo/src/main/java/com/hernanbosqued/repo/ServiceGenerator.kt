@@ -17,15 +17,15 @@ infix fun <T> T?.ifNull(block: () -> Unit) {
 }
 
 object ServiceGenerator {
-    private const val HEADER_CACHE_CONTROL = "Cache-Control"
-    private const val HEADER_PRAGMA = "Pragma"
-    private var cache: Cache? = null
-    private val retrofit: Retrofit
+    public const val HEADER_CACHE_CONTROL = "Cache-Control"
+    public const val HEADER_PRAGMA = "Pragma"
+    public var cache: Cache? = null
+    public val retrofit: Retrofit
 
     init {
         val interceptor = HttpLoggingInterceptor()
 
-        var dispatcher = Dispatcher()
+        val dispatcher = Dispatcher()
         dispatcher.maxRequests = 10
 
         interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -46,7 +46,7 @@ object ServiceGenerator {
             .build()
     }
 
-    private fun provideCacheInterceptor(): Interceptor {
+    public fun provideCacheInterceptor(): Interceptor {
         return Interceptor { chain ->
             val response = chain.proceed(chain.request())
 
@@ -68,15 +68,15 @@ object ServiceGenerator {
         }
     }
 
-    private fun provideCache(): Cache {
+    public fun provideCache(): Cache {
         cache.ifNull {
-            val file = File( RepoContext.context.filesDir, "http_cache")
+            val file = File(RepoContext.context.filesDir, "http_cache")
             this.cache = Cache(file, 100 * 1024 * 1024)
         }
         return this.cache!!
     }
 
-    private fun provideOfflineCacheInterceptor(): Interceptor {
+    public fun provideOfflineCacheInterceptor(): Interceptor {
         return Interceptor { chain: Interceptor.Chain ->
 
             var request: Request = chain.request()
@@ -98,7 +98,7 @@ object ServiceGenerator {
         }
     }
 
-    private fun isConnected(): Boolean {
+    public fun isConnected(): Boolean {
         val systemService = RepoContext.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = systemService.activeNetworkInfo
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting

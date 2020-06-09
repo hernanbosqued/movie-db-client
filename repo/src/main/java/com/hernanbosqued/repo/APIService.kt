@@ -3,32 +3,32 @@ package com.hernanbosqued.repo
 import com.hernanbosqued.domain.model.ListModel
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-internal interface APIService {
-    @GET("list/{page}")
-    fun getList(@Header("Authorization") authorization: String, @Path("page") page: Int): Call<ListModel>
+interface APIService {
+
+    @GET("tv/{tv_id}")
+    fun getDetails(@Path("tv_id") id: Int, @Query("api_key") apiKey: String): Call<ListModel>
 
     @GET("movie/popular")
-    fun getMoviesPopular(@Header("Authorization") authorization: String, @Query("page") page: Int): Call<ListModel>
+    fun getMoviesPopular(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<ListModel>
 
     @GET("movie/top_rated")
-    fun getMoviesTopRated(@Header("Authorization") authorization: String, @Query("page") page: Int): Call<ListModel>
+    fun getMoviesTopRated(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<ListModel>
 
     @GET("tv/popular")
-    fun getTVPopular(@Header("Authorization") authorization: String, @Query("page") page: Int): Call<ListModel>
+    fun getTVPopular(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<ListModel>
 
     @GET("tv/top_rated")
-    fun getTVTopRated(@Header("Authorization") authorization: String, @Query("page") page: Int): Call<ListModel>
+    fun getTVTopRated(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<ListModel>
 
     @GET("search/tv")
-    fun searchTVShows(@Header("Authorization") authorization: String, @Query("page") page: Int, @Query("query")query: String?): Call<ListModel>
+    fun searchTVShows(@Query("page") page: Int, @Query("query") query: String?, @Query("api_key") apiKey: String): Call<ListModel>
 
     @GET("search/movie")
-    fun searchMovies(@Header("Authorization") authorization: String, @Query("page") page: Int, @Query("query")query: String?): Call<ListModel>
+    fun searchMovies(@Query("page") page: Int, @Query("query") query: String?, @Query("api_key") apiKey: String): Call<ListModel>
 
     @GET("search/multi")
-    fun searchBoth(@Header("Authorization") authorization: String, @Query("page") page: Int, @Query("query")query: String?): Call<ListModel>
+    fun searchBoth(@Query("page") page: Int, @Query("query") query: String?, @Query("api_key") apiKey: String): Call<ListModel>
 }

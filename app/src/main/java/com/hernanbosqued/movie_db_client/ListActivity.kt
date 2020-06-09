@@ -4,13 +4,15 @@ import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.hernanbosqued.domain.model.ResultModel
 
-class MainActivity : BaseFragmentActivity(), MainFragment.Callbacks {
+class ListActivity : BaseFragmentActivity(), ListFragment.Callbacks {
 
     override fun getFragment(): Fragment {
-        return MainFragment()
+        return ListFragment()
     }
 
     override fun fromMainFragment(model: ResultModel) {
-        startActivity(Intent(this,DetailActivity::class.java))
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("id", model.id)
+        startActivity(intent)
     }
 }

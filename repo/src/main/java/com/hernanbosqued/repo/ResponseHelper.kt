@@ -7,7 +7,7 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 
 internal class ResponseHelper<T> {
-    private fun parseError(responseBody: ResponseBody): ErrorModel {
+    public fun parseError(responseBody: ResponseBody): ErrorModel {
         val response = ServiceGenerator.parseResponse(ErrorsModel::class.java, responseBody)
         return if (response.errors.isNotEmpty()) {
             response.errors[0]

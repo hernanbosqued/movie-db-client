@@ -9,13 +9,8 @@ import androidx.appcompat.widget.SearchView
 import com.hernanbosqued.domain.model.ResultModel
 import kotlinx.android.synthetic.main.fragment_main.*
 
-class MainFragment : BaseFragment<MainFragment.Callbacks>(), SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener, MainContract.View, CarouselListeners {
-    private val presenter: MainPresenter = MainPresenter(this)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
+class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
+    private val presenter: ListPresenter = ListPresenter(this)
 
     override fun onResume() {
         super.onResume()
@@ -43,6 +38,9 @@ class MainFragment : BaseFragment<MainFragment.Callbacks>(), SearchView.OnQueryT
 
     override fun addCarousel(model: CarouselModel) {
         val view = CarouselView(context!!, this)
+
+        lifecycle.addObserver(view);
+
         view.bind(model)
         container.addView(view, 0)
         scrollTop()

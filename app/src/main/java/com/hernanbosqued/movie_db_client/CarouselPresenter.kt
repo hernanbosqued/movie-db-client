@@ -57,6 +57,6 @@ class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselMod
             view()?.showEmpty()
         } else {
             view()?.hideEmpty()
-        }
+        }?:view()?.showEmpty()
     }
 }
