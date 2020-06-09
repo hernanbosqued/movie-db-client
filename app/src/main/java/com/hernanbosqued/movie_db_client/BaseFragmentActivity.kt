@@ -3,57 +3,31 @@ package com.hernanbosqued.movie_db_client
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
+import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 
-abstract class BaseFragmentActivity<F:Fragment> : AppCompatActivity() {
-    companion object{
-        private const val FRAGMENT_TAG = "tag"
-        private const val STACK_KEY = "stack"
-    }
+abstract class BaseFragmentActivity : AppCompatActivity() {
 
-    protected abstract val fragment: F
+    private val TAG = "TAG"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        savedInstanceState?:run{
-            initFragment()
-        }
+        addFragment(findFragment())
     }
 
-    private fun initFragment() {
-        replaceContent(fragment, false, FRAGMENT_TAG)
+    abstract fun getFragment(): Fragment
+
+    private fun findFragment(): Fragment {
+        return supportFragmentManager.findFragmentByTag(TAG) ?: getFragment()
     }
 
-    override fun onBackPressed() {
-        if (currentFragment is BackPressedCallbacks) {
-            if ((fragment as BackPressedCallbacks).onBackPressedCallback()) {
-                return
-            }
-        }
-        super.onBackPressed()
-    }
-
-    val currentFragment: F?
-        get() {
-            return try {
-                supportFragmentManager.findFragmentByTag(FRAGMENT_TAG) as F?
-            } catch (e: ClassCastException) {
-                null
-            }
-        }
-
-    private fun replaceContent(fragment: F, addToBackStack: Boolean, tag: String) {
+    private fun addFragment(fragment: Fragment) {
         val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragmentContainer, fragment, tag)
-        if (addToBackStack) {
-            ft.addToBackStack(STACK_KEY)
-        }
+        ft.replace(R.id.fragmentContainer, fragment, TAG)
         ft.commit()
-    }
-
-    interface BackPressedCallbacks {
-        fun onBackPressedCallback(): Boolean
     }
 }

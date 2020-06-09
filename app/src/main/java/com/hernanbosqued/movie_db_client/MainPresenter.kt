@@ -1,39 +1,43 @@
 package com.hernanbosqued.movie_db_client
 
 import com.hernanbosqued.domain.Client
-import com.hernanbosqued.domain.model.ResultModel
+import com.hernanbosqued.domain.ClientCallbacks
+import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.repo.RepositoryImpl
 
-class MainPresenter : BasePresenter<MutableList<ResultModel>, MainContract.View>(mutableListOf()), MainContract.Presenter {
+class MainPresenter(val view: MainContract.View) : BasePresenter<ListModel, MainContract.View>(ListModel()), MainContract.Presenter {
+
+    init {
+        bindView(view)
+    }
 
     override fun processQuery(query: String, includeMovies: Boolean, includeTVShows: Boolean) {
-        if( includeMovies && includeTVShows){
-            view()?.addSearchCarousel(Client::searchBoth, "Movies and TV shows for '$query'", query)
-        }else if(includeTVShows){
-            view()?.addSearchCarousel(Client::searchTVShows, "TV shows for '$query'", query)
-        }else{
-            view()?.addSearchCarousel(Client::searchMovies, "Movies for '$query'", query)
-        }
+        val carousel =
+            if (includeMovies && includeTVShows) {
+                CarouselModel(Client::searchBoth, "Movies and TV shows for '$query'", query)
+            } else if (includeTVShows) {
+                CarouselModel(Client::searchTVShows, "TV shows for '$query'", query)
+            } else {
+                CarouselModel(Client::searchMovies, "Movies for '$query'", query)
+            }
+
+        view()?.addCarousel(carousel)
+        view()?.scrollTop()
     }
 
-    override fun prepareLists() {
+    override fun addCarousels() {
         Client.repo = RepositoryImpl
 
-        view()?.addViewCarousel(Client::getMoviesPopular, "Popular movies")
-        view()?.addViewCarousel(Client::getMoviesTopRated, "Top rated movies")
-        view()?.addViewCarousel(Client::getTVPopular, "Popular TV shows")
-        view()?.addViewCarousel(Client::getTVTopRated, "Top rated TV shows")
-        model.add(ResultModel())
-    }
+        val list: MutableList<CarouselModel> = ArrayList()
+        list.add(CarouselModel(Client::getMoviesPopular, "popular movies", null))
+        list.add(CarouselModel(Client::getMoviesTopRated, "Top rated movies", null))
+        list.add(CarouselModel(Client::getTVPopular, "Popular TV shows", null))
+        list.add(CarouselModel(Client::getTVTopRated, "Top rated TV shows", null))
 
-    override fun updateView() {
-    }
-
-    override fun bindView(view: MainContract.View) {
-        super.bindView(view)
-
-        if (model.isEmpty()) {
-            prepareLists()
+        list.forEach { carousel ->
+            view()?.addCarousel(carousel)
         }
+
+        view()?.scrollTop()
     }
 }

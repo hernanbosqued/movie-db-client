@@ -2,20 +2,14 @@ package com.hernanbosqued.movie_db_client
 
 import java.lang.ref.WeakReference
 
-abstract class BasePresenter<M, V>(init_model: M){
+abstract class BasePresenter<M, V>(init_model: M) {
+
+    var model: M = init_model
 
     private var view: WeakReference<V>? = null
 
-    var model: M = init_model
-        set(value) {
-            field = value
-            if (setupDone()) {
-                updateView()
-            }
-        }
-
     private fun setupDone(): Boolean {
-        return model != null
+        return model != null && view != null
     }
 
     open fun bindView(view: V) {
@@ -29,6 +23,4 @@ abstract class BasePresenter<M, V>(init_model: M){
     fun unbindView() {
         view = null
     }
-
-    protected abstract fun updateView()
 }

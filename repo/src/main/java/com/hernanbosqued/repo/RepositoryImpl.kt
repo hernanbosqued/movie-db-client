@@ -12,45 +12,40 @@ import retrofit2.Response
 object RepositoryImpl : Repository {
     private val service: APIService = ServiceGenerator.createService(APIService::class.java)
 
-    override fun getList(page: Int, callbacks: ModelCallbacks<ListModel>) {
-        service.getList(Constants.AUTH_PREFIX + Constants.TOKEN, page)
-            .enqueue(CallbackImpl(callbacks))
-    }
-
-    override fun getMoviesPopular(page: Int, callbacks: ModelCallbacks<ListModel>) {
+    override fun getMoviesPopular(page: Int, callbacks: Client.ClientCallbackImpl<ListModel>) {
         service.getMoviesPopular(Constants.AUTH_PREFIX + Constants.TOKEN, page)
             .enqueue(CallbackImpl(callbacks))
 
     }
 
-    override fun getMoviesTopRated(page: Int, callbacks: ModelCallbacks<ListModel>) {
+    override fun getMoviesTopRated(page: Int, callbacks: Client.ClientCallbackImpl<ListModel>) {
         service.getMoviesTopRated(Constants.AUTH_PREFIX + Constants.TOKEN, page)
             .enqueue(CallbackImpl(callbacks))
     }
 
-    override fun getTVPopular(page: Int, callbacks: ModelCallbacks<ListModel>) {
+    override fun getTVPopular(page: Int, callbacks: Client.ClientCallbackImpl<ListModel>) {
         service.getTVPopular(Constants.AUTH_PREFIX + Constants.TOKEN, page)
             .enqueue(CallbackImpl(callbacks))
     }
 
-    override fun getTVTopRated(page: Int, callbacks: ModelCallbacks<ListModel>) {
+    override fun getTVTopRated(page: Int, callbacks: Client.ClientCallbackImpl<ListModel>) {
         service.getTVTopRated(Constants.AUTH_PREFIX + Constants.TOKEN, page)
             .enqueue(CallbackImpl(callbacks))
     }
 
-    override fun searchTVShows(page: Int, query: String, modelCallbacksImpl: Client.ModelCallbacksImpl<ListModel>) {
+    override fun searchTVShows(page: Int, query: String?, callbacks: Client.ClientCallbackImpl<ListModel>) {
         service.searchTVShows(Constants.AUTH_PREFIX + Constants.TOKEN, page, query)
-            .enqueue(CallbackImpl(modelCallbacksImpl))
+            .enqueue(CallbackImpl(callbacks))
     }
 
-    override fun searchMovies(page: Int, query: String, modelCallbacksImpl: Client.ModelCallbacksImpl<ListModel>) {
+    override fun searchMovies(page: Int, query: String?, callbacks: Client.ClientCallbackImpl<ListModel>) {
         service.searchMovies(Constants.AUTH_PREFIX + Constants.TOKEN, page, query)
-            .enqueue(CallbackImpl(modelCallbacksImpl))
+            .enqueue(CallbackImpl(callbacks))
     }
 
-    override fun searchBoth(page: Int, query: String, modelCallbacksImpl: Client.ModelCallbacksImpl<ListModel>) {
+    override fun searchBoth(page: Int, query: String?, callbacks: Client.ClientCallbackImpl<ListModel>) {
         service.searchBoth(Constants.AUTH_PREFIX + Constants.TOKEN, page, query)
-            .enqueue(CallbackImpl(modelCallbacksImpl))
+            .enqueue(CallbackImpl(callbacks))
     }
 
     class CallbackImpl<T>(private val modelCallbacks: ModelCallbacks<T>) : Callback<T> {

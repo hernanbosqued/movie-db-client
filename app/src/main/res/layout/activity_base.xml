@@ -1,48 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:actionBarNavMode="list">
-
-    <SearchView
-        android:id="@+id/search_view"
-        android:theme="@style/SearchViewStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:queryHint="Búsqueda"
-        app:layout_constraintLeft_toRightOf="@id/checkbox_tv"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/checkbox_movies"
-        style="@style/CheckBoxStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="@string/movies"
-        app:layout_constraintBottom_toBottomOf="@id/search_view"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/search_view" />
-
-    <CheckBox
-        android:id="@+id/checkbox_tv"
-        style="@style/CheckBoxStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="@string/tv_shows"
-        app:layout_constraintBottom_toBottomOf="@id/search_view"
-        app:layout_constraintLeft_toRightOf="@id/checkbox_movies"
-        app:layout_constraintTop_toTopOf="@id/search_view" />
+    android:fitsSystemWindows="true">
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_view"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="105dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"/>
+
+</FrameLayout>
