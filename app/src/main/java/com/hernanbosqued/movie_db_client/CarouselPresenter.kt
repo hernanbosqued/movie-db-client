@@ -18,9 +18,7 @@ class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselMod
     private fun load(page: Int) {
         view()?.showProgress()
 
-        model?.let {
-            it.client.invoke(page, it.query, this)
-        }
+        model?.let { it.client.invoke(page, it.query, this) }
     }
 
     override fun load() {
@@ -57,6 +55,6 @@ class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselMod
             view()?.showEmpty()
         } else {
             view()?.hideEmpty()
-        }?:view()?.showEmpty()
+        } ?: view()?.showEmpty()
     }
 }

@@ -26,6 +26,7 @@ class ListPresenter(val view: ListContract.View) : BasePresenter<ListModel, List
     override fun addCarousels() {
 
         val list: MutableList<CarouselModel> = ArrayList()
+        list.add(CarouselModel(Client::searchMovies, "With video", "Depeche Mode video singles"))
         list.add(CarouselModel(Client::getMoviesPopular, "popular movies", null))
         list.add(CarouselModel(Client::getMoviesTopRated, "Top rated movies", null))
         list.add(CarouselModel(Client::getTVPopular, "Popular TV shows", null))

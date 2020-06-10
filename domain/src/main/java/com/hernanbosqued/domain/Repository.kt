@@ -1,15 +1,18 @@
 package com.hernanbosqued.domain
 
 import com.hernanbosqued.domain.model.ListModel
+import com.hernanbosqued.domain.model.VideoModel
 
 interface Repository {
-    fun getDetails(id: Int, callbacks: Client.ClientCallbackImpl<ListModel>)
-    fun getMoviesPopular(page: Int, callbacks: Client.ClientCallbackImpl<ListModel>)
-    fun getMoviesTopRated(page: Int, callbacks: Client.ClientCallbackImpl<ListModel>)
-    fun getTVPopular(page: Int, callbacks: Client.ClientCallbackImpl<ListModel>)
-    fun getTVTopRated(page: Int, callbacks: Client.ClientCallbackImpl<ListModel>)
+    fun getDetails(id: Int, callbacks: ModelCallbacks<ListModel>)
+    fun getMoviesPopular(page: Int, callbacks: ModelCallbacks<ListModel>)
+    fun getMoviesTopRated(page: Int, callbacks: ModelCallbacks<ListModel>)
+    fun getTVPopular(page: Int, callbacks: ModelCallbacks<ListModel>)
+    fun getTVTopRated(page: Int, callbacks: ModelCallbacks<ListModel>)
 
-    fun searchTVShows(page: Int, query: String?, callbacks: Client.ClientCallbackImpl<ListModel>)
-    fun searchMovies(page: Int, query: String?, callbacks: Client.ClientCallbackImpl<ListModel>)
-    fun searchBoth(page: Int, query: String?, callbacks: Client.ClientCallbackImpl<ListModel>)
+    fun searchTVShows(page: Int, query: String?, callbacks: ModelCallbacks<ListModel>)
+    fun searchMovies(page: Int, query: String?, callbacks: ModelCallbacks<ListModel>)
+    fun searchBoth(page: Int, query: String?, callbacks: ModelCallbacks<ListModel>)
+
+    fun getVideos(type: String, id: Int, callbacks: ModelCallbacks<VideoModel>)
 }

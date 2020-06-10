@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.hernanbosqued.domain.model.ResultModel
+import com.hernanbosqued.domain.model.VideoModel
+import com.hernanbosqued.repo.Constants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import kotlinx.android.synthetic.main.fragment_details.*
+import java.util.*
 
 class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.View {
     interface Callbacks
@@ -26,25 +31,17 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prepareYoutube()
+
         if (savedInstanceState == null) {
-            val id = activity?.intent?.getIntExtra("id", -1)?:-1
-            presenter.getDetails(id)
+            val model = activity?.intent?.getSerializableExtra("model") as ResultModel?
+            model?.let { presenter.setModel(it) }
         }
     }
 
     private fun prepareYoutube() {
         lifecycle.addObserver(youtube);
-
         youtube.getPlayerUiController().showFullscreenButton(true)
         youtube.enableAutomaticInitialization = true
-
-        youtube.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                super.onReady(youTubePlayer)
-                youTubePlayer.cueVideo("OvzJ1cm4dpY", 0f)
-                youTubePlayer.play()
-            }
-        })
     }
 
     override fun onResume() {
@@ -60,4 +57,41 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
     override val dummyCallbacks: Callbacks
         get() = object : Callbacks {
         }
+
+    override fun setTitle(name: String) {
+        title_textview.text = name
+    }
+
+    override fun setOverview(overview: String) {
+        overview_textview.text = overview
+    }
+
+    override fun setPoster(posterPath: String) {
+        val path = Constants.IMAGE_BASE_URL + posterPath
+        Utils.setImage(poster_imageview, null, path, false)
+    }
+
+    override fun setRanking(ranking: String) {
+        ranking_textview.text = ranking
+    }
+
+    override fun showMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun setVideo(data: VideoModel) {
+        val result = data.results?.first()
+
+        result?.let {
+            if( it.site.equals("youtube", ignoreCase = true) ){
+                youtube.getPlayerUiController().setVideoTitle(it.name)
+                youtube.getYouTubePlayerWhenReady(object: YouTubePlayerCallback{
+                    override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                        youTubePlayer.cueVideo(it.key,0f)
+                        youTubePlayer.play()
+                    }
+                })
+            }
+        }
+    }
 }

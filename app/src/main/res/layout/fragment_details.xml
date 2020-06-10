@@ -5,37 +5,37 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/title_textview"
         style="@style/subtitleStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="La banda de la yuta"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/poster"
+        app:layout_constraintRight_toLeftOf="@id/poster_imageview"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/ranking_textview"
         style="@style/subtitleStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="La banda de la yuta"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/poster"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintRight_toLeftOf="@id/poster_imageview"
+        app:layout_constraintTop_toBottomOf="@id/title_textview" />
 
     <TextView
-        android:id="@+id/ranking"
+        android:id="@+id/overview_textview"
         style="@style/subtitleStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="La banda de la yuta"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/poster"
-        app:layout_constraintTop_toBottomOf="@id/description" />
+        app:layout_constraintRight_toLeftOf="@+id/poster_imageview"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_textview" />
 
     <ImageView
-        android:id="@+id/poster"
+        android:id="@+id/poster_imageview"
         android:layout_width="200dp"
         android:layout_height="300dp"
         app:layout_constraintRight_toRightOf="parent"

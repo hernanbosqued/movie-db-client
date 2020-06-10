@@ -9,6 +9,10 @@ abstract class BasePresenter<M, V>() {
         bindView(view)
     }
 
+    constructor(view: V, model: M) : this(view) {
+        this.model = model
+    }
+
     var model: M? = null
 
     private var view: WeakReference<V>? = null

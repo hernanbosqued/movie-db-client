@@ -6,7 +6,6 @@ import java.io.Serializable
 class ResultModel:Serializable{
     @SerializedName(value = "id")
     val id: Int = -1
-
     @SerializedName(value = "original_title", alternate = ["original_name"])
     val name: String = ""
     @SerializedName("vote_average")
@@ -15,6 +14,8 @@ class ResultModel:Serializable{
     val backdropPath: String = ""
     @SerializedName("poster_path")
     val posterPath: String = ""
-
-
+    @SerializedName("overview")
+    val overview: String = ""
+    @SerializedName("video")
+    var hasVideo: Boolean = false
 }

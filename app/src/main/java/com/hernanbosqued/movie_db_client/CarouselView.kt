@@ -66,7 +66,7 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(rootView.context, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(rootView.context, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onLastItemReached() {

@@ -12,7 +12,7 @@ class ListActivity : BaseFragmentActivity(), ListFragment.Callbacks {
 
     override fun fromMainFragment(model: ResultModel) {
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("id", model.id)
+        intent.putExtra("model", model)
         startActivity(intent)
     }
 }
