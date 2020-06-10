@@ -2,6 +2,17 @@
 
 MovieDB client
 
+
+## Qué faltó ##
+
+* Unit tests
+
+* La app invierte dependencias manualmente, me faltó implementar dagger
+
+* Me hubiera gustado usar un visitor para elegir el tipo de Model
+
+* Todo lo demas creo que está 
+
 ## Requerimientos ##
 
 * Películas y/o Series categorizadas por Popular y Top Rated.
@@ -36,8 +47,8 @@ MovieDB client
 
 ## Entregables ##
 
-* Archivo APK.§
-§
+* Archivo APK.
+
 * Link de Github/Bitbucket/Gitlab/Otro.
 
 ### Sugerencia ###§
