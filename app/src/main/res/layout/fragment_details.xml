@@ -1,50 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/poster_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:alpha=".5"
+        app:layout_constraintBottom_toTopOf="@id/youtube"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/title_textview"
-        style="@style/subtitleStyle"
-        android:layout_width="0dp"
+        style="@style/superTitleStyle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="La banda de la yuta"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/poster_imageview"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/margin16"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/ranking_textview"
         style="@style/subtitleStyle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="La banda de la yuta"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/poster_imageview"
+        android:padding="@dimen/margin16"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_textview" />
+
 
     <TextView
         android:id="@+id/overview_textview"
         style="@style/subtitleStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="La banda de la yuta"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/poster_imageview"
-        app:layout_constraintTop_toBottomOf="@+id/ranking_textview" />
-
-    <ImageView
-        android:id="@+id/poster_imageview"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="@dimen/margin16"
+        android:scrollbars = "vertical"
+        android:ellipsize="end"
+        app:layout_constraintBottom_toTopOf="@id/youtube"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_textview"
+        tools:text="@tools:sample/lorem/random" />
 
     <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:id="@+id/youtube"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
+    <TextView
+        android:id="@+id/empty_view"
+        style="@style/superTitleStyle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_margin="@dimen/margin16"
+        android:text="@string/no_video"
+        android:shadowColor="@color/black"
+        android:elevation="@dimen/margin16"
+        android:shadowDx="20"
+        android:shadowDy="20"
+        android:shadowRadius="2"
+        android:background="@drawable/ic_place_holder"
+        app:layout_constraintBottom_toBottomOf="@id/youtube"
+        app:layout_constraintLeft_toLeftOf="@id/youtube"
+        app:layout_constraintRight_toRightOf="@id/youtube"
+        app:layout_constraintTop_toTopOf="@id/youtube" />
 </androidx.constraintlayout.widget.ConstraintLayout>

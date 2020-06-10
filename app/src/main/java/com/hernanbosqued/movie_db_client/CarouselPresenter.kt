@@ -2,6 +2,7 @@ package com.hernanbosqued.movie_db_client
 
 import com.hernanbosqued.domain.ClientCallbacks
 import com.hernanbosqued.domain.model.ListModel
+import com.hernanbosqued.domain.model.TYPE
 
 class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselModel, CarouselContract.View>(view), CarouselContract.Presenter, ClientCallbacks<ListModel> {
 

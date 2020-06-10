@@ -41,7 +41,6 @@
     <TextView
         android:id="@+id/ranking"
         style="@style/subtitleStyle"
-        tools:text="ATLANTA"
         android:layout_margin="@dimen/margin8"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -9,9 +9,6 @@ import retrofit2.http.Query
 
 interface APIService {
 
-    @GET("tv/{tv_id}")
-    fun getDetails(@Path("tv_id") id: Int, @Query("api_key") apiKey: String): Call<ListModel>
-
     @GET("movie/popular")
     fun getMoviesPopular(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<ListModel>
 

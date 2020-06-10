@@ -18,12 +18,13 @@ class DetailPresenter(view: DetailContract.View) : BasePresenter<ResultModel, De
 
     private fun fillViews() {
         model?.let {
-            view()?.setTitle(it.name)
+            val type = TYPE.resolve(it)
+            view()?.setTitle(type.geLabel(it))
             view()?.setOverview(it.overview)
-            view()?.setPoster(it.posterPath)
+            view()?.setPoster(it.posterPath!!)
             view()?.setRanking(it.voteAverage)
             if (it.hasVideo) {
-                client.getVideos(TYPE.MOVIE.value, it.id, this )
+                client.getVideos(TYPE.resolve(it).value, it.id, this)
             }
         }
     }

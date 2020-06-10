@@ -1,6 +1,11 @@
 package com.hernanbosqued.movie_db_client
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +14,8 @@ import com.hernanbosqued.domain.model.ResultModel
 import com.hernanbosqued.domain.model.VideoModel
 import com.hernanbosqued.repo.Constants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import kotlinx.android.synthetic.main.fragment_details.*
-import java.util.*
 
 class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.View {
     interface Callbacks
@@ -30,17 +33,18 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prepareYoutube()
 
         if (savedInstanceState == null) {
             val model = activity?.intent?.getSerializableExtra("model") as ResultModel?
+
             model?.let { presenter.setModel(it) }
+            youtube.visibility = View.INVISIBLE
+            empty_view.visibility = View.VISIBLE
         }
     }
 
     private fun prepareYoutube() {
         lifecycle.addObserver(youtube);
-        youtube.getPlayerUiController().showFullscreenButton(true)
         youtube.enableAutomaticInitialization = true
     }
 
@@ -66,13 +70,16 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         overview_textview.text = overview
     }
 
-    override fun setPoster(posterPath: String) {
-        val path = Constants.IMAGE_BASE_URL + posterPath
-        Utils.setImage(poster_imageview, null, path, false)
+    override fun setPoster(path: String) {
+        val absolutePath = Constants.IMAGE_BASE_URL + path
+        Utils.setImage(poster_imageview, null, absolutePath, showAnimation = false, roundedCorners = false)
     }
 
     override fun setRanking(ranking: String) {
-        ranking_textview.text = ranking
+        val span = SpannableStringBuilder(getString(R.string.ranking))
+        span.setSpan(ForegroundColorSpan(resources.getColor(R.color.colorAccent)), 0, span.length - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        span.setSpan(StyleSpan(Typeface.BOLD), 0, span.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        this.ranking_textview.text = span.append(" $ranking")
     }
 
     override fun showMessage(message: String) {
@@ -83,11 +90,14 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         val result = data.results?.first()
 
         result?.let {
-            if( it.site.equals("youtube", ignoreCase = true) ){
-                youtube.getPlayerUiController().setVideoTitle(it.name)
-                youtube.getYouTubePlayerWhenReady(object: YouTubePlayerCallback{
+            if (it.site.equals("youtube", ignoreCase = true)) {
+                prepareYoutube()
+
+                youtube.visibility = View.VISIBLE
+                empty_view.visibility = View.INVISIBLE
+                youtube.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                     override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                        youTubePlayer.cueVideo(it.key,0f)
+                        youTubePlayer.cueVideo(it.key, 0f)
                         youTubePlayer.play()
                     }
                 })

@@ -7,8 +7,4 @@ class DetailActivity : BaseFragmentActivity(), DetailFragment.Callbacks {
     override fun getFragment(): Fragment {
         return DetailFragment()
     }
-
-    override fun onResume() {
-        super.onResume()
-    }
 }

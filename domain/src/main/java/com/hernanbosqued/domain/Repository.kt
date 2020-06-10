@@ -4,7 +4,6 @@ import com.hernanbosqued.domain.model.ListModel
 import com.hernanbosqued.domain.model.VideoModel
 
 interface Repository {
-    fun getDetails(id: Int, callbacks: ModelCallbacks<ListModel>)
     fun getMoviesPopular(page: Int, callbacks: ModelCallbacks<ListModel>)
     fun getMoviesTopRated(page: Int, callbacks: ModelCallbacks<ListModel>)
     fun getTVPopular(page: Int, callbacks: ModelCallbacks<ListModel>)

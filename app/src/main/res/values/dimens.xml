@@ -2,7 +2,9 @@
 <resources>
     <dimen name="margin5">5dp</dimen>
     <dimen name="margin8">8dp</dimen>
-    <dimen name="font_size">14sp</dimen>
+    <dimen name="font_size_14">14sp</dimen>
+    <dimen name="font_size_18">18sp</dimen>
+    <dimen name="font_size_24">24sp</dimen>
     <dimen name="rounded_size">10dp</dimen>
     <dimen name="spacing_size">20dp</dimen>
     <dimen name="name">20dp</dimen>

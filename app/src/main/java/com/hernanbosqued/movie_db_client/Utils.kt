@@ -2,6 +2,7 @@ package com.hernanbosqued.movie_db_client
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -17,25 +18,32 @@ import kotlinx.android.synthetic.main.layout_item.view.*
 
 internal object Utils {
 
-    fun setImage(view: ImageView, progress: View?, path: String, showAnimation: Boolean) {
+    @SuppressLint("CheckResult")
+    fun setImage(view: ImageView, progress: View?, path: String, showAnimation: Boolean, roundedCorners: Boolean) {
 
-        progress?.let{ it.visibility = View.VISIBLE }
+        progress?.let { it.visibility = View.VISIBLE }
 
-        Glide
+        val builder = Glide
             .with(view.context as Activity)
             .load(path)
-            .transform(CenterCrop(), RoundedCorners(view.resources.getDimension(R.dimen.rounded_size).toInt()))
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                     return false
                 }
 
                 override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                    progress?.let{ it.visibility = View.INVISIBLE }
+                    progress?.let { it.visibility = View.INVISIBLE }
                     return false
                 }
             })
-            .into(view)
+
+        if (roundedCorners) {
+            builder.transform(CenterCrop(), RoundedCorners(view.resources.getDimension(R.dimen.rounded_size).toInt()))
+        } else {
+            builder.transform(CenterCrop())
+        }
+
+        builder.into(view)
 
         if (showAnimation) {
             setAnimation(view)
