@@ -17,7 +17,7 @@ class ListPresenter(val view: ListContract.View) : BasePresenter<ListModel, List
             } else if (includeTVShows) {
                 CarouselModel(Client::searchTVShows, "TV shows for '$query'", query)
             } else {
-                CarouselModel(Client::searchMovies, "Movies for '$query'", query)
+                CarouselModel(Client::searchMovies, "Movies afor '$query'", query)
             }
 
         view()?.addCarousel(carousel)

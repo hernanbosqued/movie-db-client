@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="ranking" translatable="false">Ranking:</string>
     <string name="app_name" tools:ignore="MissingTranslation">Movies DB Client</string>
     <string name="search">Search</string>
     <string name="from">from</string>
@@ -6,5 +7,4 @@
     <string name="no_video">No video provided</string>
     <string name="movies">movies</string>
     <string name="tv_shows">tv shows</string>
-    <string name="ranking" translatable="false">Ranking:</string>
 </resources>
