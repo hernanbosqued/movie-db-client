@@ -2,7 +2,6 @@ package com.hernanbosqued.domain
 
 import com.hernanbosqued.domain.model.ErrorModel
 import com.hernanbosqued.domain.model.ListModel
-import com.hernanbosqued.domain.model.VideoModel
 
 object Client {
 
