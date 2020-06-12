@@ -1,4 +1,4 @@
 include ':domain'
 include ':repo'
-include ':app'
+include ':ui'
 rootProject.name = "movie db client"
