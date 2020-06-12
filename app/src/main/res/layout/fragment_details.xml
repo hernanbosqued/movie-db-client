@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/poster_imageview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:alpha=".5"
         app:layout_constraintBottom_toTopOf="@id/youtube"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,6 +64,8 @@
         android:layout_margin="@dimen/margin16"
         android:gravity="center"
         android:text="@string/no_video"
+        android:backgroundTint="@color/placeholder_dark"
+        android:background="@drawable/placeholder"
         app:layout_constraintBottom_toBottomOf="@id/youtube"
         app:layout_constraintLeft_toLeftOf="@id/youtube"
         app:layout_constraintRight_toRightOf="@id/youtube"

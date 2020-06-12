@@ -6,6 +6,7 @@ import com.hernanbosqued.domain.model.ResultModel
 import com.hernanbosqued.domain.model.TYPE
 import com.hernanbosqued.domain.model.VideoModel
 import com.hernanbosqued.repo.RepositoryImpl
+import com.hernanbosqued.repo.ifNull
 
 class DetailPresenter(view: DetailContract.View) : BasePresenter<ResultModel, DetailContract.View>(view), DetailContract.Presenter, ModelCallbacks<VideoModel> {
 
@@ -21,7 +22,7 @@ class DetailPresenter(view: DetailContract.View) : BasePresenter<ResultModel, De
             val type = TYPE.resolve(it)
             view()?.setTitle(type.geLabel(it))
             view()?.setOverview(it.overview)
-            view()?.setPoster(it.posterPath!!)
+            it.posterPath?.let { path -> view()?.setPoster(path) }
             view()?.setRanking(it.voteAverage)
             if (it.hasVideo) {
                 client.getVideos(TYPE.resolve(it).value, it.id, this)
