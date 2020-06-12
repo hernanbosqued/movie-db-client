@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/title_textview"
-        style="@style/superTitleStyle"
+        style="@style/Text.Detail.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/ranking_textview"
-        style="@style/subtitleStyle"
+        style="@style/Text.Item.Ranking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin16"
@@ -32,17 +32,22 @@
         app:layout_constraintTop_toBottomOf="@id/title_textview" />
 
 
-    <TextView
-        android:id="@+id/overview_textview"
-        style="@style/subtitleStyle"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="@dimen/margin16"
-        android:scrollbars = "vertical"
-        android:ellipsize="end"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@id/youtube"
-        app:layout_constraintTop_toBottomOf="@+id/ranking_textview"
-        tools:text="@tools:sample/lorem/random" />
+        app:layout_constraintTop_toBottomOf="@+id/ranking_textview">
+
+        <TextView
+            android:id="@+id/overview_textview"
+            style="@style/Text.Item.Ranking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin16"
+            tools:text="@tools:sample/lorem/random" />
+    </ScrollView>
+
 
     <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:id="@+id/youtube"
@@ -53,18 +58,12 @@
 
     <TextView
         android:id="@+id/empty_view"
-        style="@style/superTitleStyle"
+        style="@style/Text.Detail.Empty"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center"
         android:layout_margin="@dimen/margin16"
+        android:gravity="center"
         android:text="@string/no_video"
-        android:shadowColor="@color/black"
-        android:elevation="@dimen/margin16"
-        android:shadowDx="20"
-        android:shadowDy="20"
-        android:shadowRadius="2"
-        android:background="@drawable/ic_place_holder"
         app:layout_constraintBottom_toBottomOf="@id/youtube"
         app:layout_constraintLeft_toLeftOf="@id/youtube"
         app:layout_constraintRight_toRightOf="@id/youtube"

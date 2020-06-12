@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.manager.LifecycleListener
 import com.hernanbosqued.domain.model.ListModel
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 import kotlinx.android.synthetic.main.layout_carrousel.view.progress
@@ -32,9 +31,9 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
 
     private fun prepareRecyclerView() {
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-        container.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
-        container.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        container.adapter = adapter
+        carousel.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
+        carousel.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        carousel.adapter = adapter
     }
 
     override fun onAttachedToWindow() {

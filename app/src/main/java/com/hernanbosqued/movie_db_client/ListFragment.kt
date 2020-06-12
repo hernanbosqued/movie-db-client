@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import com.hernanbosqued.domain.model.ResultModel
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
     private val presenter: ListPresenter = ListPresenter(this)
@@ -23,7 +23,7 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

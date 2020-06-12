@@ -1,28 +1,46 @@
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/gray</item>
+
+        <item name="android:buttonTint">?android:attr/textColor</item>
+        <item name="android:shadowColor">@color/black</item>
+
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorPrimaryDisableOnly">?android:attr/textColor</item>
+        <item name="android:textColorSecondary">?android:attr/textColor</item>
+        <item name="android:textColorHint">?android:attr/textColor</item>
+
+        <item name="queryHint">@string/search</item>
+
+        <item name="transition_time">500</item>
+        <item name="transition_interpolator">@android:anim/accelerate_interpolator</item>
+
+        <item name="autoCompleteTextViewStyle">@style/Widget.AppCompat.AutoCompleteTextView.My</item>
+        <item name="searchViewStyle">@style/Widget.AppCompat.SearchView.My</item>
+        <item name="android:checkboxStyle">@style/Widget.AppCompat.CompoundButton.CheckBox.My</item>
+        <item name="android:textViewStyle">@style/Widget.AppCompat.TextView.My</item>
     </style>
 
-    <style name="SearchViewStyle">
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
+    <style name="Widget.AppCompat.SearchView.My" parent="Widget.AppCompat.SearchView">
         <item name="android:background">@color/colorPrimary</item>
-        <item name="android:textColorHint">@color/white_a0</item>
-        <item name="android:textColor">@color/white</item>
-
     </style>
 
-    <style name="CheckBoxStyle">
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:buttonTint">@color/white</item>
+    <style name="Widget.AppCompat.AutoCompleteTextView.My" parent="Widget.AppCompat.AutoCompleteTextView">
         <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
 
+    <style name="Widget.AppCompat.CompoundButton.CheckBox.My" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="Widget.AppCompat.TextView.My" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/transparent</item>
     </style>
 
     <style name="TransparentDialog" parent="Theme.AppCompat.Light.Dialog">
@@ -30,34 +48,49 @@
         <item name="android:windowBackground">@color/transparent</item>
     </style>
 
-    <style name="subtitleStyle">
-        <item name="android:textSize">@dimen/font_size_18</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:shadowColor">@color/black</item>
-        <item name="android:shadowDx">4</item>
-        <item name="android:shadowDy">4</item>
-        <item name="android:shadowRadius">5</item>
+    <style name="Text.Item" parent="Text"/>
+    <style name="Text.Detail" parent="Text" />
+    <style name="Text.Carousel" parent="Text.Item" />
+    <style name="Text.Carousel.Empty" parent="Text.Title.Accent" />
+    <style name="Text.Empty" parent="Text.Title.Accent" />
+    <style name="Text.Detail.Empty" parent="Text.Empty" />
+
+    <style name="Text.Title.Accent" parent="Text.Title">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+    <style name="Text.Detail.Title" parent="Text.Title">
+        <item name="android:shadowDy">15</item>
+        <item name="android:shadowDx">15</item>
+
     </style>
 
-    <style name="titleStyle">
+    <style name="Text">
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowDx">4</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="Text.Title">
+        <item name="android:textSize">@dimen/font_size_26</item>
+        <item name="android:textStyle">bold</item>
+        <item name="elevation">15dp</item>
+
+    </style>
+
+    <style name="Text.Item.Title">
         <item name="android:textSize">@dimen/font_size_14</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="superTitleStyle">
-        <item name="android:textSize">@dimen/font_size_24</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:shadowColor">@color/black</item>
-        <item name="android:shadowDx">20</item>
-        <item name="android:shadowDy">20</item>
-        <item name="android:shadowRadius">5</item>
+    <style name="Text.Item.Ranking">
+        <item name="android:textSize">@dimen/font_size_18</item>
     </style>
 
-    <style name="nameStyle">
-        <item name="android:textSize">@dimen/name</item>
-        <item name="android:textColor">@color/white</item>
+    <style name="Text.Carousel.Title">
+        <item name="android:textSize">@dimen/font_size_22</item>
         <item name="android:textStyle">bold</item>
     </style>
 </resources>

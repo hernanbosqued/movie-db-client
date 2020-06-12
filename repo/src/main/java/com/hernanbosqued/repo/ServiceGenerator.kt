@@ -2,6 +2,7 @@ package com.hernanbosqued.repo
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import okhttp3.CacheControl
@@ -17,10 +18,10 @@ infix fun <T> T?.ifNull(block: () -> Unit) {
 }
 
 object ServiceGenerator {
-    public const val HEADER_CACHE_CONTROL = "Cache-Control"
-    public const val HEADER_PRAGMA = "Pragma"
-    public var cache: Cache? = null
-    public val retrofit: Retrofit
+    private const val HEADER_CACHE_CONTROL = "Cache-Control"
+    private const val HEADER_PRAGMA = "Pragma"
+    private var cache: Cache? = null
+    private var retrofit: Retrofit
 
     init {
         val interceptor = HttpLoggingInterceptor()
@@ -46,7 +47,7 @@ object ServiceGenerator {
             .build()
     }
 
-    public fun provideCacheInterceptor(): Interceptor {
+    private fun provideCacheInterceptor(): Interceptor {
         return Interceptor { chain ->
             val response = chain.proceed(chain.request())
 
@@ -68,7 +69,7 @@ object ServiceGenerator {
         }
     }
 
-    public fun provideCache(): Cache {
+    private fun provideCache(): Cache {
         cache.ifNull {
             val file = File(RepoContext.context.filesDir, "http_cache")
             this.cache = Cache(file, 100 * 1024 * 1024)
@@ -76,7 +77,7 @@ object ServiceGenerator {
         return this.cache!!
     }
 
-    public fun provideOfflineCacheInterceptor(): Interceptor {
+    private fun provideOfflineCacheInterceptor(): Interceptor {
         return Interceptor { chain: Interceptor.Chain ->
 
             var request: Request = chain.request()
@@ -98,10 +99,15 @@ object ServiceGenerator {
         }
     }
 
-    public fun isConnected(): Boolean {
-        val systemService = RepoContext.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = systemService.activeNetworkInfo
-        return activeNetwork != null && activeNetwork.isConnectedOrConnecting
+    private fun isConnected(): Boolean {
+        val connectivityManager = RepoContext.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager.allNetworks.forEach { network ->
+            val capabilities = connectivityManager.getNetworkCapabilities(network)
+            if (capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true) {
+                return true
+            }
+        }
+        return false
     }
 
     fun <T> createService(serviceClass: Class<T>): T {

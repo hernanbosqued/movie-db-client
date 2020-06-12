@@ -9,17 +9,15 @@
 
     <TextView
         android:id="@+id/carousel_title"
-        style="@style/nameStyle"
+        style="@style/Text.Carousel.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin16"
-        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:text="ATLANTA" />
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/container"
+        android:id="@+id/carousel"
         android:layout_width="match_parent"
         android:layout_height="@dimen/recycler_height"
         android:layout_marginTop="@dimen/margin16"
@@ -30,14 +28,14 @@
 
     <TextView
         android:id="@+id/empty_view"
-        style="@style/titleStyle"
+        style="@style/Text.Carousel.Empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_results_found"
-        app:layout_constraintBottom_toBottomOf="@id/container"
-        app:layout_constraintLeft_toLeftOf="@id/container"
-        app:layout_constraintRight_toRightOf="@id/container"
-        app:layout_constraintTop_toTopOf="@id/container"
+        app:layout_constraintBottom_toBottomOf="@id/carousel"
+        app:layout_constraintLeft_toLeftOf="@id/carousel"
+        app:layout_constraintRight_toRightOf="@id/carousel"
+        app:layout_constraintTop_toTopOf="@id/carousel"
         android:visibility="gone"/>
 
     <ProgressBar

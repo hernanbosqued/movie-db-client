@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 
 class DetailActivity : BaseFragmentActivity(), DetailFragment.Callbacks {
 
-    override fun getFragment(): Fragment {
+     fun getFragment(): Fragment {
         return DetailFragment()
     }
 }

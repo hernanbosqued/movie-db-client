@@ -7,19 +7,16 @@
     android:background="@color/gray"
     tools:context=".ListActivity">
 
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:queryHint="Búsqueda"
-        android:theme="@style/SearchViewStyle"
         app:layout_constraintLeft_toRightOf="@id/checkbox_tv"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
         android:id="@+id/checkbox_movies"
-        style="@style/CheckBoxStyle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:text="@string/movies"
@@ -29,7 +26,6 @@
 
     <CheckBox
         android:id="@+id/checkbox_tv"
-        style="@style/CheckBoxStyle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:text="@string/tv_shows"
@@ -42,7 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_view">
+        app:layout_constraintTop_toBottomOf="@id/search_view"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="50dp">
 
         <LinearLayout
             android:id="@+id/container"
@@ -54,7 +52,7 @@
 
     <TextView
         android:id="@+id/empty_view"
-        style="@style/titleStyle"
+        style="@style/Text.Empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_results_found"

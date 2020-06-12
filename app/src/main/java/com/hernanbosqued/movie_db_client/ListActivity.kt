@@ -1,18 +1,26 @@
 package com.hernanbosqued.movie_db_client
 
-import android.content.Intent
-import androidx.fragment.app.Fragment
+import android.os.Bundle
 import com.hernanbosqued.domain.model.ResultModel
 
 class ListActivity : BaseFragmentActivity(), ListFragment.Callbacks {
 
-    override fun getFragment(): Fragment {
-        return ListFragment()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            return
+        }
+
+        addFragment(ListFragment(), false)
     }
 
     override fun fromMainFragment(model: ResultModel) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("model", model)
-        startActivity(intent)
+        val fragment = DetailFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable("model", model)
+            }
+        }
+        addFragment(fragment, true)
     }
 }

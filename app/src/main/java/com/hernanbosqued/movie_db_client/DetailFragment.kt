@@ -34,13 +34,11 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState == null) {
-            val model = activity?.intent?.getSerializableExtra("model") as ResultModel?
+        val model = arguments?.getSerializable("model") as ResultModel?
+        model?.let { presenter.setModel(it) }
 
-            model?.let { presenter.setModel(it) }
-            youtube.visibility = View.INVISIBLE
-            empty_view.visibility = View.VISIBLE
-        }
+        youtube.visibility = View.INVISIBLE
+        empty_view.visibility = View.VISIBLE
     }
 
     private fun prepareYoutube() {
@@ -56,6 +54,10 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
     override fun onPause() {
         super.onPause()
         presenter.unbindView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     override val dummyCallbacks: Callbacks
