@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hernanbosqued.repo">
+    package="com.hernanbosqued.movie_db_client.repo">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application>
@@ -7,6 +7,6 @@
             android:exported="false"
             android:enabled="true"
             android:authorities="{$applicationId}}.ContextContentProvider"
-            android:name=".ContextContentProvider"/>
+            android:name="com.hernanbosqued.mobile-db-client.repo.ContextContentProvider"/>
     </application>
 </manifest>
