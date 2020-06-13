@@ -3,6 +3,7 @@
     <string name="search"><font size="15">Buscar</font></string>
     <string name="no_results_found">No se encontraron resultados</string>
     <string name="no_video">No hay video disponible</string>
+    <string name="no_image">No hay imagen disponible</string>
     <string name="movies">Películas</string>
     <string name="tv_shows">Series</string>
 </resources>

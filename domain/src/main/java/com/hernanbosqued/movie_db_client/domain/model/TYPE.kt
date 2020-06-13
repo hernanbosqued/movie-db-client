@@ -26,7 +26,6 @@ enum class TYPE(var value: String) {
 
     companion object {
         fun resolve(model: ResultModel): TYPE = when {
-            model.posterPath == null -> PERSON
             model.name != null -> TV_SHOW
             model.title != null -> MOVIE
             else -> ERROR

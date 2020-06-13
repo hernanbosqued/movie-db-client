@@ -11,7 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RepositoryImpl(context : Context) : Repository {
-    private var service: APIService = ServiceGenerator.createService(context, APIService::class.java)
+    private var service: APIService = ServiceGenerator.createService(context.applicationContext, APIService::class.java)
 
     override fun getMoviesPopular(page: Int, callbacks: ModelCallbacks<ListModel>) {
         service.getMoviesPopular(page, Constants.API_KEY).enqueue(CallbackImpl(callbacks))

@@ -12,11 +12,15 @@ class ItemViewHolder(view: View, private val listener: ItemListener) : BaseViewH
 
         itemView.title.text = model.type.geLabel(model)
         itemView.ranking.text = model.voteAverage
-
-        val imagePath = Constants.IMAGE_BASE_URL + model.posterPath
-
-        itemView.progress.visibility = View.VISIBLE
-        Utils.setImage(itemView.poster, itemView.progress, imagePath, showAnimation = true, roundedCorners = true)
         itemView.setOnClickListener { listener.onItemClicked(model) }
+
+        model.posterPath?.let {
+            val absolutePath = Constants.IMAGE_BASE_URL + it
+            itemView.progress.visibility = View.VISIBLE
+            Utils.setImage(itemView.poster, itemView.progress, itemView.no_image, absolutePath, showAnimation = true, roundedCorners = true)
+        }?:run {
+            itemView.no_image.visibility = View.VISIBLE
+        }
+
     }
 }

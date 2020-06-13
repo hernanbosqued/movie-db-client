@@ -52,4 +52,16 @@
         app:layout_constraintRight_toRightOf="@id/poster"
         app:layout_constraintTop_toTopOf="@id/poster" />
 
+    <TextView
+        android:id="@+id/no_image"
+        style="@style/Text.Item.Empty"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_image"
+        app:layout_constraintBottom_toBottomOf="@id/poster"
+        app:layout_constraintLeft_toLeftOf="@id/poster"
+        app:layout_constraintRight_toRightOf="@id/poster"
+        app:layout_constraintTop_toTopOf="@id/poster" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

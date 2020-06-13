@@ -18,7 +18,7 @@ import com.bumptech.glide.request.target.Target
 internal object Utils {
 
     @SuppressLint("CheckResult")
-    fun setImage(view: ImageView, progress: View?, path: String, showAnimation: Boolean, roundedCorners: Boolean) {
+    fun setImage(view: ImageView, progress: View?, noProvided:View?, path: String, showAnimation: Boolean, roundedCorners: Boolean) {
 
         progress?.let { it.visibility = View.VISIBLE }
 
@@ -27,6 +27,8 @@ internal object Utils {
             .load(path)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
+                    progress?.let { it.visibility = View.INVISIBLE }
+                    noProvided?.let{ it.visibility = View.INVISIBLE }
                     return false
                 }
 

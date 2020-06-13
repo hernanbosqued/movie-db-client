@@ -4,6 +4,7 @@
     <string name="search"><font size="15">Search</font></string>
     <string name="no_results_found">No results found</string>
     <string name="no_video">No video provided</string>
+    <string name="no_image">No image provided</string>
     <string name="movies">movies</string>
     <string name="tv_shows">tv shows</string>
 

@@ -50,7 +50,7 @@
     <style name="Text.Empty" parent="Text.Title.Accent" />
     <style name="Text.Detail.Empty" parent="Text.Empty">
         <item name="android:backgroundTint">@color/placeholder_dark</item>
-    </style>s
+    </style>
 
     <style name="Text.Title.Accent" parent="Text.Title">
         <item name="android:textColor">@color/colorAccent</item>
@@ -74,6 +74,8 @@
         <item name="elevation">15dp</item>
 
     </style>
+
+    <style name="Text.Item.Empty" parent="Text.Item.Title"/>
 
     <style name="Text.Item.Title">
         <item name="android:textSize">@dimen/font_size_14</item>

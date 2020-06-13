@@ -29,7 +29,7 @@ object ServiceGenerator {
         val dispatcher = Dispatcher()
         dispatcher.maxRequests = 10
 
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        interceptor.level = HttpLoggingInterceptor.Level.BASIC
         val gson = GsonBuilder().setLenient().create()
 
         val okHttpClient = OkHttpClient.Builder()

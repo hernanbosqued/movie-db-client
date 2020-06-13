@@ -70,9 +70,11 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         overview_text.text = overview
     }
 
-    override fun setPoster(posterPath: String) {
-        val absolutePath = Constants.IMAGE_BASE_URL + posterPath
-        Utils.setImage(poster_image, null, absolutePath, showAnimation = false, roundedCorners = false)
+    override fun setPoster(posterPath: String?){
+        posterPath?.let{
+            val absolutePath = Constants.IMAGE_BASE_URL + posterPath
+            Utils.setImage(poster_image, null, null, absolutePath, showAnimation = false, roundedCorners = false)
+        }
     }
 
     override fun setRanking(ranking: String) {
