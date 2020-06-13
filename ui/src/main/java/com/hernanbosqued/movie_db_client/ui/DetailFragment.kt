@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.hernanbosqued.movie_db_client.domain.model.ResultModel
 import com.hernanbosqued.movie_db_client.domain.model.VideoModel
 import com.hernanbosqued.movie_db_client.repo.Constants
+import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import kotlinx.android.synthetic.main.fragment_details.*
@@ -24,7 +25,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = DetailPresenter(this)
+        presenter = DetailPresenter(this, RepositoryImpl(context!!))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

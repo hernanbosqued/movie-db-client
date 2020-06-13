@@ -1,21 +1,9 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragmentActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
-    }
-
-    //abstract fun getFragment(): Fragment
-
-//    private fun findFragment(): Fragment {
-//        return supportFragmentManager.findFragmentByTag(TAG) ?: getFragment()
-//    }
 
     fun addFragment(fragment: Fragment, addToBackStack: Boolean) {
         val ft = supportFragmentManager.beginTransaction()
@@ -23,10 +11,10 @@ abstract class BaseFragmentActivity : AppCompatActivity() {
         if (addToBackStack) {
             val last = supportFragmentManager.fragments.last()
             ft.hide(last)
-            ft.add(R.id.fragmentContainer, fragment)
+            ft.add(android.R.id.content, fragment)
             ft.addToBackStack(null)
         } else {
-            ft.add(R.id.fragmentContainer, fragment)
+            ft.add(android.R.id.content, fragment)
         }
 
         ft.commit()

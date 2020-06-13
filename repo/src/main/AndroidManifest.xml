@@ -2,11 +2,5 @@
     package="com.hernanbosqued.movie_db_client.repo">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <application>
-        <provider
-            android:exported="false"
-            android:enabled="true"
-            android:authorities="{$applicationId}}.ContextContentProvider"
-            android:name=".ContextContentProvider"/>
-    </application>
+    <application/>
 </manifest>

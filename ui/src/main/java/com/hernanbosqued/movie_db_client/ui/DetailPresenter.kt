@@ -1,15 +1,16 @@
 package com.hernanbosqued.movie_db_client.ui
 
 import com.hernanbosqued.movie_db_client.domain.ModelCallbacks
+import com.hernanbosqued.movie_db_client.domain.Repository
 import com.hernanbosqued.movie_db_client.domain.model.ErrorModel
 import com.hernanbosqued.movie_db_client.domain.model.ResultModel
 import com.hernanbosqued.movie_db_client.domain.model.TYPE
 import com.hernanbosqued.movie_db_client.domain.model.VideoModel
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 
-class DetailPresenter(view: DetailContract.View) : BasePresenter<ResultModel, DetailContract.View>(view), DetailContract.Presenter, ModelCallbacks<VideoModel> {
+class DetailPresenter(view: DetailContract.View, repository: Repository) : BasePresenter<ResultModel, DetailContract.View>(view), DetailContract.Presenter, ModelCallbacks<VideoModel> {
 
-    private var client = RepositoryImpl
+    private var client = repository
 
     override fun setModel(resultModel: ResultModel) {
         this.model = resultModel

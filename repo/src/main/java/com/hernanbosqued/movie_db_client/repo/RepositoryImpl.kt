@@ -1,5 +1,6 @@
 package com.hernanbosqued.movie_db_client.repo
 
+import android.content.Context
 import com.hernanbosqued.movie_db_client.domain.ModelCallbacks
 import com.hernanbosqued.movie_db_client.domain.Repository
 import com.hernanbosqued.movie_db_client.domain.model.ErrorModel
@@ -9,8 +10,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-object RepositoryImpl : Repository {
-    private val service: APIService = ServiceGenerator.createService(APIService::class.java)
+class RepositoryImpl(context : Context) : Repository {
+    private var service: APIService = ServiceGenerator.createService(context, APIService::class.java)
 
     override fun getMoviesPopular(page: Int, callbacks: ModelCallbacks<ListModel>) {
         service.getMoviesPopular(page, Constants.API_KEY).enqueue(CallbackImpl(callbacks))

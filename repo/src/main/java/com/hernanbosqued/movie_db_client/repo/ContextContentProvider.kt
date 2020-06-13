@@ -2,13 +2,13 @@ package com.hernanbosqued.movie_db_client.repo
 
 import android.content.ContentProvider
 import android.content.ContentValues
+import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 
 class ContextContentProvider : ContentProvider() {
 
     override fun onCreate(): Boolean {
-        RepoContext.load(context!!)
         return false
     }
 

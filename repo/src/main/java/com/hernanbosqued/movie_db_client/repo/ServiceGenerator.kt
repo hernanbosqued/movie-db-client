@@ -21,9 +21,9 @@ object ServiceGenerator {
     private const val HEADER_CACHE_CONTROL = "Cache-Control"
     private const val HEADER_PRAGMA = "Pragma"
     private var cache: Cache? = null
-    private var retrofit: Retrofit
+    private lateinit var retrofit: Retrofit
 
-    init {
+    fun init(context: Context) {
         val interceptor = HttpLoggingInterceptor()
 
         val dispatcher = Dispatcher()
@@ -34,9 +34,9 @@ object ServiceGenerator {
 
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            .addInterceptor(provideOfflineCacheInterceptor())
-            .addNetworkInterceptor(provideCacheInterceptor())
-            .cache(provideCache())
+            .addInterceptor(provideOfflineCacheInterceptor(context))
+            .addNetworkInterceptor(provideCacheInterceptor(context))
+            .cache(provideCache(context))
             .dispatcher(dispatcher)
             .build()
 
@@ -47,11 +47,11 @@ object ServiceGenerator {
             .build()
     }
 
-    private fun provideCacheInterceptor(): Interceptor {
+    private fun provideCacheInterceptor(context: Context): Interceptor {
         return Interceptor { chain ->
             val response = chain.proceed(chain.request())
 
-            val cacheControl: CacheControl = if (isConnected()) {
+            val cacheControl: CacheControl = if (isConnected(context)) {
                 CacheControl.Builder()
                     .maxAge(60, TimeUnit.SECONDS)
                     .build()
@@ -69,20 +69,20 @@ object ServiceGenerator {
         }
     }
 
-    private fun provideCache(): Cache {
+    private fun provideCache(context: Context): Cache {
         cache.ifNull {
-            val file = File(RepoContext.context.filesDir, "http_cache")
+            val file = File(context.filesDir, "http_cache")
             this.cache = Cache(file, 100 * 1024 * 1024)
         }
         return this.cache!!
     }
 
-    private fun provideOfflineCacheInterceptor(): Interceptor {
+    private fun provideOfflineCacheInterceptor(context: Context): Interceptor {
         return Interceptor { chain: Interceptor.Chain ->
 
             var request: Request = chain.request()
 
-            if (!isConnected()) {
+            if (!isConnected(context)) {
                 val cacheControl = CacheControl
                     .Builder()
                     .maxStale(7, TimeUnit.DAYS)
@@ -99,8 +99,8 @@ object ServiceGenerator {
         }
     }
 
-    private fun isConnected(): Boolean {
-        val connectivityManager = RepoContext.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    private fun isConnected(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         connectivityManager.allNetworks.forEach { network ->
             val capabilities = connectivityManager.getNetworkCapabilities(network)
             if (capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true) {
@@ -110,7 +110,8 @@ object ServiceGenerator {
         return false
     }
 
-    fun <T> createService(serviceClass: Class<T>): T {
+    fun <T> createService(context: Context, serviceClass: Class<T>): T {
+        init(context)
         return retrofit.create(serviceClass)
     }
 

@@ -1,13 +1,14 @@
 package com.hernanbosqued.movie_db_client.ui
 
 import com.hernanbosqued.movie_db_client.domain.Client
+import com.hernanbosqued.movie_db_client.domain.Repository
 import com.hernanbosqued.movie_db_client.domain.model.ListModel
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 
-class ListPresenter(val view: ListContract.View) : BasePresenter<ListModel, ListContract.View>(view), ListContract.Presenter {
+class ListPresenter(val view: ListContract.View, repository: Repository) : BasePresenter<ListModel, ListContract.View>(view), ListContract.Presenter {
 
     init {
-        Client.repo = RepositoryImpl
+        Client.repo = repository
     }
 
     override fun processQuery(query: String, includeMovies: Boolean, includeTVShows: Boolean) {

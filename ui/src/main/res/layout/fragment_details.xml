@@ -11,8 +11,7 @@
         android:layout_height="match_parent"
         android:alpha=".5"
         app:layout_constraintBottom_toTopOf="@id/youtube"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="TODO" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title_textview"
