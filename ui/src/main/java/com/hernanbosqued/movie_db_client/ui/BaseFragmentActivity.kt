@@ -11,12 +11,10 @@ abstract class BaseFragmentActivity : AppCompatActivity() {
         if (addToBackStack) {
             val last = supportFragmentManager.fragments.last()
             ft.hide(last)
-            ft.add(android.R.id.content, fragment)
             ft.addToBackStack(null)
-        } else {
-            ft.add(android.R.id.content, fragment)
         }
 
+        ft.add(android.R.id.content, fragment, fragment::class.java.simpleName)
         ft.commit()
     }
 

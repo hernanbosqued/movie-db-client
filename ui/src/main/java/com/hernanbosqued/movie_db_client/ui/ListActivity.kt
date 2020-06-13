@@ -1,6 +1,7 @@
 package com.hernanbosqued.movie_db_client.ui
 
 import android.os.Bundle
+import androidx.arch.core.executor.DefaultTaskExecutor
 import com.hernanbosqued.movie_db_client.domain.model.ResultModel
 
 class ListActivity : BaseFragmentActivity(), ListFragment.Callbacks {
@@ -16,11 +17,12 @@ class ListActivity : BaseFragmentActivity(), ListFragment.Callbacks {
     }
 
     override fun fromMainFragment(model: ResultModel) {
-        val fragment = DetailFragment().apply {
-            arguments = Bundle().apply {
+        supportFragmentManager.findFragmentByTag(DetailFragment::class.java.simpleName)?:run {
+            val fragment = DetailFragment()
+            fragment.arguments = Bundle().apply {
                 putSerializable("model", model)
             }
+            addFragment(fragment, true)
         }
-        addFragment(fragment, true)
     }
 }
