@@ -46,10 +46,16 @@
     <style name="Text.Item" parent="Text"/>
 
     <style name="Text.Carousel" parent="Text.Item" />
-    <style name="Text.Carousel.Empty" parent="Text.Title.Accent" />
+
+    <style name="Text.Carousel.Empty" parent="Text.Title.Accent">
+        <item name="android:backgroundTint">@color/placeholder_dark</item>
+        <item name="android:background">@drawable/placeholder</item>
+
+    </style>
     <style name="Text.Empty" parent="Text.Title.Accent" />
     <style name="Text.Detail.Empty" parent="Text.Empty">
         <item name="android:backgroundTint">@color/placeholder_dark</item>
+        <item name="android:background">@drawable/placeholder</item>
     </style>
 
     <style name="Text.Title.Accent" parent="Text.Title">

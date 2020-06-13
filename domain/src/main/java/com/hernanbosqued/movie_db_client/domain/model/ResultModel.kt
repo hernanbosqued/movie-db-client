@@ -1,34 +1,48 @@
 package com.hernanbosqued.movie_db_client.domain.model
 
+import com.google.gson.Gson
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import com.google.gson.annotations.SerializedName
+import com.hernanbosqued.movie_db_client.domain.Visitable
+import com.hernanbosqued.movie_db_client.domain.Visitor
 import java.io.Serializable
+import java.lang.reflect.Type
 
-class ResultModel : Serializable {
+open class ResultModel:Visitable, Serializable {
 
-    var type: TYPE = TYPE.ERROR
+    fun getMediaType( ):MEDIATYPE{
+        return MEDIATYPE.fromType( this.javaClass )
+    }
 
-    fun setType(){
-        type = TYPE.resolve(this)
+    override fun visit(visitor: Visitor) {
+        visitor.accept(this)
     }
 
     @SerializedName(value = "id")
     val id: Int = -1
 
-    @SerializedName(value = "name")
-    val name: String? = null
-
-    @SerializedName(value = "title")
-    val title: String? = null
-
     @SerializedName("vote_average")
-    val voteAverage: String = ""
-
-    @SerializedName("poster_path")
-    val posterPath: String? = null
+    val ranking: String = ""
 
     @SerializedName("overview")
     val overview: String = ""
 
     @SerializedName("video")
     var hasVideo: Boolean = false
+
+    object Deserializer : JsonDeserializer<ResultModel> {
+        override fun deserialize( json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?) : ResultModel? {
+
+            val jsonObject = json!!.asJsonObject ?: run { return null }
+
+            if (jsonObject.has("media_type")) {
+                val type = MEDIATYPE.fromValue(jsonObject.get("media_type").asString).type()
+                return Gson().fromJson<ResultModel>(jsonObject.toString(), type)
+            }
+
+            return null
+        }
+    }
 }

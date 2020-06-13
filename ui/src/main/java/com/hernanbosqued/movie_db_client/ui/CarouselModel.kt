@@ -8,5 +8,5 @@ class CarouselModel(
     var title: String,
     val query: String?
 ) {
-    var response: ListModel? = null
+    var response: ListModel = ListModel()
 }

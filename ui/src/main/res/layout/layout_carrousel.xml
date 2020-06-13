@@ -27,14 +27,16 @@
     <TextView
         android:id="@+id/empty_view"
         style="@style/Text.Carousel.Empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
         android:text="@string/no_results_found"
+        android:visibility="gone"
+        android:layout_margin="@dimen/margin16"
+        app:layout_constraintTop_toTopOf="@id/carousel"
         app:layout_constraintBottom_toBottomOf="@id/carousel"
         app:layout_constraintLeft_toLeftOf="@id/carousel"
-        app:layout_constraintRight_toRightOf="@id/carousel"
-        app:layout_constraintTop_toTopOf="@id/carousel"
-        android:visibility="gone"/>
+        app:layout_constraintRight_toRightOf="@id/carousel" />
 
     <ProgressBar
         android:id="@+id/progress"

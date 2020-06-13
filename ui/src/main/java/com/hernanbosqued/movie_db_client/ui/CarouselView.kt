@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hernanbosqued.movie_db_client.domain.model.ListModel
+import com.hernanbosqued.movie_db_client.domain.model.ResultModel
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 import kotlinx.android.synthetic.main.layout_carrousel.view.progress
 
@@ -60,8 +60,8 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
         listener.onCarouselClicked(model)
     }
 
-    override fun addData(model: ListModel) {
-        model.results?.let { adapter.add(it) }
+    override fun addData(model: List<ResultModel>) {
+        adapter.add(model)
     }
 
     override fun showMessage(message: String) {
@@ -82,6 +82,11 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
 
     override fun showEmpty() {
         empty_view.visibility = View.VISIBLE
+    }
+
+    override fun showEmpty(error: String) {
+        empty_view.visibility = View.VISIBLE
+        empty_view.text = error
     }
 
     override fun hideEmpty() {

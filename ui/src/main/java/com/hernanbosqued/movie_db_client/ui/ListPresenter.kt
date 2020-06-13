@@ -26,11 +26,12 @@ class ListPresenter(val view: ListContract.View, repository: Repository) : BaseP
     override fun addCarousels() {
 
         val list: MutableList<CarouselModel> = ArrayList()
-        list.add(CarouselModel(Client::searchMovies, "With video", "Depeche Mode video singles"))
+//        list.add(CarouselModel(Client::searchBoth, "both", "a"))
+//        list.add(CarouselModel(Client::searchBoth, "With video", "Depeche Mode video singles"))
         list.add(CarouselModel(Client::getMoviesPopular, "popular movies", null))
-        list.add(CarouselModel(Client::getMoviesTopRated, "Top rated movies", null))
-        list.add(CarouselModel(Client::getTVPopular, "Popular TV shows", null))
-        list.add(CarouselModel(Client::getTVTopRated, "Top rated TV show", null))
+//        list.add(CarouselModel(Client::getMoviesTopRated, "Top rated movies", null))
+//        list.add(CarouselModel(Client::getTVPopular, "Popular TV shows", null))
+//        list.add(CarouselModel(Client::getTVTopRated, "Top rated TV show", null))
 
         view()?.addCarousels(list)
     }

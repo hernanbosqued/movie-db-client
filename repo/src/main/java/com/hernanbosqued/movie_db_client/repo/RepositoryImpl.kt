@@ -56,7 +56,7 @@ class RepositoryImpl(context : Context) : Repository {
         }
 
         override fun onFailure(call: Call<T>, t: Throwable) {
-            modelCallbacks.onFail(ErrorModel(Constants.CUSTOM_ERROR_CODE, t.message!!))
+            modelCallbacks.onFail(ErrorModel(Constants.CUSTOM_ERROR_CODE, t.message?:"ATLANTA"))
         }
     }
 }

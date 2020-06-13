@@ -17,7 +17,6 @@ class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselMod
 
     private fun load(page: Int) {
         view()?.showProgress()
-
         model?.let { it.client.invoke(page, it.query, this) }
     }
 
@@ -36,9 +35,10 @@ class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselMod
 
         this.maxPages = response.totalPages
         this.continueLoading = page < maxPages
-        this.model?.response = response
+        val filteredResult = response.results.filterNotNull()
+        this.model?.response?.results?.addAll(filteredResult)
 
-        view()?.addData(response)
+        view()?.addData(filteredResult)
 
         if (this.model?.response?.results?.isEmpty()!!) {
             view()?.showEmpty()
@@ -51,10 +51,6 @@ class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselMod
         view()?.showMessage(error)
         view()?.hideProgress()
 
-        if (this.model?.response?.results?.isEmpty()!!) {
-            view()?.showEmpty()
-        } else {
-            view()?.hideEmpty()
-        } ?: view()?.showEmpty()
+        view()?.showEmpty(error)
     }
 }

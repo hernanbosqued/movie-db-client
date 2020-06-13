@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import com.hernanbosqued.movie_db_client.domain.model.ResultModel
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.fragment_list.*
+import java.io.Serializable
 
 class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
     private lateinit var presenter: ListPresenter
@@ -108,11 +109,13 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
     }
 
     interface Callbacks {
-        fun fromMainFragment(model: ResultModel)
+        fun <RESULT_MODEL : Serializable> fromMainFragment(model: RESULT_MODEL)
     }
 
     override val dummyCallbacks: Callbacks
         get() = object : Callbacks {
-            override fun fromMainFragment(model: ResultModel) {}
+
+            override fun <RESULT_MODEL : Serializable> fromMainFragment(model: RESULT_MODEL) {
+            }
         }
 }

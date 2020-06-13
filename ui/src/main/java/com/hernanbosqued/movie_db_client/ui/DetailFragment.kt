@@ -70,22 +70,34 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         overview_text.text = overview
     }
 
-    override fun setPoster(posterPath: String?){
-        posterPath?.let{
+
+    override fun setPoster(posterPath: String?) {
+        posterPath?.let {
             val absolutePath = Constants.IMAGE_BASE_URL + posterPath
             Utils.setImage(poster_image, null, null, absolutePath, showAnimation = false, roundedCorners = false)
         }
     }
 
-    override fun setRanking(ranking: String) {
-        val span = SpannableStringBuilder(getString(R.string.ranking))
 
-        span.setSpan(
-            ForegroundColorSpan(
-                ContextCompat.getColor(context!!, R.color.colorAccent)), 0, span.length - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        span.setSpan(StyleSpan(Typeface.BOLD), 0, span.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        this.ranking_text.text = span.append(" $ranking")
+    private inline fun String?.IFIF(condition: Boolean, block: () -> String?): String? {
+        if (condition)
+            return block()
+        else
+            return null
+    }
+
+    override fun setRanking(ranking: String) {
+
+        if (ranking.isNotEmpty()) {
+            val span = SpannableStringBuilder(getString(R.string.ranking))
+            span.setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(context!!, R.color.colorAccent)
+                ), 0, span.length - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            span.setSpan(StyleSpan(Typeface.BOLD), 0, span.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            this.ranking_text.text = span.append(" $ranking")
+        }
     }
 
     override fun showMessage(message: String) {
