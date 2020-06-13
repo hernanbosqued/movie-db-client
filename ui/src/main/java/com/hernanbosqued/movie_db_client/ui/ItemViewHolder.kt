@@ -16,7 +16,7 @@ class ItemViewHolder(view: View, private val listener: ItemListener) : BaseViewH
         val imagePath = Constants.IMAGE_BASE_URL + model.posterPath
 
         itemView.progress.visibility = View.VISIBLE
-        Utils.setImage(itemView.poster, itemView.progress, imagePath, true, true)
+        Utils.setImage(itemView.poster, itemView.progress, imagePath, showAnimation = true, roundedCorners = true)
         itemView.setOnClickListener { listener.onItemClicked(model) }
     }
 }

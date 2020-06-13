@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.hernanbosqued.movie_db_client.domain.model.ResultModel
 import com.hernanbosqued.movie_db_client.domain.model.VideoModel
 import com.hernanbosqued.movie_db_client.repo.Constants
@@ -62,23 +63,27 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         }
 
     override fun setTitle(name: String) {
-        title_textview.text = name
+        title_text.text = name
     }
 
     override fun setOverview(overview: String) {
-        overview_textview.text = overview
+        overview_text.text = overview
     }
 
-    override fun setPoster(path: String) {
-        val absolutePath = Constants.IMAGE_BASE_URL + path
-        Utils.setImage(poster_imageview, null, absolutePath, showAnimation = false, roundedCorners = false)
+    override fun setPoster(posterPath: String) {
+        val absolutePath = Constants.IMAGE_BASE_URL + posterPath
+        Utils.setImage(poster_image, null, absolutePath, showAnimation = false, roundedCorners = false)
     }
 
     override fun setRanking(ranking: String) {
         val span = SpannableStringBuilder(getString(R.string.ranking))
-        span.setSpan(ForegroundColorSpan(resources.getColor(R.color.colorAccent)), 0, span.length - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        span.setSpan(
+            ForegroundColorSpan(
+                ContextCompat.getColor(context!!, R.color.colorAccent)), 0, span.length - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         span.setSpan(StyleSpan(Typeface.BOLD), 0, span.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        this.ranking_textview.text = span.append(" $ranking")
+        this.ranking_text.text = span.append(" $ranking")
     }
 
     override fun showMessage(message: String) {

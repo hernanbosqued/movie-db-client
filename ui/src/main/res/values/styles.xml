@@ -1,4 +1,4 @@
-<resources xmlns:app="http://schemas.android.com/apk/res-auto">
+<resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -43,13 +43,8 @@
         <item name="android:background">@color/transparent</item>
     </style>
 
-    <style name="TransparentDialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/transparent</item>
-    </style>
-
     <style name="Text.Item" parent="Text"/>
-    <style name="Text.Detail" parent="Text" />
+
     <style name="Text.Carousel" parent="Text.Item" />
     <style name="Text.Carousel.Empty" parent="Text.Title.Accent" />
     <style name="Text.Empty" parent="Text.Title.Accent" />

@@ -1,10 +1,10 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name" translatable="false">Movies DB Client</string>
     <string name="ranking" translatable="false">Ranking:</string>
     <string name="search"><font size="15">Search</font></string>
-    <string name="from">from</string>
     <string name="no_results_found">No results found</string>
     <string name="no_video">No video provided</string>
     <string name="movies">movies</string>
     <string name="tv_shows">tv shows</string>
+
 </resources>

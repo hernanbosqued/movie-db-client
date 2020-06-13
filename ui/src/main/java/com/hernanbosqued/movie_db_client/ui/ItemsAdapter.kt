@@ -22,11 +22,6 @@ class ItemsAdapter(private val carouselListener: ScrollListener, private val lis
         }
     }
 
-    fun add(entity: ResultModel) {
-        this.entities.add(0, entity)
-        notifyItemInserted(0)
-    }
-
     fun add(entities: List<ResultModel>) {
         this.entities.addAll(entities)
         notifyItemRangeInserted(this.entities.size - entities.size, entities.size)

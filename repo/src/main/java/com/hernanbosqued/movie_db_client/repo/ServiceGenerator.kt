@@ -13,17 +13,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-infix fun <T> T?.ifNull(block: () -> Unit) {
-    if (this == null) block()
-}
-
 object ServiceGenerator {
+    private infix fun <T> T?.ifNull(block: () -> Unit) {
+        if (this == null) block()
+    }
+
     private const val HEADER_CACHE_CONTROL = "Cache-Control"
     private const val HEADER_PRAGMA = "Pragma"
     private var cache: Cache? = null
     private lateinit var retrofit: Retrofit
 
-    fun init(context: Context) {
+    private fun init(context: Context) {
         val interceptor = HttpLoggingInterceptor()
 
         val dispatcher = Dispatcher()

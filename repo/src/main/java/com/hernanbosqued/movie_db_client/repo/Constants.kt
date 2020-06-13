@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package com.hernanbosqued.movie_db_client.repo
 
 object Constants {

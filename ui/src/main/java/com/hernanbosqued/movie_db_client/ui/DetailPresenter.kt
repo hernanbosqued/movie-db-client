@@ -6,7 +6,6 @@ import com.hernanbosqued.movie_db_client.domain.model.ErrorModel
 import com.hernanbosqued.movie_db_client.domain.model.ResultModel
 import com.hernanbosqued.movie_db_client.domain.model.TYPE
 import com.hernanbosqued.movie_db_client.domain.model.VideoModel
-import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 
 class DetailPresenter(view: DetailContract.View, repository: Repository) : BasePresenter<ResultModel, DetailContract.View>(view), DetailContract.Presenter, ModelCallbacks<VideoModel> {
 

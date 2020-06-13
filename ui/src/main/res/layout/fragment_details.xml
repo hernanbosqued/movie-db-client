@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/poster_imageview"
+        android:id="@+id/poster_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha=".5"
@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/title_textview"
+        android:id="@+id/title_text"
         style="@style/Text.Detail.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,13 +23,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ranking_textview"
+        android:id="@+id/ranking_text"
         style="@style/Text.Item.Ranking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin16"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_textview" />
+        app:layout_constraintTop_toBottomOf="@id/title_text" />
 
 
     <ScrollView
@@ -37,10 +37,10 @@
         android:layout_height="0dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@id/youtube"
-        app:layout_constraintTop_toBottomOf="@+id/ranking_textview">
+        app:layout_constraintTop_toBottomOf="@+id/ranking_text">
 
         <TextView
-            android:id="@+id/overview_textview"
+            android:id="@+id/overview_text"
             style="@style/Text.Item.Ranking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

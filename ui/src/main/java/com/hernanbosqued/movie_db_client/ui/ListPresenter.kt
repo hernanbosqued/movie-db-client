@@ -3,7 +3,6 @@ package com.hernanbosqued.movie_db_client.ui
 import com.hernanbosqued.movie_db_client.domain.Client
 import com.hernanbosqued.movie_db_client.domain.Repository
 import com.hernanbosqued.movie_db_client.domain.model.ListModel
-import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 
 class ListPresenter(val view: ListContract.View, repository: Repository) : BasePresenter<ListModel, ListContract.View>(view), ListContract.Presenter {
 
@@ -18,7 +17,7 @@ class ListPresenter(val view: ListContract.View, repository: Repository) : BaseP
             } else if (includeTVShows) {
                 CarouselModel(Client::searchTVShows, "TV shows for '$query'", query)
             } else {
-                CarouselModel(Client::searchMovies, "Movies afor '$query'", query)
+                CarouselModel(Client::searchMovies, "Movies for '$query'", query)
             }
 
         view()?.addCarousel(carousel)
