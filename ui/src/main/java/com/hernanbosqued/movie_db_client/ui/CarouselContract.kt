@@ -1,11 +1,11 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import com.hernanbosqued.movie_db_client.domain.model.ListModel
-import com.hernanbosqued.movie_db_client.domain.model.ResultModel
+import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 
 class CarouselContract {
     interface View {
-        fun addData(model: List<ResultModel>)
+        fun addData(data: CarouselItemModel)
+        fun addData(data: List<CarouselItemModel>)
         fun showMessage(message: String)
         fun showProgress()
         fun hideProgress()

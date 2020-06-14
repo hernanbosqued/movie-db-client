@@ -1,31 +1,21 @@
-package com.hernanbosqued.movie_db_client.domain.model
+package com.hernanbosqued.movie_db_client.domain
 
 import com.google.gson.Gson
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.annotations.SerializedName
-import com.hernanbosqued.movie_db_client.domain.Visitable
-import com.hernanbosqued.movie_db_client.domain.Visitor
 import java.io.Serializable
 import java.lang.reflect.Type
 
-open class ResultModel(mediatype: MEDIATYPE) : Visitable, Serializable {
-
-    init {
-        Deserializer.mediatype = mediatype
-    }
-
-    fun getMediaType(): MEDIATYPE {
-        return MEDIATYPE.fromType(this.javaClass)
-    }
+open class ResultModel : Visitable, Serializable {
 
     override fun visit(visitor: Visitor) {
-        visitor.accept(this)
+        return visitor.accept(this)
     }
 
     @SerializedName(value = "id")
-    val id: Int = -1
+    open val id: String = ""
 
     @SerializedName("vote_average")
     val ranking: String = ""
@@ -36,9 +26,11 @@ open class ResultModel(mediatype: MEDIATYPE) : Visitable, Serializable {
     @SerializedName("video")
     var hasVideo: Boolean = false
 
-    object Deserializer : JsonDeserializer<ResultModel> {
+    fun getType(): String {
+        return MEDIATYPE.fromType(this.javaClass).toString()
+    }
 
-        var mediatype = MEDIATYPE.UNDEFINED
+    object Deserializer : JsonDeserializer<ResultModel> {
 
         override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): ResultModel? {
 

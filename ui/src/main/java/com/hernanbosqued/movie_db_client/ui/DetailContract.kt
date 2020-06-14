@@ -1,7 +1,7 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import com.hernanbosqued.movie_db_client.domain.model.ResultModel
-import com.hernanbosqued.movie_db_client.domain.model.VideoModel
+import com.hernanbosqued.movie_db_client.domain.ResultModel
+import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 
 class DetailContract {
     interface View {
@@ -10,7 +10,7 @@ class DetailContract {
         fun setPoster(posterPath: String?)
         fun setRanking(ranking  : String)
         fun showMessage(message: String)
-        fun setVideo(data: VideoModel)
+        fun setVideo(data: VideoResultModel)
     }
 
     interface Presenter {

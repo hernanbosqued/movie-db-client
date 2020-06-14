@@ -9,20 +9,13 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hernanbosqued.movie_db_client.domain.ModelCallbacks
-import com.hernanbosqued.movie_db_client.domain.Repository
-import com.hernanbosqued.movie_db_client.domain.model.ErrorModel
-import com.hernanbosqued.movie_db_client.domain.model.MovieListModel
-import com.hernanbosqued.movie_db_client.domain.model.ResultModel
-import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
+import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
-import kotlinx.android.synthetic.main.layout_carrousel.view.progress
-
 
 @SuppressLint("ViewConstructor")
 class CarouselView(context: Context, private val listener: CarouselListeners) : ConstraintLayout(context), CarouselContract.View, ScrollListener, LifecycleObserver {
 
-    private var presenter: CarouselPresenter = CarouselPresenter(this, RepositoryImpl(context))
+    private var presenter: CarouselPresenter = CarouselPresenter(this)
     private var adapter = ItemsAdapter(this, listener)
 
     init {
@@ -46,7 +39,7 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
     }
 
     fun bind(model: CarouselModel) {
-        //if (presenter.model == null) {
+        //if (presenter.model == null) {c
             presenter.setModel(model)
         //}
     }
@@ -54,7 +47,10 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
     private fun prepareRecyclerView() {
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
         carousel.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
-        carousel.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager =  LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        layoutManager.isItemPrefetchEnabled = true
+        layoutManager.recycleChildrenOnDetach = true
+        carousel.layoutManager = layoutManager
         carousel.adapter = adapter
     }
 
@@ -66,8 +62,12 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
         listener.onCarouselClicked(model)
     }
 
-    override fun addData(model: List<ResultModel>) {
-        adapter.add(model)
+    override fun addData(data: CarouselItemModel) {
+        adapter.add(data)
+    }
+
+    override fun addData(data: List<CarouselItemModel>) {
+        adapter.add(data)
     }
 
     override fun showMessage(message: String) {

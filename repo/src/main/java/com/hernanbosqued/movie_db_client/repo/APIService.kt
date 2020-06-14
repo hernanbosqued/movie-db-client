@@ -1,9 +1,6 @@
 package com.hernanbosqued.movie_db_client.repo
 
-import com.hernanbosqued.movie_db_client.domain.model.ListModel
-import com.hernanbosqued.movie_db_client.domain.model.MovieListModel
-import com.hernanbosqued.movie_db_client.domain.model.TVListModel
-import com.hernanbosqued.movie_db_client.domain.model.VideoModel
+import com.hernanbosqued.movie_db_client.domain.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,28 +9,28 @@ import retrofit2.http.Query
 interface APIService {
 
     @GET("movie/popular")
-    fun getMoviesPopular(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<MovieListModel>
+    fun moviesPopular(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<BaseListModel<MovieResultModel>>
 
     @GET("movie/top_rated")
-    fun getMoviesTopRated(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<MovieListModel>
-
-    @GET("search/movie")
-    fun searchMovies(@Query("page") page: Int, @Query("query") query: String?, @Query("api_key") apiKey: String): Call<MovieListModel>
-
+    fun moviesTopRated(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<BaseListModel<MovieResultModel>>
 
     @GET("tv/popular")
-    fun getTVPopular(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<TVListModel>
+    fun tvPopular(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<BaseListModel<TVResultModel>>
 
     @GET("tv/top_rated")
-    fun getTVTopRated(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<TVListModel>
+    fun tvTopRated(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<BaseListModel<TVResultModel>>
+
+
+    @GET("search/movie")
+    fun searchMovies(@Query("page") page: Int, @Query("query") query: String?, @Query("api_key") apiKey: String): Call<BaseListModel<MovieResultModel>>
 
     @GET("search/tv")
-    fun searchTVShows(@Query("page") page: Int, @Query("query") query: String?, @Query("api_key") apiKey: String): Call<TVListModel>
-
+    fun searchTVShows(@Query("page") page: Int, @Query("query") query: String?, @Query("api_key") apiKey: String): Call<BaseListModel<TVResultModel>>
 
     @GET("search/multi")
-    fun searchBoth(@Query("page") page: Int, @Query("query") query: String?, @Query("api_key") apiKey: String): Call<ListModel>
+    fun searchBoth(@Query("page") page: Int, @Query("query") query: String?, @Query("api_key") apiKey: String): Call<BaseListModel<ResultModel>>
+
 
     @GET("{type}/{id}/videos")
-    fun getVideos(@Path("type") type: String, @Path("id") id: Int, @Query("api_key") apiKey: String): Call<VideoModel>
+    fun videos(@Path("type") type: String, @Path("id") id: Int, @Query("api_key") apiKey: String): Call<BaseListModel<VideoResultModel>>
 }

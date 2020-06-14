@@ -3,11 +3,11 @@ package com.hernanbosqued.movie_db_client.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.hernanbosqued.movie_db_client.domain.model.ResultModel
+import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 
-class ItemsAdapter(private val carouselListener: ScrollListener, private val listener: ItemListener): RecyclerView.Adapter<ItemViewHolder>() {
+class ItemsAdapter(private val carouselListener: ScrollListener, private val listener: ItemListener) : RecyclerView.Adapter<ItemViewHolder>() {
 
-    private var entities: MutableList<ResultModel> = ArrayList()
+    private var entities: MutableList<CarouselItemModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_item, parent, false)
@@ -22,12 +22,17 @@ class ItemsAdapter(private val carouselListener: ScrollListener, private val lis
         }
     }
 
-    fun add(entities: List<ResultModel>) {
+    fun add(entities: List<CarouselItemModel>) {
         this.entities.addAll(entities)
         notifyItemRangeInserted(this.entities.size - entities.size, entities.size)
     }
 
     override fun getItemCount(): Int {
         return entities.size
+    }
+
+    fun add(model: CarouselItemModel) {
+        entities.add(model)
+        notifyItemInserted(entities.size - 1)
     }
 }

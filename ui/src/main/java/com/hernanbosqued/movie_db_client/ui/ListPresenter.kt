@@ -1,13 +1,18 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import com.hernanbosqued.movie_db_client.domain.model.ListModel
+import com.hernanbosqued.movie_db_client.domain.Repository
 
-class ListPresenter(view: ListContract.View, private val client: CarouselClient, private val stringRepository: StringRepository) : BasePresenter<ListModel, ListContract.View>(view), ListContract.Presenter {
+class ListPresenter(view: ListContract.View, repository: Repository) : BasePresenter<List<CarouselModel>, ListContract.View>(view), ListContract.Presenter {
 
-    private val data = arrayOf<CarouselModel>(
-        CarouselModel(endpoint = client::getPopularMoviesList, title = stringRepository.getA(), query = "a"),
-        CarouselModel(endpoint = client::getPopularMoviesList, title = stringRepository.getB(), query = "b"),
-        CarouselModel(endpoint = client::getPopularMoviesList, title = stringRepository.getC(), query = "c")
+    private val data = arrayOf(
+//        CarouselModel(endpoint = client::searchBoth, title = stringRepository.searchBoth(), query = "a"),
+//        CarouselModel(endpoint = client::searchTV, title = stringRepository.searchTV(), query = "b"),
+//        CarouselModel(endpoint = client::searchMovies, title = stringRepository.searchMovies(), query = "c"),
+//        CarouselModel(endpoint = client::tvPopular, title = "Popular TV shows", query = null),
+        CarouselModel(endpoint = CarouselClient(repository = repository)::searchBoth, title = "With video", query = "Depeche Mode video singles")
+//        CarouselModel(endpoint = client::moviesPopular, title = "popular movies", query = null),
+//        CarouselModel(endpoint = client::moviesTopRated, title = "Top rated movies", query = null),
+//        CarouselModel(endpoint = client::tvTopRated, title = "Top rated TV show", query = null)
     )
 
     private fun addCarousel(carouselModel: CarouselModel) {
@@ -19,12 +24,6 @@ class ListPresenter(view: ListContract.View, private val client: CarouselClient,
     }
 
     override fun bind() {
-//        list.add(CarouselModel(Client::searchBoth, "both", "a"))
-//        list.add(CarouselModel(Client::searchBoth, "With video", "Depeche Mode video singles"))
-        //list.add(CarouselModel("popular movies", null))
-//        list.add(CarouselModel(Cli    ent::getMoviesTopRated, "Top rated movies", null))
-//        list.add(CarouselModel(Client::getTVPopular, "Popular TV shows", null))
-//        list.add(CarouselModel(Client::getTVTopRated, "Top rated TV show", null))
         data.forEach { addCarousel(it) }
     }
 }

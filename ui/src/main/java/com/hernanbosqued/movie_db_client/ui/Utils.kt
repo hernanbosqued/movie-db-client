@@ -4,7 +4,12 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -15,10 +20,20 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 
-internal object Utils {
+object Utils {
 
-    @SuppressLint("CheckResult")
-    fun setImage(view: ImageView, progress: View?, noProvided:View?, path: String, showAnimation: Boolean, roundedCorners: Boolean) {
+    fun getSpan(key: String, value: String, accent: Int): String {
+
+        if (key.isNotEmpty()) {
+            val span = SpannableStringBuilder(key)
+            span.setSpan(ForegroundColorSpan(accent), 0, span.length - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            span.setSpan(StyleSpan(Typeface.BOLD), 0, span.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            return span.append(" $value").toString()
+        }
+        return "$key: $value"
+    }
+
+    fun setImage(view: ImageView, progress: View?, noProvided:View?, path: String, roundedCorners: Boolean) {
 
         progress?.let { it.visibility = View.VISIBLE }
 
@@ -45,17 +60,13 @@ internal object Utils {
         }
 
         builder.into(view)
-
-        if (showAnimation) {
-            setAnimation(view)
-        }
     }
 
-    private fun setAnimation(view: ImageView) {
+    fun setAnimation(view:View) {
         val animatorSet = AnimatorSet()
 
         view.alpha = 0f
-        view.translationY = view.y - 300
+        view.translationY = - view.height * 0.5f
 
         val translate: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationY", 0f)
         val alpha = ObjectAnimator.ofFloat(view, "alpha", 1f)

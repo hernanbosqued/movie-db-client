@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.domain.model
+package com.hernanbosqued.movie_db_client.domain
 
 import com.google.gson.annotations.SerializedName
 

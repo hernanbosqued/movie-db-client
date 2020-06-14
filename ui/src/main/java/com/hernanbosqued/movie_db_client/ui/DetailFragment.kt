@@ -6,13 +6,10 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.hernanbosqued.movie_db_client.domain.model.ResultModel
-import com.hernanbosqued.movie_db_client.domain.model.VideoModel
+import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 import com.hernanbosqued.movie_db_client.repo.Constants
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -36,8 +33,8 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val model = arguments?.getSerializable("model") as ResultModel?
-        model?.let { presenter.setModel(it) }
+//        val model = arguments?.getSerializable("model") as ResultModel?
+//        model?.let { presenter.setModel(it) }
 
         youtube.visibility = View.INVISIBLE
         empty_view.visibility = View.VISIBLE
@@ -52,6 +49,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         super.onPause()
         presenter.unbindView()
     }
+
     private fun prepareYoutube() {
         lifecycle.addObserver(youtube)
         youtube.enableAutomaticInitialization = true
@@ -73,7 +71,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
     override fun setPoster(posterPath: String?) {
         posterPath?.let {
             val absolutePath = Constants.IMAGE_BASE_URL + posterPath
-            Utils.setImage(poster_image, null, null, absolutePath, showAnimation = false, roundedCorners = false)
+            Utils.setImage(poster_image, null, null, absolutePath, roundedCorners = false)
         }
     }
 
@@ -95,22 +93,17 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun setVideo(data: VideoModel) {
-        val result = data.results?.first()
-
-        result?.let {
-            if (it.site.equals("youtube", ignoreCase = true)) {
-                prepareYoutube()
-
-                youtube.visibility = View.VISIBLE
-                empty_view.visibility = View.INVISIBLE
-                youtube.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
-                    override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                        youTubePlayer.cueVideo(it.key, 0f)
-                        youTubePlayer.play()
-                    }
-                })
+    override fun setVideo(data: VideoResultModel) {
+        if (data.site.equals("youtube", ignoreCase = true) && !data.key.isNullOrEmpty())
+            prepareYoutube()
+        youtube.visibility = View.VISIBLE
+        empty_view.visibility = View.INVISIBLE
+        youtube.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+            override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.cueVideo(data.key!!, 0f)
+                youTubePlayer.play()
             }
-        }
+        })
     }
 }
+

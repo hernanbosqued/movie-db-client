@@ -1,9 +1,7 @@
 package com.hernanbosqued.movie_db_client.ui
 
 import android.os.Bundle
-import androidx.arch.core.executor.DefaultTaskExecutor
-import com.hernanbosqued.movie_db_client.domain.model.ResultModel
-import java.io.Serializable
+import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 
 class ListActivity : BaseFragmentActivity(), ListFragment.Callbacks {
 
@@ -17,7 +15,7 @@ class ListActivity : BaseFragmentActivity(), ListFragment.Callbacks {
         addFragment(ListFragment(), false)
     }
 
-    override fun fromMainFragment(model: ResultModel) {
+    override fun fromMainFragment(model: CarouselItemModel) {
         supportFragmentManager.findFragmentByTag(DetailFragment::class.java.simpleName) ?: run {
             val fragment = DetailFragment()
             fragment.arguments = Bundle().apply {

@@ -1,11 +1,8 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import com.hernanbosqued.movie_db_client.domain.ModelCallbacks
-import com.hernanbosqued.movie_db_client.domain.Repository
-import com.hernanbosqued.movie_db_client.domain.Visitor
-import com.hernanbosqued.movie_db_client.domain.model.*
+import com.hernanbosqued.movie_db_client.domain.*
 
-class DetailPresenter(view: DetailContract.View, private val repository: Repository) : BasePresenter<ResultModel, DetailContract.View>(view), DetailContract.Presenter, ModelCallbacks<VideoModel>, Visitor {
+class DetailPresenter(view: DetailContract.View, private val repository: Repository) : BasePresenter<ResultModel, DetailContract.View>(view), DetailContract.Presenter, Visitor {
 
     override fun setModel(model: ResultModel) {
         this.model = model
@@ -16,7 +13,7 @@ class DetailPresenter(view: DetailContract.View, private val repository: Reposit
         view()?.setOverview(visitable.overview)
         view()?.setRanking(visitable.ranking)
         if (visitable.hasVideo) {
-            repository.getVideos(visitable.getMediaType().value, visitable.id, this)
+               // repository.getVideos(ResultModel.MEDIATYPE.value, visitable.id, this)
         }
     }
 
@@ -36,11 +33,15 @@ class DetailPresenter(view: DetailContract.View, private val repository: Reposit
         view()?.setRanking(visitable.ranking)
     }
 
-    override fun onSuccess(data: VideoModel) {
-        view()?.setVideo(data)
+    override fun accept(visitable: VideoResultModel) {
     }
 
-    override fun onFail(errorModel: ErrorModel) {
-        view()?.showMessage(errorModel.code.toString() + " - " + errorModel.message)
-    }
+
+//    override fun onSuccess(data: VideoModel) {
+//        view()?.setVideo(data)
+//    }
+//
+//    override fun onFail(errorModel: ErrorModel) {
+//        view()?.showMessage(errorModel.code.toString() + " - " + errorModel.message)
+//    }
 }

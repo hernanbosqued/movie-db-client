@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.domain.model
+package com.hernanbosqued.movie_db_client.domain
 
 import java.lang.reflect.Type
 
@@ -28,8 +28,8 @@ enum class MEDIATYPE(val value: String) {
             return values().firstOrNull{ it.value == param }?:UNDEFINED
         }
 
-        fun fromType(type: Type): MEDIATYPE {
-            return values().firstOrNull{ it.type() == type }?:UNDEFINED
+        fun fromType(type: Type): String {
+            return values().firstOrNull{ it.type() == type }?.value?:UNDEFINED.value
         }
     }
 }

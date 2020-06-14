@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import com.hernanbosqued.movie_db_client.domain.model.ResultModel
+import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.fragment_list.*
 
@@ -12,7 +12,7 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
     private lateinit var presenter: ListPresenter
 
     interface Callbacks {
-        fun fromMainFragment(model: ResultModel)
+        fun fromMainFragment(model: CarouselItemModel)
     }
 
     override fun getLayout(): Int {
@@ -21,7 +21,7 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = ListPresenter(this, CarouselClient(RepositoryImpl(context!!)), StringRepositoryImpl(context!!))
+        presenter = ListPresenter(view = this, repository = RepositoryImpl(context!!))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,10 +53,10 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
 
         lifecycle.addObserver(view)
 
-        scrollTop()
+        //scrollTop()
     }
 
-    override fun onItemClicked(model: ResultModel) {
+    override fun onItemClicked(model: CarouselItemModel) {
         callbacks?.fromMainFragment(model)
     }
 
@@ -81,7 +81,7 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
     }
 
     override fun scrollTop() {
-        scroll_view.smoothScrollTo(0, 0)
+        //scroll_view.smoothScrollTo(0, 0)
     }
 
     private fun prepareSearchView() {
@@ -107,6 +107,6 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
 
     override val dummyCallbacks: Callbacks
         get() = object : Callbacks {
-            override fun fromMainFragment(model: ResultModel){}
+            override fun fromMainFragment(model: CarouselItemModel) {}
         }
 }

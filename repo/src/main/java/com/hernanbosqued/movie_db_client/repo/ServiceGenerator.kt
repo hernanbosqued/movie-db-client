@@ -4,8 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.google.gson.GsonBuilder
-import com.hernanbosqued.movie_db_client.domain.model.ListModel
-import com.hernanbosqued.movie_db_client.domain.model.ResultModel
+import com.hernanbosqued.movie_db_client.domain.ResultModel
 import okhttp3.*
 import okhttp3.CacheControl
 import okhttp3.logging.HttpLoggingInterceptor

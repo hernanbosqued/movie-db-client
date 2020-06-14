@@ -1,19 +1,19 @@
-package com.hernanbosqued.movie_db_client.domain.model
+package com.hernanbosqued.movie_db_client.domain
 
 import com.google.gson.annotations.SerializedName
 import com.hernanbosqued.movie_db_client.domain.Visitable
 import com.hernanbosqued.movie_db_client.domain.Visitor
 import java.io.Serializable
 
-
-class MovieResultModel : ResultModel(MEDIATYPE.MOVIE), Serializable, Visitable {
+class TVResultModel : ResultModel(), Serializable, Visitable {
 
     override fun visit(visitor: Visitor) {
         super.visit(visitor)
         visitor.accept(this)
     }
-    @SerializedName(value = "title")
-    val title: String? = null
+
+    @SerializedName(value = "name")
+    val name: String? = null
 
     @SerializedName("poster_path")
     val posterPath: String? = null

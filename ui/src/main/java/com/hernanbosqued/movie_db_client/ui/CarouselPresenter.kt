@@ -1,59 +1,58 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import com.hernanbosqued.movie_db_client.domain.Repository
-import com.hernanbosqued.movie_db_client.domain.model.ListModel
+import com.hernanbosqued.movie_db_client.domain.CarouselClientCallbacks
+import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 
-class CarouselPresenter(view: CarouselContract.View, val repository: Repository) : BasePresenter<CarouselModel, CarouselContract.View>(view), CarouselContract.Presenter {
+class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselModel, CarouselContract.View>(view), CarouselContract.Presenter, CarouselClientCallbacks {
 
-    private var page = 1
-    private var maxPages: Int = 0
-    private var continueLoading: Boolean = true
+    override fun onOK(data: CarouselItemModel) {
+        view()?.hideProgress()
+
+        this.model?.list?.add(data)
+
+        view()?.addData(data)
+
+        if (this.model?.list?.isEmpty()!!) {
+            view()?.showEmpty()
+        } else {
+            view()?.hideEmpty()
+        }
+    }
 
     fun setModel(model: CarouselModel) {
         super.model = model
-
         view()?.setTitle(model.title)
-
-        load(page)
-    }
-
-    private fun load(page: Int) {
-        view()?.showProgress()
-        //repository.getMoviesPopular(1, this)
-        //model?.let { client.invoke(page, it.query, this) }
+        load()
     }
 
     override fun load() {
-        if (continueLoading) {
-            load(++page)
-        }
+        view()?.showProgress()
+        model?.endpoint?.invoke(model?.query, this)
     }
 
     override fun onCarouselClicked() {
         model?.let { view()?.showCarouselData(it) }
     }
 
-    fun onOK(response: ListModel) {
+//    override fun onOK(data: List<CarouselItemModel>) {
 //        view()?.hideProgress()
 //
-//        this.maxPages = response.totalPages
-//        this.continueLoading = page < maxPages
-//        val filteredResult = response.results.filterNotNull()
-//        this.model?.response?.results?.addAll(filteredResult)
+//        //this.maxPages = response.totalPages
+//        //this.continueLoading = page < maxPages
+//        val filteredResult = data.filterNotNull()
+//        this.model?.list?.addAll(filteredResult)
 //
 //        view()?.addData(filteredResult)
 //
-//        if (this.model?.response?.results?.isEmpty()!!) {
+//        if (this.model?.list?.isEmpty()!!) {
 //            view()?.showEmpty()
 //        } else {
 //            view()?.hideEmpty()
 //        }
-    }
+//    }
 
-    fun onError(error: String) {
+     override fun onError(error: String) {
         view()?.showMessage(error)
         view()?.hideProgress()
-
-        view()?.showEmpty(error)
     }
 }
