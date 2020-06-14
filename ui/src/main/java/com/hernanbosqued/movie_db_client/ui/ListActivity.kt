@@ -17,7 +17,7 @@ class ListActivity : BaseFragmentActivity(), ListFragment.Callbacks {
         addFragment(ListFragment(), false)
     }
 
-    override fun <RESULT_MODEL : Serializable> fromMainFragment(model: RESULT_MODEL) {
+    override fun fromMainFragment(model: ResultModel) {
         supportFragmentManager.findFragmentByTag(DetailFragment::class.java.simpleName) ?: run {
             val fragment = DetailFragment()
             fragment.arguments = Bundle().apply {

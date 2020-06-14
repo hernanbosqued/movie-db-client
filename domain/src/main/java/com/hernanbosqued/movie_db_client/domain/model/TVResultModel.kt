@@ -5,7 +5,7 @@ import com.hernanbosqued.movie_db_client.domain.Visitable
 import com.hernanbosqued.movie_db_client.domain.Visitor
 import java.io.Serializable
 
-class TVResultModel : ResultModel(), Serializable, Visitable {
+class TVResultModel : ResultModel(MEDIATYPE.TV), Serializable, Visitable {
 
     override fun visit(visitor: Visitor) {
         super.visit(visitor)

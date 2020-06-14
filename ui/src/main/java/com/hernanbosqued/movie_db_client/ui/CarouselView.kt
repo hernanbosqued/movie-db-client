@@ -9,14 +9,20 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hernanbosqued.movie_db_client.domain.ModelCallbacks
+import com.hernanbosqued.movie_db_client.domain.Repository
+import com.hernanbosqued.movie_db_client.domain.model.ErrorModel
+import com.hernanbosqued.movie_db_client.domain.model.MovieListModel
 import com.hernanbosqued.movie_db_client.domain.model.ResultModel
+import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 import kotlinx.android.synthetic.main.layout_carrousel.view.progress
 
 
 @SuppressLint("ViewConstructor")
 class CarouselView(context: Context, private val listener: CarouselListeners) : ConstraintLayout(context), CarouselContract.View, ScrollListener, LifecycleObserver {
-    private var presenter: CarouselPresenter = CarouselPresenter(this)
+
+    private var presenter: CarouselPresenter = CarouselPresenter(this, RepositoryImpl(context))
     private var adapter = ItemsAdapter(this, listener)
 
     init {
@@ -27,13 +33,6 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
         setOnClickListener {
             presenter.onCarouselClicked()
         }
-    }
-
-    private fun prepareRecyclerView() {
-        layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-        carousel.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
-        carousel.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        carousel.adapter = adapter
     }
 
     override fun onAttachedToWindow() {
@@ -47,9 +46,16 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
     }
 
     fun bind(model: CarouselModel) {
-        if (presenter.model == null) {
+        //if (presenter.model == null) {
             presenter.setModel(model)
-        }
+        //}
+    }
+
+    private fun prepareRecyclerView() {
+        layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+        carousel.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
+        carousel.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        carousel.adapter = adapter
     }
 
     override fun setTitle(title: String) {

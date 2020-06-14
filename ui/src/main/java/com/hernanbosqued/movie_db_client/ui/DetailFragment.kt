@@ -20,17 +20,17 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.You
 import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.View {
+    private lateinit var presenter: DetailPresenter
+
     interface Callbacks
 
-    private lateinit var presenter: DetailPresenter
+    override fun getLayout(): Int {
+        return R.layout.fragment_details
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = DetailPresenter(this, RepositoryImpl(context!!))
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,11 +43,6 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         empty_view.visibility = View.VISIBLE
     }
 
-    private fun prepareYoutube() {
-        lifecycle.addObserver(youtube)
-        youtube.enableAutomaticInitialization = true
-    }
-
     override fun onResume() {
         super.onResume()
         presenter.bindView(this)
@@ -56,6 +51,10 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
     override fun onPause() {
         super.onPause()
         presenter.unbindView()
+    }
+    private fun prepareYoutube() {
+        lifecycle.addObserver(youtube)
+        youtube.enableAutomaticInitialization = true
     }
 
     override val dummyCallbacks: Callbacks
@@ -76,14 +75,6 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
             val absolutePath = Constants.IMAGE_BASE_URL + posterPath
             Utils.setImage(poster_image, null, null, absolutePath, showAnimation = false, roundedCorners = false)
         }
-    }
-
-
-    private inline fun String?.IFIF(condition: Boolean, block: () -> String?): String? {
-        if (condition)
-            return block()
-        else
-            return null
     }
 
     override fun setRanking(ranking: String) {

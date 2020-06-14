@@ -10,10 +10,14 @@ import com.hernanbosqued.movie_db_client.domain.Visitor
 import java.io.Serializable
 import java.lang.reflect.Type
 
-open class ResultModel:Visitable, Serializable {
+open class ResultModel(mediatype: MEDIATYPE) : Visitable, Serializable {
 
-    fun getMediaType( ):MEDIATYPE{
-        return MEDIATYPE.fromType( this.javaClass )
+    init {
+        Deserializer.mediatype = mediatype
+    }
+
+    fun getMediaType(): MEDIATYPE {
+        return MEDIATYPE.fromType(this.javaClass)
     }
 
     override fun visit(visitor: Visitor) {
@@ -33,7 +37,10 @@ open class ResultModel:Visitable, Serializable {
     var hasVideo: Boolean = false
 
     object Deserializer : JsonDeserializer<ResultModel> {
-        override fun deserialize( json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?) : ResultModel? {
+
+        var mediatype = MEDIATYPE.UNDEFINED
+
+        override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): ResultModel? {
 
             val jsonObject = json!!.asJsonObject ?: run { return null }
 

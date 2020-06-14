@@ -1,22 +1,38 @@
 package com.hernanbosqued.movie_db_client.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import com.hernanbosqued.movie_db_client.domain.model.ResultModel
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.fragment_list.*
-import java.io.Serializable
 
 class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
     private lateinit var presenter: ListPresenter
 
+    interface Callbacks {
+        fun fromMainFragment(model: ResultModel)
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.fragment_list
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = ListPresenter(this, RepositoryImpl(context!!))
+        presenter = ListPresenter(this, CarouselClient(RepositoryImpl(context!!)), StringRepositoryImpl(context!!))
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        prepareSearchView()
+        prepareCheckboxes()
+
+        if (savedInstanceState == null) {
+            presenter.bind()
+        }
     }
 
     override fun onResume() {
@@ -29,34 +45,15 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         presenter.unbindView()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_list, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        prepareSearchView()
-        prepareCheckboxes()
-
-        if (savedInstanceState == null) {
-            presenter.addCarousels()
-        }
-    }
-
     override fun addCarousel(model: CarouselModel) {
         val view = CarouselView(context!!, this)
+        view.bind(model)
+
+        container.addView(view, 0)
 
         lifecycle.addObserver(view)
 
-        view.bind(model)
-        container.addView(view, 0)
         scrollTop()
-    }
-
-    override fun addCarousels(models: List<CarouselModel>) {
-        for (model in models) {
-            addCarousel(model)
-        }
     }
 
     override fun onItemClicked(model: ResultModel) {
@@ -108,14 +105,8 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
-    interface Callbacks {
-        fun <RESULT_MODEL : Serializable> fromMainFragment(model: RESULT_MODEL)
-    }
-
     override val dummyCallbacks: Callbacks
         get() = object : Callbacks {
-
-            override fun <RESULT_MODEL : Serializable> fromMainFragment(model: RESULT_MODEL) {
-            }
+            override fun fromMainFragment(model: ResultModel){}
         }
 }

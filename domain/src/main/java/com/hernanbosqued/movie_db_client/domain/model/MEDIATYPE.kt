@@ -1,6 +1,5 @@
 package com.hernanbosqued.movie_db_client.domain.model
 
-import java.lang.RuntimeException
 import java.lang.reflect.Type
 
 enum class MEDIATYPE(val value: String) {
@@ -16,9 +15,9 @@ enum class MEDIATYPE(val value: String) {
         override fun type(): Type {
             return PersonResultModel::class.java
         }
-    },ERROR("error"){
+    },UNDEFINED("undefined"){
         override fun type(): Type {
-            throw RuntimeException("MEDIATYPE error")
+            return ResultModel::class.java
         }
     };
 
@@ -26,11 +25,11 @@ enum class MEDIATYPE(val value: String) {
 
     companion object{
         fun fromValue(param:String):MEDIATYPE{
-            return values().firstOrNull{ it.value == param }?:ERROR
+            return values().firstOrNull{ it.value == param }?:UNDEFINED
         }
 
         fun fromType(type: Type): MEDIATYPE {
-            return values().firstOrNull{ it.type() == type }?:ERROR
+            return values().firstOrNull{ it.type() == type }?:UNDEFINED
         }
     }
 }
