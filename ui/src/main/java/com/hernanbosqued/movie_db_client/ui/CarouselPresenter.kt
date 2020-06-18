@@ -2,13 +2,16 @@ package com.hernanbosqued.movie_db_client.ui
 
 import com.hernanbosqued.movie_db_client.domain.CarouselClientCallbacks
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
+import com.hernanbosqued.movie_db_client.domain.CarouselModel
 
-class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselModel, CarouselContract.View>(view), CarouselContract.Presenter, CarouselClientCallbacks {
+class CarouselPresenter(view: CarouselContract.View, var client: CarouselClient) : BasePresenter<CarouselModel, CarouselContract.View>(view), CarouselContract.Presenter, CarouselClientCallbacks {
 
-    override fun onOK(data: CarouselItemModel) {
+    var page = 1
+
+    override fun onOK(data: List<CarouselItemModel>) {
         view()?.hideProgress()
 
-        this.model?.list?.add(data)
+        this.model?.list?.addAll(data)
 
         view()?.addData(data)
 
@@ -21,37 +24,23 @@ class CarouselPresenter(view: CarouselContract.View) : BasePresenter<CarouselMod
 
     fun setModel(model: CarouselModel) {
         super.model = model
+        model.list = ArrayList()
         view()?.setTitle(model.title)
         load()
     }
 
     override fun load() {
         view()?.showProgress()
-        model?.endpoint?.invoke(model?.query, this)
+
+        val c = client.javaClass.methods.find { it.name.contentEquals(model?.method!!) }
+        c?.invoke(client, page++, model?.query, this)
     }
 
     override fun onCarouselClicked() {
         model?.let { view()?.showCarouselData(it) }
     }
 
-//    override fun onOK(data: List<CarouselItemModel>) {
-//        view()?.hideProgress()
-//
-//        //this.maxPages = response.totalPages
-//        //this.continueLoading = page < maxPages
-//        val filteredResult = data.filterNotNull()
-//        this.model?.list?.addAll(filteredResult)
-//
-//        view()?.addData(filteredResult)
-//
-//        if (this.model?.list?.isEmpty()!!) {
-//            view()?.showEmpty()
-//        } else {
-//            view()?.hideEmpty()
-//        }
-//    }
-
-     override fun onError(error: String) {
+    override fun onError(error: String) {
         view()?.showMessage(error)
         view()?.hideProgress()
     }

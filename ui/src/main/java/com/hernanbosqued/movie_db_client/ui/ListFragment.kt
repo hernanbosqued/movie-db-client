@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
+import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.fragment_list.*
 
@@ -48,11 +49,7 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
     override fun addCarousel(model: CarouselModel) {
         val view = CarouselView(context!!, this)
         view.bind(model)
-
-        container.addView(view, 0)
-
-        lifecycle.addObserver(view)
-
+        container.addView(view)
         //scrollTop()
     }
 

@@ -1,0 +1,19 @@
+{
+    "results": [
+        {
+            "title": "atlanta 1",
+            "method": "searchBoth",
+            "query": "Depeche Mode video singles"
+        },
+        {
+            "title": "atlanta 2",
+            "method": "searchBoth",
+            "query": "a"
+        },
+        {
+            "title": "atlanta 3",
+            "method": "searchBoth",
+            "query": "b"
+        }
+    ]
+}

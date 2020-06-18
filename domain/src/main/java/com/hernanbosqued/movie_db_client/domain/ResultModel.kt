@@ -14,6 +14,13 @@ open class ResultModel : Visitable, Serializable {
         return visitor.accept(this)
     }
 
+    override fun parse( ): CarouselItemModel {
+        return CarouselItemModel().apply {
+            this.ranking = ranking
+            this.type = getType()
+        }
+    }
+
     @SerializedName(value = "id")
     open val id: String = ""
 

@@ -1,13 +1,26 @@
 package com.hernanbosqued.movie_db_client.repo
 
 import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.hernanbosqued.movie_db_client.domain.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.BufferedInputStream
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
-class RepositoryImpl(context: Context) : Repository {
+class RepositoryImpl(val context: Context) : Repository {
     private var service: APIService = ServiceGenerator.createService(context, APIService::class.java)
+
+    override fun carouselList(callbacks: RepositoryCallbacks<CarouselListModel>) {
+        var stream = context.assets.open("repository.json")
+        var reader = BufferedReader(InputStreamReader(stream))
+        var result = Gson().fromJson(reader, CarouselListModel::class.java)
+
+        callbacks.onSuccess(result)
+    }
 
     override fun searchMovies(page: Int, query: String?, callbacks: RepositoryCallbacks<BaseListModel<MovieResultModel>>) {
         service.searchMovies(page, query, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))

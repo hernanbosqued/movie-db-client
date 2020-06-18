@@ -4,47 +4,40 @@ import com.hernanbosqued.movie_db_client.domain.*
 
 class CarouselClient(private var repository: Repository) {
 
-    private var page: Int = 0
-
-    fun searchBoth(query: String?, callbacks: CarouselClientCallbacks) {
-        repository.searchBoth(page, query, RepositoryCallbacksImpl<BaseListModel<ResultModel>>())
+    fun searchBoth(page: Int, query: String?, callbacks: CarouselClientCallbacks) {
+        repository.searchBoth(page, query, RepositoryCallbacksImpl(callbacks))
     }
 
     fun searchTV(page: Int, query: String, callbacks: CarouselClientCallbacks) {
-        repository.searchTV(page, query, GenericsClientCallbackImpl<TVResultModel>(callbacks))
+        repository.searchTV(page, query, RepositoryCallbacksImpl(callbacks))
     }
 
     fun searchMovies(page: Int, query: String?, callbacks: CarouselClientCallbacks) {
-        repository.searchMovies(page, query, GenericsClientCallbackImpl<MovieResultModel>(callbacks))
+        repository.searchMovies(page, query, RepositoryCallbacksImpl(callbacks))
     }
 
     fun moviesPopular(page: Int, callbacks: CarouselClientCallbacks) {
-        repository.moviesPopular(page, GenericsClientCallbackImpl<MovieResultModel>(callbacks))
+        repository.moviesPopular(page, RepositoryCallbacksImpl(callbacks))
     }
 
     fun moviesTopRated(page: Int, callbacks: CarouselClientCallbacks) {
-        repository.moviesTopRated(page, GenericsClientCallbackImpl<MovieResultModel>(callbacks))
+        repository.moviesTopRated(page, RepositoryCallbacksImpl(callbacks))
     }
 
     fun tvPopular(page: Int, query: String?, callbacks: CarouselClientCallbacks) {
-        repository.tvPopular(page, GenericsClientCallbackImpl<TVResultModel>(callbacks))
+        repository.tvPopular(page, RepositoryCallbacksImpl(callbacks))
     }
 }
 
-class GenericsClientCallbackImpl<T : ResultModel>(callbacks: CarouselClientCallbacks) : RepositoryCallbacks<BaseListModel<T>> {
+
+class RepositoryCallbacksImpl<T : ResultModel>(var callbacks: CarouselClientCallbacks) : RepositoryCallbacks<BaseListModel<T>> {
+
     override fun onSuccess(data: BaseListModel<T>) {
+        callbacks.onOK(data.results.map { it.parse() })
     }
 
     override fun onFail(error: ErrorModel) {
-    }
-}
-
-class RepositoryCallbacksImpl<T> : RepositoryCallbacks<T> {
-    override fun onSuccess(data: T) {
-    }
-
-    override fun onFail(error: ErrorModel) {
-
+        callbacks.onError(error.message)
     }
 }
 
@@ -53,7 +46,7 @@ class RepositoryCallbacksImpl<T> : RepositoryCallbacks<T> {
 //                override fun onFail(errorModel: ErrorModel) {
 //                    TODO("Not yet implemented")
 //                }
-//            }
+//
 //        }
 
 //    fun videos(type: String, id: Int, callbacks: Callbacks.CarouselClientCallbacks tCallbacks) {
@@ -72,7 +65,7 @@ class RepositoryCallbacksImpl<T> : RepositoryCallbacks<T> {
 //                }
 //
 //                override fun onFail(errorModel: ErrorModel) {
-//                    callbacks.onError(errorModel.message)
+//                     callbacks.onError(errorModel.message)
 //                }
 //            }
 //        }

@@ -13,6 +13,16 @@ class MovieResultModel : ResultModel(), Serializable, Visitable {
         visitor.accept(this)
     }
 
+    override fun parse( ): CarouselItemModel {
+        return CarouselItemModel().apply {
+            this.title = title
+            this.path = posterPath
+            this.ranking = ranking
+            this.type = getType()
+        }
+    }
+
+
     @SerializedName(value = "title")
     val title: String? = null
 

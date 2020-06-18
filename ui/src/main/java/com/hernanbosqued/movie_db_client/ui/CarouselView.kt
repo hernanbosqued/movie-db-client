@@ -10,12 +10,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
+import com.hernanbosqued.movie_db_client.domain.CarouselModel
+import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 @SuppressLint("ViewConstructor")
 class CarouselView(context: Context, private val listener: CarouselListeners) : ConstraintLayout(context), CarouselContract.View, ScrollListener, LifecycleObserver {
 
-    private var presenter: CarouselPresenter = CarouselPresenter(this)
+    private var presenter: CarouselPresenter = CarouselPresenter(this, CarouselClient(RepositoryImpl(context)))
     private var adapter = ItemsAdapter(this, listener)
 
     init {
@@ -39,9 +41,7 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
     }
 
     fun bind(model: CarouselModel) {
-        //if (presenter.model == null) {c
             presenter.setModel(model)
-        //}
     }
 
     private fun prepareRecyclerView() {

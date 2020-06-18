@@ -13,6 +13,15 @@ class PersonResultModel : ResultModel(), Serializable, Visitable {
         visitor.accept(this)
     }
 
+    override fun parse( ): CarouselItemModel {
+        return CarouselItemModel().apply {
+            this.title = name
+            this.path = profilePath
+            this.ranking = ranking
+            this.type = getType()
+        }
+    }
+
     @SerializedName("name")
     val name: String? = null
 

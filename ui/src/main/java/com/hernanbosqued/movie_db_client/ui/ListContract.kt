@@ -1,5 +1,7 @@
 package com.hernanbosqued.movie_db_client.ui
 
+import com.hernanbosqued.movie_db_client.domain.CarouselModel
+
 class ListContract {
     interface View {
         fun showMessage(message: String)
