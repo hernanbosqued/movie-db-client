@@ -1,14 +1,25 @@
 <resources>
     <string name="app_name" translatable="false">Movies DB Client</string>
-    <string name="ranking" translatable="false">Ranking:</string>
     <string name="search"><font size="15">Search</font></string>
     <string name="no_results_found">No results found</string>
     <string name="no_video">No video provided</string>
     <string name="no_image">No image provided</string>
     <string name="movies">movies</string>
     <string name="tv_shows">tv shows</string>
+
+    <string name="has_video" translatable="false">(has video)</string>
+    <string name="movies_popular" formatted="true" translatable="false">Popular movies</string>
+    <string name="movies_top_rated" formatted="true" translatable="false">Top rated movies</string>
+    <string name="tv_popular" formatted="true" translatable="false">Popular tv shows</string>
+    <string name="tv_top_rated" formatted="true" translatable="false">Top rated tv shows</string>
     <string name="search_both" formatted="true" translatable="false">Movies and TV shows for \'%1$s\'</string>
     <string name="search_movies" formatted="true" translatable="false">Movies for \'%1$s\'</string>
     <string name="search_tv" formatted="true" translatable="false">TV shows for \'%1$s\'</string>
+
+    <string name="ranking" translatable="false">Ranking:</string>
+    <string name="results" translatable="false">Results:</string>
+    <string name="page" translatable="false">Page:</string>
+    <string name="total_pages" translatable="false">Total pages:</string>
+    <string name="total_results" translatable="false">Total results:</string>
 
 </resources>

@@ -5,8 +5,6 @@ import com.hernanbosqued.movie_db_client.domain.CarouselModel
 
 class CarouselContract {
     interface View {
-        fun addData(data: CarouselItemModel)
-        fun addData(data: List<CarouselItemModel>)
         fun showMessage(message: String)
         fun showProgress()
         fun hideProgress()
@@ -14,11 +12,12 @@ class CarouselContract {
         fun showEmpty(error:String)
         fun hideEmpty()
         fun showCarouselData(model: CarouselModel)
-        fun setTitle(title: String)
+        fun setCarouselInfo(title: String, page: Int, totalPages: Int, totalResults: Int, results: Int)
+        fun addData(data: MutableList<CarouselItemModel>)
     }
 
     interface Presenter {
-        fun load()
+        fun load(first: Boolean)
         fun onCarouselClicked()
     }
 }

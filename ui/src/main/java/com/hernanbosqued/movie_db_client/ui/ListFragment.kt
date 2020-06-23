@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.setMargins
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
+import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
+import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.fragment_list.*
 
@@ -29,7 +33,6 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         super.onViewCreated(view, savedInstanceState)
 
         prepareSearchView()
-        prepareCheckboxes()
 
         if (savedInstanceState == null) {
             presenter.bind()
@@ -46,11 +49,16 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         presenter.unbindView()
     }
 
-    override fun addCarousel(model: CarouselModel) {
+    override fun addCarousel(model: CarouselModel, onTop: Boolean) {
         val view = CarouselView(context!!, this)
+        val params = view.layoutParams as ConstraintLayout.LayoutParams
+        params.setMargins(20)
         view.bind(model)
-        container.addView(view)
-        //scrollTop()
+
+        container.addView(view, when {
+            onTop -> 0
+            else -> -1
+        })
     }
 
     override fun onItemClicked(model: CarouselItemModel) {
@@ -62,20 +70,18 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         showMessage(model.title)
     }
 
-    private fun prepareCheckboxes() {
+    override fun initialSelection(moviesChecked: Boolean, tvChecked: Boolean) {
+        checkbox_movies.isChecked = moviesChecked
+        checkbox_tv.isChecked = moviesChecked
+
         checkbox_movies.setOnCheckedChangeListener { _, _ ->
-            if (!checkbox_tv.isChecked) {
-                checkbox_movies.isChecked = true
-            }
+            presenter.checkboxChanged(MOVIE)
         }
         checkbox_tv.setOnCheckedChangeListener { _, _ ->
-            if (!checkbox_movies.isChecked) {
-                checkbox_tv.isChecked = true
-            }
+            presenter.checkboxChanged(TV)
         }
-
-        checkbox_movies.isChecked = true
     }
+
 
     override fun scrollTop() {
         //scroll_view.smoothScrollTo(0, 0)
@@ -89,7 +95,7 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
 
     override fun onQueryTextSubmit(query: String): Boolean {
         search_view.clearFocus()
-        presenter.processQuery(query, checkbox_movies.isChecked, checkbox_tv.isChecked)
+        presenter.processQuery(query)
         return false
     }
 
@@ -107,3 +113,5 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
             override fun fromMainFragment(model: CarouselItemModel) {}
         }
 }
+
+

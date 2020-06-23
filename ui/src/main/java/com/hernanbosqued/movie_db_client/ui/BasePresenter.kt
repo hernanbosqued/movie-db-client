@@ -9,7 +9,6 @@ abstract class BasePresenter<M, V>() {
     }
 
     var model: M? = null
-
     private var view: WeakReference<V>? = null
 
     private fun setupDone(): Boolean {
@@ -18,6 +17,14 @@ abstract class BasePresenter<M, V>() {
 
     fun bindView(view: V) {
         this.view = WeakReference(view)
+    }
+
+    fun model(): M? {
+        return model
+    }
+
+    fun bindModel(model: M) {
+        this.model = model
     }
 
     fun view(): V? {

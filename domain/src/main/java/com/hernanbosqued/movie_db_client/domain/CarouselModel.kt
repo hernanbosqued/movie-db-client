@@ -1,9 +1,16 @@
 package com.hernanbosqued.movie_db_client.domain
 
-class CarouselModel(val method: String, title: String, val query: String?) {
+class CarouselModel{
 
-    //var endpoint: (String?, CarouselClientCallbacks) -> Unit
+    var method: String? = null
+    var query: String? = null
+    var page: Int = 0
+    var results: Int = 0
+    var totalPages: Int = 0
+    var totalResults: Int = 0
 
-    var title = query?.let { title.format(it) } ?: title
+    var title: String = ""
+        get() = query?.let { field.format(it) } ?: field
+
     var list: MutableList<CarouselItemModel> = ArrayList()
 }

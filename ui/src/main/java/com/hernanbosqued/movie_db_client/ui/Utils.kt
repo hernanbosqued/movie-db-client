@@ -6,12 +6,15 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.core.text.toSpannable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -19,19 +22,22 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import kotlinx.android.synthetic.main.fragment_details.*
 
 object Utils {
 
-    fun getSpan(key: String, value: String, accent: Int): String {
+    fun getSpan(key: String, value: String, accent: Int): Spannable {
 
         if (key.isNotEmpty()) {
             val span = SpannableStringBuilder(key)
-            span.setSpan(ForegroundColorSpan(accent), 0, span.length - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            span.setSpan(ForegroundColorSpan(accent), 0, span.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             span.setSpan(StyleSpan(Typeface.BOLD), 0, span.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            return span.append(" $value").toString()
+            return span.append(" $value").toSpannable()
         }
-        return "$key: $value"
+        return "$key: $value".toSpannable()
     }
+
+
 
     fun setImage(view: ImageView, progress: View?, noProvided:View?, path: String, roundedCorners: Boolean) {
 

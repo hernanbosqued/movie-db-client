@@ -1,6 +1,6 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import com.hernanbosqued.movie_db_client.domain.ResultModel
+import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 
 class DetailContract {
@@ -14,6 +14,6 @@ class DetailContract {
     }
 
     interface Presenter {
-        fun setModel(resultModel: ResultModel)
+        fun setModel(resultModel: CarouselItemModel)
     }
 }

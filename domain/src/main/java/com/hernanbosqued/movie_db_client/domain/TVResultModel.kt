@@ -1,8 +1,6 @@
 package com.hernanbosqued.movie_db_client.domain
 
 import com.google.gson.annotations.SerializedName
-import com.hernanbosqued.movie_db_client.domain.Visitable
-import com.hernanbosqued.movie_db_client.domain.Visitor
 import java.io.Serializable
 
 class TVResultModel : ResultModel(), Serializable, Visitable {
@@ -14,12 +12,18 @@ class TVResultModel : ResultModel(), Serializable, Visitable {
 
     override fun parse( ): CarouselItemModel {
         return CarouselItemModel().apply {
-            this.title = name
-            this.path = posterPath
-            this.ranking = ranking
-            this.type = getType()
+            this.id = this@TVResultModel.id
+            this.hasVideo = this@TVResultModel.hasVideo
+            this.overview = this@TVResultModel.overview
+            this.title = this@TVResultModel.name
+            this.path = this@TVResultModel.posterPath
+            this.ranking = this@TVResultModel.ranking
+            this.type = this@TVResultModel.getType()
         }
     }
+
+    @SerializedName(value = "id")
+    val id: Int = - 1
 
     @SerializedName(value = "name")
     val name: String? = null

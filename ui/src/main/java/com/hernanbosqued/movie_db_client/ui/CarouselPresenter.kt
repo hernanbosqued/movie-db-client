@@ -1,47 +1,60 @@
 package com.hernanbosqued.movie_db_client.ui
 
 import com.hernanbosqued.movie_db_client.domain.CarouselClientCallbacks
-import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 
 class CarouselPresenter(view: CarouselContract.View, var client: CarouselClient) : BasePresenter<CarouselModel, CarouselContract.View>(view), CarouselContract.Presenter, CarouselClientCallbacks {
 
-    var page = 1
-
-    override fun onOK(data: List<CarouselItemModel>) {
+    override fun onOK(model: CarouselModel) {
         view()?.hideProgress()
+        updateModel(model)
+    }
 
-        this.model?.list?.addAll(data)
+    private fun updateModel(param: CarouselModel) {
+        this.model()?.apply {
+            title = param.title
+            page = param.page
+            totalPages = param.totalPages
+            totalResults = param.totalResults
+            list.addAll(param.list)
+            results = list.size
 
-        view()?.addData(data)
+            view()?.addData(param.list)
+            view()?.setCarouselInfo(title, page, totalPages, totalResults, results)
 
-        if (this.model?.list?.isEmpty()!!) {
-            view()?.showEmpty()
-        } else {
-            view()?.hideEmpty()
+            checkListContent()
         }
     }
 
     fun setModel(model: CarouselModel) {
-        super.model = model
-        model.list = ArrayList()
-        view()?.setTitle(model.title)
-        load()
+        super.bindModel(model)
+        load(true)
     }
 
-    override fun load() {
-        view()?.showProgress()
-
-        val c = client.javaClass.methods.find { it.name.contentEquals(model?.method!!) }
-        c?.invoke(client, page++, model?.query, this)
+    override fun load(first: Boolean) {
+        model()?.let { model ->
+            if (first || model.page < model.totalPages) {
+                val method = client.javaClass.methods.find { it.name.contentEquals(model.method!!) }
+                view()?.showProgress()
+                method?.invoke(client, model.page + 1, model.query, this)
+            }
+        }
     }
 
     override fun onCarouselClicked() {
-        model?.let { view()?.showCarouselData(it) }
+        model()?.let { view()?.showCarouselData(it) }
     }
 
     override fun onError(error: String) {
-        view()?.showMessage(error)
         view()?.hideProgress()
+        view()?.showEmpty(error)
+        checkListContent()
+    }
+
+    private fun checkListContent() {
+        if (model()?.list.isNullOrEmpty()) {
+            view()?.showEmpty()
+        } else
+            view()?.hideEmpty()
     }
 }

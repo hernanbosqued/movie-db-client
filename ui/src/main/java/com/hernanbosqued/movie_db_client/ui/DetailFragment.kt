@@ -1,14 +1,10 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 import com.hernanbosqued.movie_db_client.repo.Constants
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
@@ -27,14 +23,14 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = DetailPresenter(this, RepositoryImpl(context!!))
+        presenter = DetailPresenter(this, CarouselClient(RepositoryImpl(context!!),ResourcesRepositoryImpl(context!!)))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val model = arguments?.getSerializable("model") as ResultModel?
-//        model?.let { presenter.setModel(it) }
+        val model: CarouselItemModel? = arguments?.getSerializable("model") as CarouselItemModel?
+        model?.let { presenter.setModel(it) }
 
         youtube.visibility = View.INVISIBLE
         empty_view.visibility = View.VISIBLE
@@ -76,17 +72,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
     }
 
     override fun setRanking(ranking: String) {
-
-        if (ranking.isNotEmpty()) {
-            val span = SpannableStringBuilder(getString(R.string.ranking))
-            span.setSpan(
-                ForegroundColorSpan(
-                    ContextCompat.getColor(context!!, R.color.colorAccent)
-                ), 0, span.length - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            span.setSpan(StyleSpan(Typeface.BOLD), 0, span.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            this.ranking_text.text = span.append(" $ranking")
-        }
+        this.ranking_text.text = Utils.getSpan(getString(R.string.ranking), ranking, ContextCompat.getColor(context!!, R.color.colorAccent))
     }
 
     override fun showMessage(message: String) {

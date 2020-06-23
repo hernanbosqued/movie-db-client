@@ -2,12 +2,10 @@ package com.hernanbosqued.movie_db_client.repo
 
 import android.content.Context
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.hernanbosqued.movie_db_client.domain.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -22,36 +20,35 @@ class RepositoryImpl(val context: Context) : Repository {
         callbacks.onSuccess(result)
     }
 
-    override fun searchMovies(page: Int, query: String?, callbacks: RepositoryCallbacks<BaseListModel<MovieResultModel>>) {
+    override fun searchMovies(page: Int, query: String?, callbacks: RepositoryCallbacks<ListModel<MovieResultModel>>) {
         service.searchMovies(page, query, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
     }
 
-    override fun moviesPopular(page: Int, callbacks: RepositoryCallbacks<BaseListModel<MovieResultModel>>) {
+    override fun moviesPopular(page: Int, callbacks: RepositoryCallbacks<ListModel<MovieResultModel>>) {
         service.moviesPopular(page, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
     }
 
-    override fun moviesTopRated(page: Int, callbacks: RepositoryCallbacks<BaseListModel<MovieResultModel>>) {
+    override fun moviesTopRated(page: Int, callbacks: RepositoryCallbacks<ListModel<MovieResultModel>>) {
         service.moviesTopRated(page, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
     }
 
-    override fun tvPopular(page: Int, callbacks: RepositoryCallbacks<BaseListModel<TVResultModel>>) {
+    override fun tvPopular(page: Int, callbacks: RepositoryCallbacks<ListModel<TVResultModel>>) {
         service.tvPopular(page, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
     }
 
-    override fun tvTopRated(page: Int, callbacks: RepositoryCallbacks<BaseListModel<TVResultModel>>) {
+    override fun tvTopRated(page: Int, callbacks: RepositoryCallbacks<ListModel<TVResultModel>>) {
         service.tvTopRated(page, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
     }
 
-    override fun searchTV(page: Int, query: String?, callbacks: RepositoryCallbacks<BaseListModel<TVResultModel>>) {
+    override fun searchTV(page: Int, query: String?, callbacks: RepositoryCallbacks<ListModel<TVResultModel>>) {
         service.searchTVShows(page, query, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
     }
 
-
-    override fun searchBoth(page: Int, query: String?, callbacks: RepositoryCallbacks<BaseListModel<ResultModel>>) {
+    override fun searchBoth(page: Int, query: String?, callbacks: RepositoryCallbacks<ListModel<ResultModel>>) {
         service.searchBoth(page, query, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
     }
 
-    override fun videos(type: String, id: Int, callbacks: RepositoryCallbacks<BaseListModel<VideoResultModel>>) {
+    override fun videos(type: String, id: Int, callbacks: RepositoryCallbacks<ListModel<VideoResultModel>>) {
         service.videos(type, id, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
     }
 
