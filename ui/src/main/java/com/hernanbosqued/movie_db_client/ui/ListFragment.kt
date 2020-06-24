@@ -10,6 +10,8 @@ import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
+import com.hernanbosqued.movie_db_client.domain.orElse
+import com.hernanbosqued.movie_db_client.domain.then
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.fragment_list.*
 
@@ -55,10 +57,8 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         params.setMargins(20)
         view.bind(model)
 
-        container.addView(view, when {
-            onTop -> 0
-            else -> -1
-        })
+        val index: Int = ( onTop then 0 orElse -1 )!!
+        container.addView(view, index)
     }
 
     override fun onItemClicked(model: CarouselItemModel) {

@@ -17,3 +17,17 @@ infix fun <T> T?.ifNull(block: () -> Unit): Unit? {
     return if (this == null) block()
     else null
 }
+
+//IF
+infix fun <T> Boolean.then(ifResult: T?): Pair<Boolean, T?> {
+    return Pair(this, ifResult)
+}
+
+//ELSE
+infix fun <T> Pair<Boolean,T?>.orElse(elseResult: T?): T? {
+    return if (this.first) {
+        this.second
+    } else {
+        elseResult
+    }
+}
