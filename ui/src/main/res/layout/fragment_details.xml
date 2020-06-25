@@ -63,6 +63,7 @@
         android:layout_height="0dp"
         android:layout_margin="@dimen/margin16"
         android:gravity="center"
+        android:visibility="invisible"
         android:text="@string/no_video"
         app:layout_constraintBottom_toBottomOf="@id/youtube"
         app:layout_constraintLeft_toLeftOf="@id/youtube"
