@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.hernanbosqued.movie_db_client.domain.CarouselClient
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 import com.hernanbosqued.movie_db_client.repo.Constants
@@ -12,8 +13,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import kotlinx.android.synthetic.main.fragment_details.*
 
-class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.View {
-    private lateinit var presenter: DetailPresenter
+class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), com.hernanbosqued.movie_db_client.presenter.DetailContract.View {
+    private lateinit var presenter: com.hernanbosqued.movie_db_client.presenter.DetailPresenter
 
     interface Callbacks
 
@@ -23,7 +24,13 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = DetailPresenter(this, CarouselClient(RepositoryImpl(context!!),ResourcesRepositoryImpl(context!!)))
+        presenter = com.hernanbosqued.movie_db_client.presenter.DetailPresenter(
+            this,
+            CarouselClient(
+                RepositoryImpl(context!!),
+                ResourcesRepositoryImpl(context!!)
+            )
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

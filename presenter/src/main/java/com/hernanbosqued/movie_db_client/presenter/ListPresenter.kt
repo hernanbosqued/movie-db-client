@@ -1,9 +1,9 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.presenter
 import com.hernanbosqued.movie_db_client.domain.*
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
 
-class ListPresenter(view: ListContract.View, var repository: Repository) : BasePresenter<List<CarouselModel>, ListContract.View>(view), ListContract.Presenter, RepositoryCallbacks<CarouselListModel> {
+class ListPresenter(view: ListContract.View, var repository: Repository) : com.hernanbosqued.movie_db_client.presenter.BasePresenter<List<CarouselModel>, ListContract.View>(view), ListContract.Presenter, RepositoryCallbacks<CarouselListModel> {
 
     private var searchSelection = setOf<MEDIATYPE>(TV, MOVIE)
 

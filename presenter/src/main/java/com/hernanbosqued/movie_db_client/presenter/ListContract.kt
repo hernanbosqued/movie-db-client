@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.presenter
 
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE

@@ -11,16 +11,23 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hernanbosqued.movie_db_client.domain.CarouselClient
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 @SuppressLint("ViewConstructor")
-class CarouselView(context: Context, private val listener: CarouselListeners) : ConstraintLayout(context), CarouselContract.View, ScrollListener, LifecycleObserver {
+class CarouselView(context: Context, private val listener: CarouselListeners) : ConstraintLayout(context), com.hernanbosqued.movie_db_client.presenter.CarouselContract.View, ScrollListener, LifecycleObserver {
 
-    private val client = CarouselClient(RepositoryImpl(context), ResourcesRepositoryImpl(context))
-    private val presenter = CarouselPresenter(this, client)
+    private val client = CarouselClient(
+        RepositoryImpl(context), ResourcesRepositoryImpl(context)
+    )
+    private val presenter =
+        com.hernanbosqued.movie_db_client.presenter.CarouselPresenter(
+            this,
+            client
+        )
     private val adapter = ItemsAdapter(this, listener)
 
     init {

@@ -2,20 +2,10 @@ package com.hernanbosqued.movie_db_client.ui
 
 import android.content.Context
 import androidx.core.content.ContextCompat
+import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
 
-interface ResourcesRepository {
-    fun searchBoth():String
-    fun searchMovies():String
-    fun searchTV():String
-    fun getD():String
-    fun getAccent():Int
-    fun moviesPopular(): String
-    fun moviesTopRated(): String
-    fun tvPopular(): String
-    fun tvTopRated(): String
-}
-
-class ResourcesRepositoryImpl(private val context: Context) : ResourcesRepository{
+class ResourcesRepositoryImpl(private val context: Context) :
+    ResourcesRepository {
 
     override fun moviesPopular(): String {
         return context.getString(R.string.movies_popular)

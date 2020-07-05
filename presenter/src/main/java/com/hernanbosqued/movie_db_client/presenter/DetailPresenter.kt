@@ -1,8 +1,8 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.presenter
 
 import com.hernanbosqued.movie_db_client.domain.*
 
-class DetailPresenter(view: DetailContract.View, private val client: CarouselClient) : BasePresenter<CarouselItemModel, DetailContract.View>(view), DetailContract.Presenter, RepositoryCallbacks<ListModel<VideoResultModel>> {
+class DetailPresenter(view: DetailContract.View, private val client: CarouselClient) : com.hernanbosqued.movie_db_client.presenter.BasePresenter<CarouselItemModel, DetailContract.View>(view), DetailContract.Presenter, RepositoryCallbacks<ListModel<VideoResultModel>> {
 
     override fun setModel(param: CarouselItemModel) {
         this.model = param

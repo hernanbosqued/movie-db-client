@@ -17,8 +17,8 @@ import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener,
-    android.widget.SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
-    private lateinit var presenter: ListPresenter
+    android.widget.SearchView.OnQueryTextListener, com.hernanbosqued.movie_db_client.presenter.ListContract.View, CarouselListeners {
+    private lateinit var presenter: com.hernanbosqued.movie_db_client.presenter.ListPresenter
 
     interface Callbacks {
         fun fromMainFragment(model: CarouselItemModel)
@@ -30,7 +30,10 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = ListPresenter(view = this, repository = RepositoryImpl(context!!))
+        presenter = com.hernanbosqued.movie_db_client.presenter.ListPresenter(
+            view = this,
+            repository = RepositoryImpl(context!!)
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
