@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.hernanbosqued.movie_db_client.domain.CarouselClient
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 import com.hernanbosqued.movie_db_client.repo.Constants
@@ -13,8 +12,9 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import kotlinx.android.synthetic.main.fragment_details.*
 
-class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), com.hernanbosqued.movie_db_client.presenter.DetailContract.View {
-    private lateinit var presenter: com.hernanbosqued.movie_db_client.presenter.DetailPresenter
+class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
+    com.hernanbosqued.movie_db_client.presenter.DetailContract.View {
+    private lateinit var presenter: DetailPresenter
 
     interface Callbacks
 
@@ -24,13 +24,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), com.hernanbosqu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = com.hernanbosqued.movie_db_client.presenter.DetailPresenter(
-            this,
-            CarouselClient(
-                RepositoryImpl(context!!),
-                ResourcesRepositoryImpl(context!!)
-            )
-        )
+        presenter = DetailPresenter(this, CarouselClient())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,7 +64,6 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), com.hernanbosqu
         overview_text.text = overview
     }
 
-
     override fun setPoster(posterPath: String?) {
         posterPath?.let {
             val absolutePath = Constants.IMAGE_BASE_URL + posterPath
@@ -79,7 +72,11 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), com.hernanbosqu
     }
 
     override fun setRanking(ranking: String) {
-        this.ranking_text.text = Utils.getSpan(getString(R.string.ranking), ranking, ContextCompat.getColor(context!!, R.color.colorAccent))
+        this.ranking_text.text = Utils.getSpan(
+            getString(R.string.ranking),
+            ranking,
+            ContextCompat.getColor(context!!, R.color.colorAccent)
+        )
     }
 
     override fun showMessage(message: String) {

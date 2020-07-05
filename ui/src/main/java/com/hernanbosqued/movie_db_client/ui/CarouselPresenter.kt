@@ -1,10 +1,14 @@
-package com.hernanbosqued.movie_db_client.presenter
+package com.hernanbosqued.movie_db_client.ui
 
-import com.hernanbosqued.movie_db_client.domain.CarouselClient
 import com.hernanbosqued.movie_db_client.domain.CarouselClientCallbacks
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
+import com.hernanbosqued.movie_db_client.presenter.BasePresenter
+import com.hernanbosqued.movie_db_client.presenter.CarouselContract
 
-class CarouselPresenter(view: CarouselContract.View, var client: CarouselClient) : com.hernanbosqued.movie_db_client.presenter.BasePresenter<CarouselModel, CarouselContract.View>(view), CarouselContract.Presenter, CarouselClientCallbacks {
+class CarouselPresenter(view: CarouselContract.View, private var client: CarouselClient) :
+    BasePresenter<CarouselModel, CarouselContract.View>(view),
+    CarouselContract.Presenter,
+    CarouselClientCallbacks {
 
     override fun onOK(model: CarouselModel) {
         view()?.hideProgress()

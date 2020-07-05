@@ -11,23 +11,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hernanbosqued.movie_db_client.domain.CarouselClient
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 @SuppressLint("ViewConstructor")
-class CarouselView(context: Context, private val listener: CarouselListeners) : ConstraintLayout(context), com.hernanbosqued.movie_db_client.presenter.CarouselContract.View, ScrollListener, LifecycleObserver {
+class CarouselView(context: Context, private val listener: CarouselListeners) :
+    ConstraintLayout(context), com.hernanbosqued.movie_db_client.presenter.CarouselContract.View,
+    ScrollListener, LifecycleObserver {
 
-    private val client = CarouselClient(
-        RepositoryImpl(context), ResourcesRepositoryImpl(context)
-    )
-    private val presenter =
-        com.hernanbosqued.movie_db_client.presenter.CarouselPresenter(
-            this,
-            client
-        )
+    private val client = CarouselClient()
+    private val presenter = CarouselPresenter(this, client)
     private val adapter = ItemsAdapter(this, listener)
 
     init {
@@ -36,7 +31,8 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
         prepareRecyclerView()
 
         background = ContextCompat.getDrawable(context, R.drawable.placeholder)
-        backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.placeholder_light))
+        backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.placeholder_light))
 
         setOnClickListener {
             presenter.onCarouselClicked()
@@ -46,7 +42,6 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         presenter.bindView(this)
-
     }
 
     override fun onDetachedFromWindow() {
@@ -60,7 +55,11 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
 
     private fun prepareRecyclerView() {
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-        carousel.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
+        carousel.addItemDecoration(
+            SpacingItemDecoration(
+                resources.getDimension(R.dimen.spacing_size).toInt()
+            )
+        )
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         layoutManager.isItemPrefetchEnabled = true
         layoutManager.recycleChildrenOnDetach = true
@@ -68,12 +67,34 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
         carousel.adapter = adapter
     }
 
-    override fun setCarouselInfo(title: String, page: Int, totalPages: Int, totalResults: Int, results: Int) {
+    override fun setCarouselInfo(
+        title: String,
+        page: Int,
+        totalPages: Int,
+        totalResults: Int,
+        results: Int
+    ) {
         title_text.text = title
-        page_text.text = Utils.getSpan(context.getString(R.string.page), page.toString(), ContextCompat.getColor(context!!, R.color.colorAccent))
-        results_text.text = Utils.getSpan(context.getString(R.string.results), results.toString(), ContextCompat.getColor(context!!, R.color.colorAccent))
-        total_pages_text.text = Utils.getSpan(context.getString(R.string.total_pages), totalPages.toString(), ContextCompat.getColor(context!!, R.color.colorAccent))
-        total_results_text.text = Utils.getSpan(context.getString(R.string.total_results), totalResults.toString(), ContextCompat.getColor(context!!, R.color.colorAccent))
+        page_text.text = Utils.getSpan(
+            context.getString(R.string.page),
+            page.toString(),
+            ContextCompat.getColor(context!!, R.color.colorAccent)
+        )
+        results_text.text = Utils.getSpan(
+            context.getString(R.string.results),
+            results.toString(),
+            ContextCompat.getColor(context!!, R.color.colorAccent)
+        )
+        total_pages_text.text = Utils.getSpan(
+            context.getString(R.string.total_pages),
+            totalPages.toString(),
+            ContextCompat.getColor(context!!, R.color.colorAccent)
+        )
+        total_results_text.text = Utils.getSpan(
+            context.getString(R.string.total_results),
+            totalResults.toString(),
+            ContextCompat.getColor(context!!, R.color.colorAccent)
+        )
     }
 
     override fun showCarouselData(model: CarouselModel) {
@@ -102,7 +123,7 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
 
     override fun showEmpty() {
         title_text.visibility = View.GONE
-        page_text .visibility = View.GONE
+        page_text.visibility = View.GONE
         results_text.visibility = View.GONE
         total_results_text.visibility = View.GONE
         total_pages_text.visibility = View.GONE
@@ -117,7 +138,7 @@ class CarouselView(context: Context, private val listener: CarouselListeners) : 
 
     override fun hideEmpty() {
         title_text.visibility = View.VISIBLE
-        page_text .visibility = View.VISIBLE
+        page_text.visibility = View.VISIBLE
         results_text.visibility = View.VISIBLE
         total_results_text.visibility = View.VISIBLE
         total_pages_text.visibility = View.VISIBLE
