@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.presenter
+package com.hernanbosqued.movie_db_client.ui
 
 import java.lang.ref.WeakReference
 

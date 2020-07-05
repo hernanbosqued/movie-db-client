@@ -55,7 +55,6 @@ dependencies {
 
     implementation project(path: ':repo')
     implementation project(path: ':domain')
-    implementation project(path: ':presenter')
 
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 }

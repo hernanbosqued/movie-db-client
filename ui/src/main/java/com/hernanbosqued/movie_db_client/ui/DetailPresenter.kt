@@ -1,8 +1,6 @@
 package com.hernanbosqued.movie_db_client.ui
 
 import com.hernanbosqued.movie_db_client.domain.*
-import com.hernanbosqued.movie_db_client.presenter.BasePresenter
-import com.hernanbosqued.movie_db_client.presenter.DetailContract
 
 class DetailPresenter(view: DetailContract.View, private val client: CarouselClient) : BasePresenter<CarouselItemModel, DetailContract.View>(view),
     DetailContract.Presenter, RepositoryCallbacks<ListModel<VideoResultModel>> {

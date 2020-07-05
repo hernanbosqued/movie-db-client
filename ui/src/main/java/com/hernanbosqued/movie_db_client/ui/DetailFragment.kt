@@ -7,13 +7,12 @@ import androidx.core.content.ContextCompat
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 import com.hernanbosqued.movie_db_client.repo.Constants
-import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
-    com.hernanbosqued.movie_db_client.presenter.DetailContract.View {
+    DetailContract.View {
     private lateinit var presenter: DetailPresenter
 
     interface Callbacks

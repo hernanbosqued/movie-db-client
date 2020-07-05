@@ -13,12 +13,11 @@ import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
 import com.hernanbosqued.movie_db_client.domain.orElse
 import com.hernanbosqued.movie_db_client.domain.then
-import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener,
-    android.widget.SearchView.OnQueryTextListener, com.hernanbosqued.movie_db_client.presenter.ListContract.View, CarouselListeners {
-    private lateinit var presenter: com.hernanbosqued.movie_db_client.presenter.ListPresenter
+    android.widget.SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
+    private lateinit var presenter: ListPresenter
 
     interface Callbacks {
         fun fromMainFragment(model: CarouselItemModel)
@@ -30,10 +29,8 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = com.hernanbosqued.movie_db_client.presenter.ListPresenter(
-            view = this,
-            repository = RepositoryImpl(context!!)
-        )
+        presenter =
+            ListPresenter(view = this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

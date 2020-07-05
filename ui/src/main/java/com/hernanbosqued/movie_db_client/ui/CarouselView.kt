@@ -13,12 +13,11 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
-import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 @SuppressLint("ViewConstructor")
 class CarouselView(context: Context, private val listener: CarouselListeners) :
-    ConstraintLayout(context), com.hernanbosqued.movie_db_client.presenter.CarouselContract.View,
+    ConstraintLayout(context), CarouselContract.View,
     ScrollListener, LifecycleObserver {
 
     private val client = CarouselClient()
