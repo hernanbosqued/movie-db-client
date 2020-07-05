@@ -14,6 +14,10 @@ class ListPresenter(view: ListContract.View) :
 
     private var searchSelection = setOf(TV, MOVIE)
 
+    init {
+        MyApp.component.poke(this)
+    }
+
     override fun processQuery(query: String) {
         val carousel = CarouselModel().apply {
             this.query = query
