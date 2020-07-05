@@ -28,7 +28,7 @@ class ItemViewHolder(view: View, private val listener: ItemListener) :
             model.type!!,
             if (model.hasVideo) itemView.resources.getString(R.string.has_video) else "",
             ContextCompat.getColor(itemView.context, R.color.colorAccent)
-        )k
+        )
 
         itemView.setOnTouchListener { v: View, event ->
             when (event.action) {
