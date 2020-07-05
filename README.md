@@ -1,17 +1,4 @@
-# Ejercicio Técnico - Hernán Bosqued #
-
-MovieDB client
-
-
-## Qué faltó ##
-
-* Unit tests
-
-* La app invierte dependencias manualmente, me faltó implementar dagger
-
-* Me hubiera gustado usar un visitor para elegir el tipo de Model
-
-* Todo lo demas creo que está 
+# MovieDB client #
 
 ## Requerimientos ##
 

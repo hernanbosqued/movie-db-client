@@ -2,6 +2,7 @@ package com.hernanbosqued.movie_db_client.ui
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.MeasureSpec
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +16,8 @@ import com.hernanbosqued.movie_db_client.domain.then
 import com.hernanbosqued.movie_db_client.repo.RepositoryImpl
 import kotlinx.android.synthetic.main.fragment_list.*
 
-class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
+class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener,
+    android.widget.SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
     private lateinit var presenter: ListPresenter
 
     interface Callbacks {
@@ -52,13 +54,21 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
     }
 
     override fun addCarousel(model: CarouselModel, onTop: Boolean) {
-        val view = CarouselView(context!!, this)
-        val params = view.layoutParams as ConstraintLayout.LayoutParams
+        val carouselView = CarouselView(context!!, this)
+        val params = carouselView.layoutParams as ConstraintLayout.LayoutParams
         params.setMargins(20)
-        view.bind(model)
+        carouselView.bind(model)
 
-        val index: Int = ( onTop then 0 orElse -1 )!!
-        container.addView(view, index)
+        val index: Int = (onTop then 0 orElse -1)!!
+        container.addView(carouselView, index)
+
+        carouselView.measure(
+            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+        )
+
+        carouselView.translationY = (-carouselView.measuredHeight).toFloat()
+        carouselView.animate().translationY(0F)
     }
 
     override fun onItemClicked(model: CarouselItemModel) {
@@ -82,9 +92,8 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         }
     }
 
-
     override fun scrollTop() {
-        //scroll_view.smoothScrollTo(0, 0)
+        scroll_view.smoothScrollTo(0, 0)
     }
 
     private fun prepareSearchView() {
