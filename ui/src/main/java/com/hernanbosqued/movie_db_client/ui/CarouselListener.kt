@@ -1,5 +1,6 @@
 package com.hernanbosqued.movie_db_client.ui
 
+import android.view.View
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 
@@ -8,7 +9,10 @@ interface ScrollListener {
 }
 
 interface ItemListener{
-    fun onItemClicked(model: CarouselItemModel)
+    fun onItemClicked(
+        model1: View,
+        model: CarouselItemModel
+    )
 }
 
 interface CarouselViewListeners {

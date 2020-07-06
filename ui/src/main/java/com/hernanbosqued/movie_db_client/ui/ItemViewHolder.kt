@@ -48,7 +48,7 @@ class ItemViewHolder(view: View, private val listener: ItemListener) :
             false
         }
         itemView.setOnClickListener {
-            listener.onItemClicked(model)
+            listener.onItemClicked(itemView, model)
         }
 
         model.path.let { path ->

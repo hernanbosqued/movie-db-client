@@ -1,5 +1,7 @@
 package com.hernanbosqued.movie_db_client.ui
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.MeasureSpec
@@ -14,6 +16,8 @@ import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
 import com.hernanbosqued.movie_db_client.domain.orElse
 import com.hernanbosqued.movie_db_client.domain.then
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.layout_item.poster
+import kotlinx.android.synthetic.main.layout_item.view.poster
 
 class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener,
     android.widget.SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
@@ -71,8 +75,16 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         carouselView.animate().translationY(0F)
     }
 
-    override fun onItemClicked(model: CarouselItemModel) {
-        callbacks?.fromMainFragment(model)
+    override fun onItemClicked(
+        view: View,
+        model: CarouselItemModel
+    ) {
+        val intent = Intent(context, DetailActivity::class.java)
+        val options = ActivityOptions.makeSceneTransitionAnimation(activity, view.poster, "poster")
+        intent.putExtra("model", model)
+        startActivity(intent, options.toBundle())
+
+        //callbacks?.fromMainFragment(model)
     }
 
     override fun onCarouselClicked(model: CarouselModel) {
