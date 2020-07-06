@@ -10,4 +10,5 @@ interface ResourcesRepository {
     fun moviesTopRated(): String
     fun tvPopular(): String
     fun tvTopRated(): String
+    fun nothingSelected(): String
 }

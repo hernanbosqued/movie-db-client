@@ -10,7 +10,7 @@ interface ScrollListener {
 
 interface ItemListener{
     fun onItemClicked(
-        model1: View,
+        view: View,
         model: CarouselItemModel
     )
 }

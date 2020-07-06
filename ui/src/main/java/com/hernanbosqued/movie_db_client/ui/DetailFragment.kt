@@ -21,17 +21,11 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
         return R.layout.fragment_detail
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter = DetailPresenter(this, CarouselClient())
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val model: CarouselItemModel? = arguments?.getSerializable("model") as CarouselItemModel?
-        model?.let { presenter.setModel(it) }
-
+        val model: CarouselItemModel = arguments?.getSerializable("model") as CarouselItemModel
+        presenter = DetailPresenter(this, model, CarouselClient())
         youtube.visibility = View.INVISIBLE
         empty_view.visibility = View.VISIBLE
     }

@@ -6,11 +6,14 @@ import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
 import javax.inject.Inject
 
 class ListPresenter(view: ListContract.View) :
-    BasePresenter<List<CarouselModel>, ListContract.View>(view),
+    BasePresenter<ArrayList<CarouselModel>, ListContract.View>(ArrayList(), view),
     ListContract.Presenter, RepositoryCallbacks<CarouselListModel> {
 
     @Inject
     lateinit var repository: Repository
+
+    @Inject
+    lateinit var resources: ResourcesRepository
 
     private var searchSelection = setOf(TV, MOVIE)
 
@@ -19,17 +22,21 @@ class ListPresenter(view: ListContract.View) :
     }
 
     override fun processQuery(query: String) {
-        val carousel = CarouselModel().apply {
-            this.query = query
-            this.method = searchSelection.getTypes()
+        if (searchSelection.any { it.isChecked() }) {
+            val carousel = CarouselModel().apply {
+                this.query = query
+                this.method = searchSelection.getTypes()
+            }
+            view().addCarousel(carousel, true)
+        } else {
+            view().showMessage(resources.nothingSelected())
         }
-        view()?.addCarousel(carousel, true)
     }
 
     override fun bind() {
         repository.carouselList(this)
 
-        view()?.initialSelection(
+        view().initialSelection(
             searchSelection[MOVIE].isChecked(),
             searchSelection[TV].isChecked()
         )
@@ -40,11 +47,12 @@ class ListPresenter(view: ListContract.View) :
     }
 
     override fun onSuccess(data: CarouselListModel) {
-        data.results.forEach { view()?.addCarousel(it, false) }
+        model().addAll(data.results)
+        data.results.forEach { view().addCarousel(it, false) }
     }
 
     override fun onFail(error: ErrorModel) {
-        view()?.showMessage(error.message)
+        view().showMessage(error.message)
     }
 }
 

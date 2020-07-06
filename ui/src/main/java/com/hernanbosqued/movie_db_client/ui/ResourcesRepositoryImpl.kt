@@ -23,7 +23,11 @@ class ResourcesRepositoryImpl(private val context: Context) :
         return context.getString(R.string.tv_top_rated)
     }
 
-    override fun searchBoth( ): String {
+    override fun nothingSelected(): String {
+        return context.getString(R.string.nothing_selected)
+    }
+
+    override fun searchBoth(): String {
         return context.getString(R.string.search_both)
     }
 

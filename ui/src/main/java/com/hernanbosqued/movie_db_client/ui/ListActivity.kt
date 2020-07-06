@@ -1,9 +1,9 @@
 package com.hernanbosqued.movie_db_client.ui
 
 import android.os.Bundle
-import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
+import androidx.appcompat.app.AppCompatActivity
 
-class ListActivity : BaseFragmentActivity(), ListFragment.Callbacks {
+class ListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -12,9 +12,9 @@ class ListActivity : BaseFragmentActivity(), ListFragment.Callbacks {
             return
         }
 
-        addFragment(ListFragment(), false)
-    }
-
-    override fun fromMainFragment(model: CarouselItemModel) {
+        supportFragmentManager
+            .beginTransaction()
+            .add(android.R.id.content, ListFragment(), ListFragment::class.java.simpleName)
+            .commit()
     }
 }

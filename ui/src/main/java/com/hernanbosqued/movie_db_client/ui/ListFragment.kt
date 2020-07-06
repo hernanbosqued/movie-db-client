@@ -15,12 +15,15 @@ import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
 import com.hernanbosqued.movie_db_client.domain.orElse
 import com.hernanbosqued.movie_db_client.domain.then
-import kotlinx.android.synthetic.main.fragment_list.*
-import kotlinx.android.synthetic.main.layout_item.poster
+import kotlinx.android.synthetic.main.fragment_list.checkbox_movies
+import kotlinx.android.synthetic.main.fragment_list.checkbox_tv
+import kotlinx.android.synthetic.main.fragment_list.container
+import kotlinx.android.synthetic.main.fragment_list.scroll_view
+import kotlinx.android.synthetic.main.fragment_list.search_view
 import kotlinx.android.synthetic.main.layout_item.view.poster
 
 class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener,
-    android.widget.SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
+    ListContract.View, CarouselListeners {
     private lateinit var presenter: ListPresenter
 
     interface Callbacks {
@@ -58,10 +61,9 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
     }
 
     override fun addCarousel(model: CarouselModel, onTop: Boolean) {
-        val carouselView = CarouselView(context!!, this)
+        val carouselView = CarouselView(context!!, model, this)
         val params = carouselView.layoutParams as ConstraintLayout.LayoutParams
         params.setMargins(20)
-        carouselView.bind(model)
 
         val index: Int = (onTop then 0 orElse -1)!!
         container.addView(carouselView, index)
@@ -73,6 +75,10 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
 
         carouselView.translationY = (-carouselView.measuredHeight).toFloat()
         carouselView.animate().translationY(0F)
+
+        if (onTop) {
+            scrollTop()
+        }
     }
 
     override fun onItemClicked(
@@ -83,8 +89,6 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         val options = ActivityOptions.makeSceneTransitionAnimation(activity, view.poster, "poster")
         intent.putExtra("model", model)
         startActivity(intent, options.toBundle())
-
-        //callbacks?.fromMainFragment(model)
     }
 
     override fun onCarouselClicked(model: CarouselModel) {
@@ -94,7 +98,7 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
 
     override fun initialSelection(moviesChecked: Boolean, tvChecked: Boolean) {
         checkbox_movies.isChecked = moviesChecked
-        checkbox_tv.isChecked = moviesChecked
+        checkbox_tv.isChecked = tvChecked
 
         checkbox_movies.setOnCheckedChangeListener { _, _ ->
             presenter.checkboxChanged(MOVIE)

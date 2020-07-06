@@ -16,12 +16,15 @@ import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 @SuppressLint("ViewConstructor")
-class CarouselView(context: Context, private val listener: CarouselListeners) :
-    ConstraintLayout(context), CarouselContract.View,
-    ScrollListener, LifecycleObserver {
+class CarouselView(
+    context: Context,
+    val model: CarouselModel,
+    private val listener: CarouselListeners
+) :
+    ConstraintLayout(context), CarouselContract.View, ScrollListener, LifecycleObserver {
 
     private val client = CarouselClient()
-    private val presenter = CarouselPresenter(this, client)
+    private var presenter: CarouselPresenter
     private val adapter = ItemsAdapter(this, listener)
 
     init {
@@ -32,6 +35,8 @@ class CarouselView(context: Context, private val listener: CarouselListeners) :
         background = ContextCompat.getDrawable(context, R.drawable.placeholder)
         backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(context, R.color.placeholder_light))
+
+        presenter = CarouselPresenter(this, model, client)
 
         setOnClickListener {
             presenter.onCarouselClicked()
@@ -46,10 +51,6 @@ class CarouselView(context: Context, private val listener: CarouselListeners) :
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         presenter.unbindView()
-    }
-
-    fun bind(model: CarouselModel) {
-        presenter.setModel(model)
     }
 
     private fun prepareRecyclerView() {

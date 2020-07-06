@@ -2,36 +2,23 @@ package com.hernanbosqued.movie_db_client.ui
 
 import java.lang.ref.WeakReference
 
-abstract class BasePresenter<M, V>() {
+abstract class BasePresenter<MODEL, VIEW>(private var model: MODEL, view: VIEW) {
 
-    constructor(view: V) : this() {
-        bindView(view)
-    }
+    private var weakView = WeakReference<VIEW>(view)
 
-    var model: M? = null
-    private var view: WeakReference<V>? = null
-
-    private fun setupDone(): Boolean {
-        return model != null && view != null
-    }
-
-    fun bindView(view: V) {
-        this.view = WeakReference(view)
-    }
-
-    fun model(): M? {
+    fun model(): MODEL {
         return model
     }
 
-    fun bindModel(model: M) {
-        this.model = model
+    fun view(): VIEW {
+        return weakView.get()!!
     }
 
-    fun view(): V? {
-        return view?.get()
+    fun bindView(view: VIEW){
+        weakView = WeakReference<VIEW>(view)
     }
 
     fun unbindView() {
-        view = null
+        weakView.clear()
     }
 }

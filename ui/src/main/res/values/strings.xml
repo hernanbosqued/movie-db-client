@@ -21,5 +21,6 @@
     <string name="page" translatable="false">Page:</string>
     <string name="total_pages" translatable="false">Total pages:</string>
     <string name="total_results" translatable="false">Total results:</string>
+    <string name="nothing_selected" translatable="false">Nothing selected to search for</string>
 
 </resources>
