@@ -1,3 +1,5 @@
+package com.hernanbosqued.movie_db_client.tests
+
 import com.hernanbosqued.movie_db_client.domain.ifNull
 import com.hernanbosqued.movie_db_client.domain.orElse
 import com.hernanbosqued.movie_db_client.domain.then
@@ -67,6 +69,5 @@ class Tests {
 
     @Test
     fun testLock() {
-
     }
 }

@@ -12,6 +12,3 @@ dependencies {
 
     implementation project(path: ':domain')
 }
-
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"

@@ -6,6 +6,19 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/gray</item>
 
+        <item name="android:windowActivityTransitions">true</item>
+        <!-- specify enter and exit transitions -->
+        <!--        <item name="android:windowEnterTransition">@transition/explode</item>-->
+        <!--        <item name="android:windowExitTransition">@transition/explode</item>-->
+
+        <!-- specify shared element transitions -->
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/change_image_transform
+        </item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/change_image_transform
+        </item>
+
         <item name="android:buttonTint">?android:attr/textColor</item>
         <item name="android:shadowColor">@color/black</item>
 
@@ -16,10 +29,12 @@
 
         <item name="queryHint">@string/search</item>
 
+
         <item name="transition_time">500</item>
         <item name="transition_interpolator">@android:anim/accelerate_interpolator</item>
 
-        <item name="autoCompleteTextViewStyle">@style/Widget.AppCompat.AutoCompleteTextView.My</item>
+        <item name="autoCompleteTextViewStyle">@style/Widget.AppCompat.AutoCompleteTextView.My
+        </item>
         <item name="searchViewStyle">@style/Widget.AppCompat.SearchView.My</item>
         <item name="android:checkboxStyle">@style/Widget.AppCompat.CompoundButton.CheckBox.My</item>
         <item name="android:textViewStyle">@style/Widget.AppCompat.TextView.My</item>
@@ -43,7 +58,7 @@
         <item name="android:background">@color/transparent</item>
     </style>
 
-    <style name="Text.Item" parent="Text"/>
+    <style name="Text.Item" parent="Text" />
 
     <style name="Text.Carousel" parent="Text.Item" />
 
@@ -52,7 +67,9 @@
         <item name="android:background">@drawable/placeholder</item>
 
     </style>
+
     <style name="Text.Empty" parent="Text.Title.Accent" />
+
     <style name="Text.Detail.Empty" parent="Text.Empty">
         <item name="android:backgroundTint">@color/placeholder_dark</item>
         <item name="android:background">@drawable/placeholder</item>
@@ -61,6 +78,7 @@
     <style name="Text.Title.Accent" parent="Text.Title">
         <item name="android:textColor">@color/colorAccent</item>
     </style>
+
     <style name="Text.Detail.Title" parent="Text.Title">
         <item name="android:shadowDy">15</item>
         <item name="android:shadowDx">15</item>
@@ -81,7 +99,7 @@
 
     </style>
 
-    <style name="Text.Item.Empty" parent="Text.Item.Title"/>
+    <style name="Text.Item.Empty" parent="Text.Item.Title" />
 
     <style name="Text.Item.Title">
         <item name="android:textSize">@dimen/font_size_14</item>

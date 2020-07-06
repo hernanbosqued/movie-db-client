@@ -9,7 +9,7 @@ import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 import com.hernanbosqued.movie_db_client.repo.Constants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
-import kotlinx.android.synthetic.main.fragment_details.*
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
     DetailContract.View {
@@ -18,7 +18,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
     interface Callbacks
 
     override fun getLayout(): Int {
-        return R.layout.fragment_details
+        return R.layout.fragment_detail
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
