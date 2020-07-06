@@ -33,7 +33,7 @@ open class ResultModel : Visitable, Serializable {
     var hasVideo: Boolean = false
 
     fun getType(): String {
-        return MEDIATYPE.fromType(this.javaClass).toString()
+        return MEDIATYPE.fromType(this.javaClass)
     }
 
     object Deserializer : JsonDeserializer<ResultModel> {

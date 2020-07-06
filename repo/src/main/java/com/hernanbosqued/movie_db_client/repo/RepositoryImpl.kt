@@ -13,9 +13,9 @@ class RepositoryImpl(val context: Context) : Repository {
     private var service: APIService = ServiceGenerator.createService(context, APIService::class.java)
 
     override fun carouselList(callbacks: RepositoryCallbacks<CarouselListModel>) {
-        var stream = context.assets.open("repository.json")
-        var reader = BufferedReader(InputStreamReader(stream))
-        var result = Gson().fromJson(reader, CarouselListModel::class.java)
+        val stream = context.assets.open("repository.json")
+        val reader = BufferedReader(InputStreamReader(stream))
+        val result = Gson().fromJson(reader, CarouselListModel::class.java)
 
         callbacks.onSuccess(result)
     }

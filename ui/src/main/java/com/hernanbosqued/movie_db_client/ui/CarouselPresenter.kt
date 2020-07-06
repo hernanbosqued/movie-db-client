@@ -37,7 +37,9 @@ class CarouselPresenter(view: CarouselContract.View, private var client: Carouse
     override fun load(first: Boolean) {
         model()?.let { model ->
             if (first || model.page < model.totalPages) {
-                val method = client.javaClass.methods.find { it.name.contentEquals(model.method!!) }
+                val method = client.javaClass.methods.filterNotNull().find {
+                    model.method.contentEquals(it.name)
+                }
                 view()?.showProgress()
                 method?.invoke(client, model.page + 1, model.query, this)
             }

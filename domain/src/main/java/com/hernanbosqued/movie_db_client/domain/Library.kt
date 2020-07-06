@@ -6,11 +6,11 @@ operator fun Set<MEDIATYPE>.get(item: MEDIATYPE): MEDIATYPE {
     } else MEDIATYPE.UNDEFINED
 }
 
-fun Set<MEDIATYPE>.getTypes(): String? {
+fun Set<MEDIATYPE>.getTypes(): String {
     return if (this[MEDIATYPE.MOVIE].isChecked() && this[MEDIATYPE.TV].isChecked()) "searchBoth"
     else if (this[MEDIATYPE.MOVIE].isChecked()) "searchMovie"
     else if (this[MEDIATYPE.TV].isChecked()) "searchTV"
-    else null
+    else ""
 }
 
 infix fun <T> T?.ifNull(block: () -> Unit): Unit? {
