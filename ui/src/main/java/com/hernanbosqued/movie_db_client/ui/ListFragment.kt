@@ -1,7 +1,5 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import android.app.ActivityOptions
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.MeasureSpec
@@ -20,14 +18,16 @@ import kotlinx.android.synthetic.main.fragment_list.checkbox_tv
 import kotlinx.android.synthetic.main.fragment_list.container
 import kotlinx.android.synthetic.main.fragment_list.scroll_view
 import kotlinx.android.synthetic.main.fragment_list.search_view
-import kotlinx.android.synthetic.main.layout_item.view.poster
 
-class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryTextListener,
+class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener,
     ListContract.View, CarouselListeners {
     private lateinit var presenter: ListPresenter
 
-    interface Callbacks {
-        fun fromMainFragment(model: CarouselItemModel)
+    interface Callback {
+        fun fromFragment(
+            view: View,
+            model: CarouselItemModel
+        )
     }
 
     override fun getLayout(): Int {
@@ -71,14 +71,8 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         }
     }
 
-    override fun onItemClicked(
-        view: View,
-        model: CarouselItemModel
-    ) {
-        val intent = Intent(context, DetailActivity::class.java)
-        val options = ActivityOptions.makeSceneTransitionAnimation(activity, view.poster, "poster")
-        intent.putExtra("model", model)
-        startActivity(intent, options.toBundle())
+    override fun onItemClicked(view: View, model: CarouselItemModel) {
+        callback?.fromFragment(view, model)
     }
 
     override fun onCarouselClicked(model: CarouselModel) {
@@ -123,9 +117,9 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
-    override val dummyCallbacks: Callbacks
-        get() = object : Callbacks {
-            override fun fromMainFragment(model: CarouselItemModel) {}
+    override val dummyCallback: Callback
+        get() = object : Callback {
+            override fun fromFragment(view: View, model: CarouselItemModel) {}
         }
 }
 

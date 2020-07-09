@@ -7,7 +7,7 @@
     <string name="movies">películas</string>
     <string name="tv_shows">series</string>
     <string name="has_video">(Tiene video)</string>
-    <string name="movies_popular" translatable="false">Películas populares</string>
+    <string name="movies_popular">Películas populares</string>
     <string name="movies_top_rated">Peículas mejor calificadas</string>
     <string name="tv_top_rated">Series mejor calificadas</string>
     <string name="search_both">Películas y series para \‘%1$s\’</string>
@@ -15,7 +15,7 @@
     <string name="search_tv">Series para \‘%1$s\’</string>
     <string name="tv_popular">Series populares</string>
     <string name="page">Página:</string>
-    <string name="total_pages" translatable="false">Páginas totales:</string>
+    <string name="total_pages">Páginas totales:</string>
     <string name="total_results">Resultados totales:</string>
     <string name="nothing_selected">No se seleccionó nada donde buscar</string>
     <string name="results">Resultados:</string>

@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 @Suppress("UNCHECKED_CAST")
-abstract class BaseFragment<FRAGMENT_CALLBACKS> : Fragment() {
+abstract class BaseFragment<FRAGMENT_CALLBACK> : Fragment() {
 
     abstract fun getLayout(): Int
 
-    var callbacks: FRAGMENT_CALLBACKS? = null
+    var callback: FRAGMENT_CALLBACK? = null
+        get() = field
 
-    abstract val dummyCallbacks: FRAGMENT_CALLBACKS
+    abstract val dummyCallback: FRAGMENT_CALLBACK
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayout(), container, false)
@@ -22,7 +23,7 @@ abstract class BaseFragment<FRAGMENT_CALLBACKS> : Fragment() {
 
     override fun onAttach(context: Context) {
         try {
-            callbacks = context as FRAGMENT_CALLBACKS
+            callback = context as FRAGMENT_CALLBACK
         } catch (e: Exception) {
             throw ClassCastException("Activity must implement fragment's callbacks.")
         }
@@ -30,7 +31,7 @@ abstract class BaseFragment<FRAGMENT_CALLBACKS> : Fragment() {
     }
 
     override fun onDetach() {
-        callbacks = dummyCallbacks
+        callback = dummyCallback
         super.onDetach()
     }
 }

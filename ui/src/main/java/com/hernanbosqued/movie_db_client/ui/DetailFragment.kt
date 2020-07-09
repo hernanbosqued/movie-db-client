@@ -45,7 +45,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
         youtube.enableAutomaticInitialization = true
     }
 
-    override val dummyCallbacks: Callbacks
+    override val dummyCallback: Callbacks
         get() = object : Callbacks {
         }
 
