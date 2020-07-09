@@ -13,7 +13,6 @@ abstract class BaseFragment<FRAGMENT_CALLBACK> : Fragment() {
     abstract fun getLayout(): Int
 
     var callback: FRAGMENT_CALLBACK? = null
-        get() = field
 
     abstract val dummyCallback: FRAGMENT_CALLBACK
 
