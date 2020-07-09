@@ -12,8 +12,6 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -31,6 +29,8 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    
+    dataBinding.enabled = true
 }
 
 dependencies {
@@ -51,7 +51,6 @@ dependencies {
 
     implementation 'com.google.dagger:dagger:2.28.1'
     kapt 'com.google.dagger:dagger-compiler:2.28.1'
-
 
     implementation project(path: ':repo')
     implementation project(path: ':domain')
