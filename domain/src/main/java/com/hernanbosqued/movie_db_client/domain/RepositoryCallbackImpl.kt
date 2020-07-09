@@ -1,23 +1,25 @@
 package com.hernanbosqued.movie_db_client.domain
 
-class RepositoryCallbacksImpl<T : ResultModel>(
+class RepositoryCallbackImpl<T : ResultModel>(
     private val title: String,
-    private val callbacks: CarouselClientCallbacks
+    private val query: String,
+    private val callback: CarouselClientCallback
 ) :
-    RepositoryCallbacks<ListModel<T>> {
+    RepositoryCallback<ListModel<T>> {
 
     override fun onSuccess(data: ListModel<T>) {
         val model = CarouselModel().apply {
-            this.title = this@RepositoryCallbacksImpl.title
+            this.title = this@RepositoryCallbackImpl.title
+            this.query = this@RepositoryCallbackImpl.query
             this.page = data.page
             this.totalPages = data.totalPages
             this.totalResults = data.totalResults
             this.list = data.results?.map { it.parse() }?.toMutableList() ?: ArrayList()
         }
-        callbacks.onOK(model)
+        callback.onOK(model)
     }
 
     override fun onFail(error: ErrorModel) {
-        callbacks.onError(error.message)
+        callback.onError(error.message)
     }
 }

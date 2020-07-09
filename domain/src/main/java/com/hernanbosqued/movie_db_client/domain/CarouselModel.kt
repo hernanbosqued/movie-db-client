@@ -8,9 +8,6 @@ class CarouselModel {
     var results: Int = 0
     var totalPages: Int = 0
     var totalResults: Int = 0
-
     var title: String = ""
-        get() = query.let { field.format(it) }
-
     var list: MutableList<CarouselItemModel> = ArrayList()
 }

@@ -13,7 +13,6 @@ class ListContract {
 
     interface Presenter {
         fun processQuery(query: String)
-        fun bind()
         fun checkboxChanged(type: MEDIATYPE)
     }
 }

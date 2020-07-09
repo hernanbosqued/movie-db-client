@@ -12,58 +12,58 @@ import java.io.InputStreamReader
 class RepositoryImpl(val context: Context) : Repository {
     private var service: APIService = ServiceGenerator.createService(context, APIService::class.java)
 
-    override fun carouselList(callbacks: RepositoryCallbacks<CarouselListModel>) {
+    override fun carouselList(callback: RepositoryCallback<CarouselListModel>) {
         val stream = context.assets.open("repository.json")
         val reader = BufferedReader(InputStreamReader(stream))
         val result = Gson().fromJson(reader, CarouselListModel::class.java)
 
-        callbacks.onSuccess(result)
+        callback.onSuccess(result)
     }
 
-    override fun searchMovies(page: Int, query: String?, callbacks: RepositoryCallbacks<ListModel<MovieResultModel>>) {
-        service.searchMovies(page, query, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
+    override fun searchMovies(page: Int, query: String?, callback: RepositoryCallback<ListModel<MovieResultModel>>) {
+        service.searchMovies(page, query, Constants.API_KEY).enqueue(ServiceCallback(callback))
     }
 
-    override fun moviesPopular(page: Int, callbacks: RepositoryCallbacks<ListModel<MovieResultModel>>) {
-        service.moviesPopular(page, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
+    override fun moviesPopular(page: Int, callback: RepositoryCallback<ListModel<MovieResultModel>>) {
+        service.moviesPopular(page, Constants.API_KEY).enqueue(ServiceCallback(callback))
     }
 
-    override fun moviesTopRated(page: Int, callbacks: RepositoryCallbacks<ListModel<MovieResultModel>>) {
-        service.moviesTopRated(page, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
+    override fun moviesTopRated(page: Int, callback: RepositoryCallback<ListModel<MovieResultModel>>) {
+        service.moviesTopRated(page, Constants.API_KEY).enqueue(ServiceCallback(callback))
     }
 
-    override fun tvPopular(page: Int, callbacks: RepositoryCallbacks<ListModel<TVResultModel>>) {
-        service.tvPopular(page, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
+    override fun tvPopular(page: Int, callback: RepositoryCallback<ListModel<TVResultModel>>) {
+        service.tvPopular(page, Constants.API_KEY).enqueue(ServiceCallback(callback))
     }
 
-    override fun tvTopRated(page: Int, callbacks: RepositoryCallbacks<ListModel<TVResultModel>>) {
-        service.tvTopRated(page, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
+    override fun tvTopRated(page: Int, callback: RepositoryCallback<ListModel<TVResultModel>>) {
+        service.tvTopRated(page, Constants.API_KEY).enqueue(ServiceCallback(callback))
     }
 
-    override fun searchTV(page: Int, query: String?, callbacks: RepositoryCallbacks<ListModel<TVResultModel>>) {
-        service.searchTVShows(page, query, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
+    override fun searchTV(page: Int, query: String?, callback: RepositoryCallback<ListModel<TVResultModel>>) {
+        service.searchTVShows(page, query, Constants.API_KEY).enqueue(ServiceCallback(callback))
     }
 
-    override fun searchBoth(page: Int, query: String?, callbacks: RepositoryCallbacks<ListModel<ResultModel>>) {
-        service.searchBoth(page, query, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
+    override fun searchBoth(page: Int, query: String?, callback: RepositoryCallback<ListModel<ResultModel>>) {
+        service.searchBoth(page, query, Constants.API_KEY).enqueue(ServiceCallback(callback))
     }
 
-    override fun videos(type: String, id: Int, callbacks: RepositoryCallbacks<ListModel<VideoResultModel>>) {
-        service.videos(type, id, Constants.API_KEY).enqueue(APICallbacksImpl(callbacks))
+    override fun videos(type: String, id: Int, callback: RepositoryCallback<ListModel<VideoResultModel>>) {
+        service.videos(type, id, Constants.API_KEY).enqueue(ServiceCallback(callback))
     }
 
-    class APICallbacksImpl<T>(private val callbacks: RepositoryCallbacks<T>) : Callback<T> {
+    class ServiceCallback<T>(private val repositoryCallback: RepositoryCallback<T>) : Callback<T> {
 
         override fun onResponse(call: Call<T>, response: Response<T>) {
             if (response.isSuccessful) {
-                ResponseHelper<T>().processResponse(response, callbacks)
+                ResponseHelper<T>().processResponse(response, repositoryCallback)
             } else {
-                callbacks.onFail(ErrorModel(response.code(), Constants.HTTP_ERROR))
+                repositoryCallback.onFail(ErrorModel(response.code(), Constants.HTTP_ERROR))
             }
         }
 
         override fun onFailure(call: Call<T>, t: Throwable) {
-            callbacks.onFail(ErrorModel(Constants.CUSTOM_ERROR_CODE, t.message ?: "onFailure"))
+            repositoryCallback.onFail(ErrorModel(Constants.CUSTOM_ERROR_CODE, t.message ?: "onFailure"))
         }
     }
 }

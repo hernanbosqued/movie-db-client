@@ -1,6 +1,6 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import com.hernanbosqued.movie_db_client.domain.CarouselClientCallbacks
+import com.hernanbosqued.movie_db_client.domain.CarouselClientCallback
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 
 class CarouselPresenter(
@@ -10,7 +10,7 @@ class CarouselPresenter(
 ) :
     BasePresenter<CarouselModel, CarouselContract.View>(model, view),
     CarouselContract.Presenter,
-    CarouselClientCallbacks {
+    CarouselClientCallback {
 
     init {
         load(true)
@@ -23,7 +23,7 @@ class CarouselPresenter(
 
     private fun updateModel(param: CarouselModel) {
         this.model().apply {
-            title = param.title
+            title = param.title.format(param.query)
             page = param.page
             totalPages = param.totalPages
             totalResults = param.totalResults

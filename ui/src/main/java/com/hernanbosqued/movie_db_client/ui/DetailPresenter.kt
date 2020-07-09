@@ -7,7 +7,7 @@ class DetailPresenter(
     model: CarouselItemModel,
     private val client: CarouselClient
 ) : BasePresenter<CarouselItemModel, DetailContract.View>(model, view),
-    DetailContract.Presenter, RepositoryCallbacks<ListModel<VideoResultModel>> {
+    DetailContract.Presenter, RepositoryCallback<ListModel<VideoResultModel>> {
 
    init {
        view().setTitle(model().title!!)

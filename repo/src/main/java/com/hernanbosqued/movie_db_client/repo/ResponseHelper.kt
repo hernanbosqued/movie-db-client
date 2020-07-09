@@ -2,7 +2,7 @@ package com.hernanbosqued.movie_db_client.repo
 
 import com.hernanbosqued.movie_db_client.domain.ErrorModel
 import com.hernanbosqued.movie_db_client.domain.ErrorsModel
-import com.hernanbosqued.movie_db_client.domain.RepositoryCallbacks
+import com.hernanbosqued.movie_db_client.domain.RepositoryCallback
 import okhttp3.ResponseBody
 import retrofit2.Response
 
@@ -16,16 +16,16 @@ internal class ResponseHelper<T> {
         }
     }
 
-    fun processResponse(response: Response<T>, callbacks: RepositoryCallbacks<T>) {
+    fun processResponse(response: Response<T>, callback: RepositoryCallback<T>) {
         if (response.isSuccessful) {
             val body = response.body()
             if (body != null) {
-                callbacks.onSuccess(body)
+                callback.onSuccess(body)
             } else {
-                callbacks.onFail(ErrorModel(Constants.CUSTOM_ERROR_CODE, Constants.NULL_RESPONSE_MESSAGE))
+                callback.onFail(ErrorModel(Constants.CUSTOM_ERROR_CODE, Constants.NULL_RESPONSE_MESSAGE))
             }
         } else {
-            callbacks.onFail(parseError(response.errorBody()!!))
+            callback.onFail(parseError(response.errorBody()!!))
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.hernanbosqued.movie_db_client.domain
 
-interface RepositoryCallbacks<T>{
+interface RepositoryCallback<T>{
     fun onSuccess(data:T)
     fun onFail(error:ErrorModel)
 }

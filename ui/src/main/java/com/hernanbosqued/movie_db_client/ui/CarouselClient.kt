@@ -1,10 +1,10 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import com.hernanbosqued.movie_db_client.domain.CarouselClientCallbacks
+import com.hernanbosqued.movie_db_client.domain.CarouselClientCallback
 import com.hernanbosqued.movie_db_client.domain.ListModel
 import com.hernanbosqued.movie_db_client.domain.Repository
-import com.hernanbosqued.movie_db_client.domain.RepositoryCallbacks
-import com.hernanbosqued.movie_db_client.domain.RepositoryCallbacksImpl
+import com.hernanbosqued.movie_db_client.domain.RepositoryCallback
+import com.hernanbosqued.movie_db_client.domain.RepositoryCallbackImpl
 import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
 import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 import javax.inject.Inject
@@ -17,83 +17,64 @@ class CarouselClient {
 
     @Inject
     lateinit var repository: Repository
+
     @Inject
     lateinit var resources: ResourcesRepository
 
-    fun searchBoth(page: Int, query: String?, callbacks: CarouselClientCallbacks) {
+    fun searchBoth(page: Int, query: String, callback: CarouselClientCallback) {
         repository.searchBoth(
             page,
             query,
-            RepositoryCallbacksImpl(
-                resources.searchBoth(),
-                callbacks
-            )
+            RepositoryCallbackImpl(resources.searchBoth(), query, callback)
         )
     }
 
-    fun searchTV(page: Int, query: String, callbacks: CarouselClientCallbacks) {
+    fun searchTV(page: Int, query: String, callback: CarouselClientCallback) {
         repository.searchTV(
-            page, query,
-            RepositoryCallbacksImpl(
-                resources.searchTV(),
-                callbacks
-            )
+            page,
+            query,
+            RepositoryCallbackImpl(resources.searchTV(), query, callback)
         )
     }
 
-    fun searchMovies(page: Int, query: String?, callbacks: CarouselClientCallbacks) {
+    fun searchMovies(page: Int, query: String, callback: CarouselClientCallback) {
         repository.searchMovies(
             page,
             query,
-            RepositoryCallbacksImpl(
-                resources.searchMovies(),
-                callbacks
-            )
+            RepositoryCallbackImpl(resources.searchMovies(), query, callback)
         )
     }
 
-    fun moviesPopular(page: Int, query: String?, callbacks: CarouselClientCallbacks) {
+    fun moviesPopular(page: Int, query: String, callback: CarouselClientCallback) {
         repository.moviesPopular(
             page,
-            RepositoryCallbacksImpl(
-                resources.moviesPopular(),
-                callbacks
-            )
+            RepositoryCallbackImpl(resources.moviesPopular(), query, callback)
         )
     }
 
-    fun moviesTopRated(page: Int, query: String?, callbacks: CarouselClientCallbacks) {
+    fun moviesTopRated(page: Int, query: String, callback: CarouselClientCallback) {
         repository.moviesTopRated(
             page,
-            RepositoryCallbacksImpl(
-                resources.moviesTopRated(),
-                callbacks
-            )
+            RepositoryCallbackImpl(resources.moviesTopRated(), query, callback)
         )
     }
 
-    fun tvPopular(page: Int, query: String?, callbacks: CarouselClientCallbacks) {
+    fun tvPopular(page: Int, query: String, callback: CarouselClientCallback) {
         repository.tvPopular(
             page,
-            RepositoryCallbacksImpl(
-                resources.tvPopular(),
-                callbacks
-            )
+            RepositoryCallbackImpl(resources.tvPopular(), query, callback)
         )
     }
 
-    fun tvTopRated(page: Int, query: String?, callbacks: CarouselClientCallbacks) {
+    fun tvTopRated(page: Int, query: String, callback: CarouselClientCallback) {
         repository.tvTopRated(
             page,
-            RepositoryCallbacksImpl(
-                resources.tvTopRated(),
-                callbacks
-            )
+            RepositoryCallbackImpl(resources.tvTopRated(), query, callback)
         )
     }
 
-    fun videos(type: String, id: Int, callbacks: RepositoryCallbacks<ListModel<VideoResultModel>>) {
-        repository.videos(type, id, callbacks)
+    fun videos(type: String, id: Int, callback: RepositoryCallback<ListModel<VideoResultModel>>) {
+        repository.videos(type, id, callback)
     }
 }
 

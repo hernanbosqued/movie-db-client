@@ -34,20 +34,10 @@ class ListFragment : BaseFragment<ListFragment.Callbacks>(), SearchView.OnQueryT
         return R.layout.fragment_list
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter =
-            ListPresenter(view = this)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        presenter = ListPresenter(view = this)
         prepareSearchView()
-
-        if (savedInstanceState == null) {
-            presenter.bind()
-        }
     }
 
     override fun onResume() {

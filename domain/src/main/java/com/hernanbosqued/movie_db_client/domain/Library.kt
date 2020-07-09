@@ -8,7 +8,7 @@ operator fun Set<MEDIATYPE>.get(item: MEDIATYPE): MEDIATYPE {
 
 fun Set<MEDIATYPE>.getTypes(): String {
     return if (this[MEDIATYPE.MOVIE].isChecked() && this[MEDIATYPE.TV].isChecked()) "searchBoth"
-    else if (this[MEDIATYPE.MOVIE].isChecked()) "searchMovie"
+    else if (this[MEDIATYPE.MOVIE].isChecked()) "searchMovies"
     else if (this[MEDIATYPE.TV].isChecked()) "searchTV"
     else ""
 }

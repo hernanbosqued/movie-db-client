@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class ListPresenter(view: ListContract.View) :
     BasePresenter<ArrayList<CarouselModel>, ListContract.View>(ArrayList(), view),
-    ListContract.Presenter, RepositoryCallbacks<CarouselListModel> {
+    ListContract.Presenter, RepositoryCallback<CarouselListModel> {
 
     @Inject
     lateinit var repository: Repository
@@ -19,6 +19,13 @@ class ListPresenter(view: ListContract.View) :
 
     init {
         MyApp.component.poke(this)
+
+        repository.carouselList(this)
+
+        view().initialSelection(
+            searchSelection[MOVIE].isChecked(),
+            searchSelection[TV].isChecked()
+        )
     }
 
     override fun processQuery(query: String) {
@@ -31,15 +38,6 @@ class ListPresenter(view: ListContract.View) :
         } else {
             view().showMessage(resources.nothingSelected())
         }
-    }
-
-    override fun bind() {
-        repository.carouselList(this)
-
-        view().initialSelection(
-            searchSelection[MOVIE].isChecked(),
-            searchSelection[TV].isChecked()
-        )
     }
 
     override fun checkboxChanged(type: MEDIATYPE) {
