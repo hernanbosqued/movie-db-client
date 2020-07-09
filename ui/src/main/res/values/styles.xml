@@ -41,9 +41,11 @@
         <item name="android:background">@color/transparent</item>
     </style>
 
-    <style name="Text.Item" parent="Text" />
+    <style name="Text.Item" parent="Text">
+        <item name="android:padding">@dimen/padding_text</item>
+    </style>
 
-    <style name="Text.Carousel" parent="Text.Item" />
+    <style name="Text.Carousel" parent="Text" />
 
     <style name="Text.Carousel.Empty" parent="Text.Title.Accent">
         <item name="android:backgroundTint">@color/placeholder_dark</item>
