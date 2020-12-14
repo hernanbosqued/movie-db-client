@@ -31,14 +31,4 @@
 
     * Inyectar dependencias. Si se usa alguna biblioteca mejor.
 
-*  Detalla cómo harías todo aquello que no ha§yas llegado a completar en el README.md del proyecto. 
-
-## Entregables ##
-
-* Archivo APK.
-
-* Link de Github/Bitbucket/Gitlab/Otro.
-
-### Sugerencia ###§
-
-* realizar el ejercicio durante el fin de semana.
+*  Detalla cómo harías todo aquello que no ha§yas llegado a completar en el README.md del proyecto.
