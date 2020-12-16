@@ -35,7 +35,6 @@ object ServiceGenerator {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(interceptor)
             .addInterceptor(provideOfflineCacheInterceptor(context))
-            .addNetworkInterceptor(provideCacheInterceptor(context))
             .cache(provideCache(context))
             .dispatcher(dispatcher)
             .build()
@@ -47,34 +46,8 @@ object ServiceGenerator {
             .build()
     }
 
-    private fun provideCacheInterceptor(context: Context): Interceptor {
-        return Interceptor { chain ->
-            val response = chain.proceed(chain.request())
-
-            val cacheControl: CacheControl = if (isConnected(context)) {
-                CacheControl.Builder()
-                    .maxAge(60, TimeUnit.SECONDS)
-                    .build()
-            } else {
-                CacheControl.Builder()
-                    .maxStale(7, TimeUnit.DAYS)
-                    .build()
-            }
-
-            response.newBuilder()
-                .removeHeader(HEADER_PRAGMA)
-                .removeHeader(HEADER_CACHE_CONTROL)
-                .header(HEADER_CACHE_CONTROL, cacheControl.toString())
-                .build()
-        }
-    }
-
     private fun provideCache(context: Context): Cache {
-        cache?: run{
-            val file = File(context.filesDir, "http_cache")
-            this.cache = Cache(file, 100 * 1024 * 1024)
-        }
-        return this.cache!!
+        return cache ?: Cache(context.cacheDir, 100 * 1024 * 1024)
     }
 
     private fun provideOfflineCacheInterceptor(context: Context): Interceptor {
@@ -83,16 +56,11 @@ object ServiceGenerator {
             var request: Request = chain.request()
 
             if (!isConnected(context)) {
-                val cacheControl = CacheControl
-                    .Builder()
-                    .maxStale(7, TimeUnit.DAYS)
-                    .build()
-
                 request = request
                     .newBuilder()
                     .removeHeader(HEADER_PRAGMA)
                     .removeHeader(HEADER_CACHE_CONTROL)
-                    .cacheControl(cacheControl)
+                    .cacheControl(CacheControl.FORCE_CACHE)
                     .build()
             }
             chain.proceed(request)
