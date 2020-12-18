@@ -18,7 +18,7 @@ class ListPresenter(view: ListContract.View) :
     private var searchSelection = setOf(TV, MOVIE)
 
     init {
-        MyApp.component.poke(this)
+        MyApp.appComponent.inject(this)
 
         repository.carouselList(this)
 

@@ -12,7 +12,7 @@ import javax.inject.Inject
 class CarouselClient {
 
     init {
-        MyApp.component.poke(this)
+        MyApp.appComponent.inject(this)
     }
 
     @Inject

@@ -3,9 +3,9 @@ package com.hernanbosqued.movie_db_client.ui
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
+import javax.inject.Inject
 
-class ResourcesRepositoryImpl(private val context: Context) :
-    ResourcesRepository {
+class ResourcesRepositoryImpl @Inject constructor(private val context: Context) : ResourcesRepository {
 
     override fun moviesPopular(): String {
         return context.getString(R.string.movies_popular)
