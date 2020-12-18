@@ -18,11 +18,7 @@ import com.hernanbosqued.movie_db_client.ui.presenter.CarouselPresenter
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 @SuppressLint("ViewConstructor")
-class CarouselView(
-    context: Context,
-    val model: CarouselModel,
-    private val listener: CarouselListeners
-) :
+class CarouselView(context: Context, val model: CarouselModel, private val listener: CarouselListeners) :
     ConstraintLayout(context), CarouselContract.View, ScrollListener, LifecycleObserver {
 
     private val client = CarouselClient()
@@ -35,8 +31,7 @@ class CarouselView(
         prepareRecyclerView()
 
         background = ContextCompat.getDrawable(context, R.drawable.placeholder)
-        backgroundTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.placeholder_light))
+        backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.placeholder_light))
 
         presenter = CarouselPresenter(this, model, client)
 
@@ -57,11 +52,7 @@ class CarouselView(
 
     private fun prepareRecyclerView() {
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-        carousel.addItemDecoration(
-            SpacingItemDecoration(
-                resources.getDimension(R.dimen.spacing_size).toInt()
-            )
-        )
+        carousel.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.spacing_size).toInt()))
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         layoutManager.isItemPrefetchEnabled = true
         layoutManager.recycleChildrenOnDetach = true

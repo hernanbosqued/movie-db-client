@@ -5,14 +5,8 @@ import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.ui.CarouselClient
 import com.hernanbosqued.movie_db_client.ui.contract.CarouselContract
 
-class CarouselPresenter(
-    view: CarouselContract.View,
-    model: CarouselModel,
-    private var client: CarouselClient
-) :
-    BasePresenter<CarouselModel, CarouselContract.View>(model, view),
-    CarouselContract.Presenter,
-    CarouselClientCallback {
+class CarouselPresenter(view: CarouselContract.View, model: CarouselModel, private var client: CarouselClient) :
+    BasePresenter<CarouselModel, CarouselContract.View>(model, view), CarouselContract.Presenter, CarouselClientCallback {
 
     init {
         load(true)

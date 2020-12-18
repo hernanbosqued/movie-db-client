@@ -3,13 +3,12 @@ package com.hernanbosqued.movie_db_client.ui.presenter
 import com.hernanbosqued.movie_db_client.domain.*
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
-import com.hernanbosqued.movie_db_client.ui.contract.ListContract
 import com.hernanbosqued.movie_db_client.ui.MyApp
+import com.hernanbosqued.movie_db_client.ui.contract.ListContract
 import javax.inject.Inject
 
 class ListPresenter(view: ListContract.View) :
-    BasePresenter<ArrayList<CarouselModel>, ListContract.View>(ArrayList(), view),
-    ListContract.Presenter, RepositoryCallback<CarouselListModel> {
+    BasePresenter<ArrayList<CarouselModel>, ListContract.View>(ArrayList(), view), ListContract.Presenter, RepositoryCallback<CarouselListModel> {
 
     @Inject
     lateinit var repository: Repository
