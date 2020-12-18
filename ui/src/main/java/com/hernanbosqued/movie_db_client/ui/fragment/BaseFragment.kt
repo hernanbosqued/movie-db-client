@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.ui.fragment
 
 import android.content.Context
 import android.os.Bundle

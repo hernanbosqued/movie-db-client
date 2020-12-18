@@ -13,6 +13,8 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
+import com.hernanbosqued.movie_db_client.ui.contract.CarouselContract
+import com.hernanbosqued.movie_db_client.ui.presenter.CarouselPresenter
 import kotlinx.android.synthetic.main.layout_carrousel.view.*
 
 @SuppressLint("ViewConstructor")

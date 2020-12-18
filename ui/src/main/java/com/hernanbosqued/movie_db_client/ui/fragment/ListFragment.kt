@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.ui.fragment
 
 import android.os.Bundle
 import android.view.View
@@ -13,6 +13,11 @@ import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
 import com.hernanbosqued.movie_db_client.domain.orElse
 import com.hernanbosqued.movie_db_client.domain.then
+import com.hernanbosqued.movie_db_client.ui.CarouselListeners
+import com.hernanbosqued.movie_db_client.ui.CarouselView
+import com.hernanbosqued.movie_db_client.ui.contract.ListContract
+import com.hernanbosqued.movie_db_client.ui.R
+import com.hernanbosqued.movie_db_client.ui.presenter.ListPresenter
 import kotlinx.android.synthetic.main.fragment_list.checkbox_movies
 import kotlinx.android.synthetic.main.fragment_list.checkbox_tv
 import kotlinx.android.synthetic.main.fragment_list.container

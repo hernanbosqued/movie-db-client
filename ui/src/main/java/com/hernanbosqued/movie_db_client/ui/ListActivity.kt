@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
+import com.hernanbosqued.movie_db_client.ui.fragment.ListFragment
 import kotlinx.android.synthetic.main.layout_item.view.poster
 
 class ListActivity : AppCompatActivity(), ListFragment.Callback {

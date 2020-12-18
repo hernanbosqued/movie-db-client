@@ -1,7 +1,9 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.ui.presenter
 
 import com.hernanbosqued.movie_db_client.domain.CarouselClientCallback
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
+import com.hernanbosqued.movie_db_client.ui.CarouselClient
+import com.hernanbosqued.movie_db_client.ui.contract.CarouselContract
 
 class CarouselPresenter(
     view: CarouselContract.View,

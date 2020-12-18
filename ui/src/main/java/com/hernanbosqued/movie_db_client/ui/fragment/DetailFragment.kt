@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.ui.fragment
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,11 @@ import androidx.core.content.ContextCompat
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 import com.hernanbosqued.movie_db_client.repo.Constants
+import com.hernanbosqued.movie_db_client.ui.CarouselClient
+import com.hernanbosqued.movie_db_client.ui.contract.DetailContract
+import com.hernanbosqued.movie_db_client.ui.R
+import com.hernanbosqued.movie_db_client.ui.Utils
+import com.hernanbosqued.movie_db_client.ui.presenter.DetailPresenter
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import kotlinx.android.synthetic.main.fragment_detail.*

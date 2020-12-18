@@ -2,6 +2,7 @@ package com.hernanbosqued.movie_db_client.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.hernanbosqued.movie_db_client.ui.fragment.DetailFragment
 
 class DetailActivity : AppCompatActivity() {
 

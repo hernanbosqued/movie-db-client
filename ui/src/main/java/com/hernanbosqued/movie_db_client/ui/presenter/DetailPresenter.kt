@@ -1,6 +1,8 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.ui.presenter
 
 import com.hernanbosqued.movie_db_client.domain.*
+import com.hernanbosqued.movie_db_client.ui.CarouselClient
+import com.hernanbosqued.movie_db_client.ui.contract.DetailContract
 
 class DetailPresenter(
     view: DetailContract.View,
