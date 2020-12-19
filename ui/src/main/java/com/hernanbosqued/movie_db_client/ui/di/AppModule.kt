@@ -13,5 +13,5 @@ abstract class AppModule {
     abstract fun provideResources(impl: ResourcesRepositoryImpl): ResourcesRepository
 
     @Binds
-    abstract fun provideAPI(impl: RepositoryImpl): Repository
+    abstract fun provideApi(impl: RepositoryImpl): Repository
 }

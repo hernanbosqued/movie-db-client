@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.base
+package com.hernanbosqued.movie_db_client.base.di
 
 import android.app.Application
 import android.content.Context

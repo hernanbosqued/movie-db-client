@@ -1,11 +1,8 @@
 package com.hernanbosqued.movie_db_client.ui.di
 
 import android.app.Application
-import com.hernanbosqued.movie_db_client.base.ContextModule
+import com.hernanbosqued.movie_db_client.base.di.ContextModule
 import com.hernanbosqued.movie_db_client.ui.CarouselClient
-import com.hernanbosqued.movie_db_client.ui.ListActivity
-import com.hernanbosqued.movie_db_client.ui.fragment.ListFragment
-import com.hernanbosqued.movie_db_client.ui.presenter.ListPresenter
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
