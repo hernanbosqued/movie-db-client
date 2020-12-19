@@ -1,6 +1,7 @@
 package com.hernanbosqued.movie_db_client.ui.di
 
 import android.app.Application
+import com.hernanbosqued.movie_db_client.base.ContextModule
 import com.hernanbosqued.movie_db_client.ui.CarouselClient
 import com.hernanbosqued.movie_db_client.ui.ListActivity
 import com.hernanbosqued.movie_db_client.ui.fragment.ListFragment
@@ -15,6 +16,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     AndroidInjectionModule::class,
+    ContextModule::class,
     AppModule::class,
     ActivityBuilderModule::class])
 interface AppComponent : AndroidInjector<DaggerApplication> {

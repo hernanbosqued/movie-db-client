@@ -1,3 +1,4 @@
+include ':base'
 include ':tests'
 include ':domain'
 include ':repo'

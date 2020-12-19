@@ -8,8 +8,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import javax.inject.Inject
 
-class RepositoryImpl(val context: Context) : Repository {
+
+class RepositoryImpl @Inject constructor(val context: Context) : Repository {
     private var service: APIService = ServiceGenerator.createService(context, APIService::class.java)
 
     override fun carouselList(callback: RepositoryCallback<CarouselListModel>) {
