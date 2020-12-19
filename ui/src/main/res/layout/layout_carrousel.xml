@@ -80,6 +80,7 @@
         android:layout_marginStart="@dimen/margin16"
         android:layout_marginEnd="@dimen/margin16"
         android:gravity="center"
+        android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
