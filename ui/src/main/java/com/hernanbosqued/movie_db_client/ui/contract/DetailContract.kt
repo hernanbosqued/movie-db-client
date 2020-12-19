@@ -12,5 +12,7 @@ class DetailContract {
         fun setVideo(data: VideoResultModel)
     }
 
-    interface Presenter
+    interface Presenter {
+        fun start()
+    }
 }

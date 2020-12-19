@@ -21,6 +21,8 @@ interface AppComponent : AndroidInjector<DaggerApplication> {
 
     override fun inject(application: DaggerApplication)
 
+    fun inject(client: CarouselClient)
+
     @Component.Builder
     interface Builder {
         fun build(): AppComponent

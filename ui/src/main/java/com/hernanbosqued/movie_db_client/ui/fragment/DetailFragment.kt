@@ -7,18 +7,20 @@ import androidx.core.content.ContextCompat
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 import com.hernanbosqued.movie_db_client.repo.Constants
-import com.hernanbosqued.movie_db_client.ui.CarouselClient
-import com.hernanbosqued.movie_db_client.ui.contract.DetailContract
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.Utils
+import com.hernanbosqued.movie_db_client.ui.contract.DetailContract
 import com.hernanbosqued.movie_db_client.ui.presenter.DetailPresenter
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import kotlinx.android.synthetic.main.fragment_detail.*
+import javax.inject.Inject
 
 class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
     DetailContract.View {
-    private lateinit var presenter: DetailPresenter
+
+    @Inject
+    lateinit var presenter: DetailPresenter
 
     interface Callbacks
 
@@ -30,9 +32,11 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
         super.onViewCreated(view, savedInstanceState)
 
         val model: CarouselItemModel = arguments?.getSerializable("model") as CarouselItemModel
-        presenter = DetailPresenter(this, model, CarouselClient())
         youtube.visibility = View.INVISIBLE
         empty_view.visibility = View.VISIBLE
+
+        presenter.bindModel(model)
+        presenter.start()
     }
 
     override fun onResume() {
@@ -73,7 +77,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
         this.ranking_text.text = Utils.getSpan(
             getString(R.string.ranking),
             ranking,
-            ContextCompat.getColor(context!!, R.color.colorAccent)
+            ContextCompat.getColor(requireContext(), R.color.colorAccent)
         )
     }
 

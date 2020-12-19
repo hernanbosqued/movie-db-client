@@ -1,25 +1,18 @@
 package com.hernanbosqued.movie_db_client.ui
 
-import com.hernanbosqued.movie_db_client.domain.CarouselClientCallback
-import com.hernanbosqued.movie_db_client.domain.ListModel
-import com.hernanbosqued.movie_db_client.domain.Repository
-import com.hernanbosqued.movie_db_client.domain.RepositoryCallback
-import com.hernanbosqued.movie_db_client.domain.RepositoryCallbackImpl
-import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
-import com.hernanbosqued.movie_db_client.domain.VideoResultModel
+import com.hernanbosqued.movie_db_client.domain.*
 import javax.inject.Inject
 
-class CarouselClient {
-
-    init {
-        MyApp.appComponent.inject(this)
-    }
-
+class CarouselClient{
     @Inject
     lateinit var repository: Repository
 
     @Inject
     lateinit var resources: ResourcesRepository
+
+    init {
+        MyApp.component.inject(this)
+    }
 
     fun searchBoth(page: Int, query: String, callback: CarouselClientCallback) {
         repository.searchBoth(

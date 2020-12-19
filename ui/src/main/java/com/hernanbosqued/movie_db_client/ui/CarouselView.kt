@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.layout_carrousel.view.*
 class CarouselView(context: Context, val model: CarouselModel, private val listener: CarouselListeners) :
     ConstraintLayout(context), CarouselContract.View, ScrollListener, LifecycleObserver {
 
-    private val client = CarouselClient()
     private var presenter: CarouselPresenter
     private val adapter = ItemsAdapter(this, listener)
 
@@ -33,7 +32,7 @@ class CarouselView(context: Context, val model: CarouselModel, private val liste
         background = ContextCompat.getDrawable(context, R.drawable.placeholder)
         backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.placeholder_light))
 
-        presenter = CarouselPresenter(this, model, client)
+        presenter = CarouselPresenter(this, model, CarouselClient())
 
         setOnClickListener {
             presenter.onCarouselClicked()

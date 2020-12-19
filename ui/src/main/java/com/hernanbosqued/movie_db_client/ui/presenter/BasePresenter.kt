@@ -14,8 +14,12 @@ abstract class BasePresenter<MODEL, VIEW>(private var model: MODEL, view: VIEW) 
         return weakView.get()!!
     }
 
+    fun bindModel(model: MODEL){
+        this.model = model
+    }
+
     fun bindView(view: VIEW){
-        weakView = WeakReference(view)
+        this.weakView = WeakReference(view)
     }
 
     fun unbindView() {

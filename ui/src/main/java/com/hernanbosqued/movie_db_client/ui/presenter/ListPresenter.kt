@@ -3,24 +3,15 @@ package com.hernanbosqued.movie_db_client.ui.presenter
 import com.hernanbosqued.movie_db_client.domain.*
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
-import com.hernanbosqued.movie_db_client.ui.MyApp
 import com.hernanbosqued.movie_db_client.ui.contract.ListContract
 import javax.inject.Inject
 
-class ListPresenter(view: ListContract.View) :
+class ListPresenter @Inject constructor(view: ListContract.View, val repository: Repository, val resources: ResourcesRepository) :
     BasePresenter<ArrayList<CarouselModel>, ListContract.View>(ArrayList(), view), ListContract.Presenter, RepositoryCallback<CarouselListModel> {
-
-    @Inject
-    lateinit var repository: Repository
-
-    @Inject
-    lateinit var resources: ResourcesRepository
 
     private var searchSelection = setOf(TV, MOVIE)
 
-    init {
-        MyApp.appComponent.inject(this)
-
+    override fun start() {
         repository.carouselList(this)
 
         view().initialSelection(

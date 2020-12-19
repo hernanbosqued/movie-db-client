@@ -15,18 +15,17 @@ import com.hernanbosqued.movie_db_client.domain.orElse
 import com.hernanbosqued.movie_db_client.domain.then
 import com.hernanbosqued.movie_db_client.ui.CarouselListeners
 import com.hernanbosqued.movie_db_client.ui.CarouselView
-import com.hernanbosqued.movie_db_client.ui.contract.ListContract
 import com.hernanbosqued.movie_db_client.ui.R
+import com.hernanbosqued.movie_db_client.ui.contract.ListContract
 import com.hernanbosqued.movie_db_client.ui.presenter.ListPresenter
-import kotlinx.android.synthetic.main.fragment_list.checkbox_movies
-import kotlinx.android.synthetic.main.fragment_list.checkbox_tv
-import kotlinx.android.synthetic.main.fragment_list.container
-import kotlinx.android.synthetic.main.fragment_list.scroll_view
-import kotlinx.android.synthetic.main.fragment_list.search_view
+import kotlinx.android.synthetic.main.fragment_list.*
+import javax.inject.Inject
 
 class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener,
     ListContract.View, CarouselListeners {
-    private lateinit var presenter: ListPresenter
+
+    @Inject
+    lateinit var presenter: ListPresenter
 
     interface Callback {
         fun fromFragment(
@@ -41,8 +40,8 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = ListPresenter(view = this)
         prepareSearchView()
+        presenter.start()
     }
 
     override fun onResume() {
@@ -56,7 +55,7 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
     }
 
     override fun addCarousel(model: CarouselModel, onTop: Boolean) {
-        val carouselView = CarouselView(context!!, model, this)
+        val carouselView = CarouselView(requireContext(), model, this)
         val params = carouselView.layoutParams as ConstraintLayout.LayoutParams
         params.setMargins(20)
 
