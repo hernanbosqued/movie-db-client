@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import dagger.android.support.DaggerFragment
 
 @Suppress("UNCHECKED_CAST")
-abstract class BaseFragment<FRAGMENT_CALLBACK> : Fragment() {
+abstract class BaseFragment<FRAGMENT_CALLBACK> : DaggerFragment() {
 
     abstract fun getLayout(): Int
 
