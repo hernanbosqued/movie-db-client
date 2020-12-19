@@ -10,10 +10,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
+
 @Module
 abstract class AppModule {
     @Binds
-    abstract fun provideContext(application: Application?): Context
+    abstract fun provideContext(application: Application): Context
 
     @Binds
     abstract fun provideResources(impl: ResourcesRepositoryImpl): ResourcesRepository
@@ -26,3 +27,5 @@ abstract class AppModule {
         }
     }
 }
+
+
