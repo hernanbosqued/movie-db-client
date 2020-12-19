@@ -28,10 +28,7 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
     lateinit var presenter: ListPresenter
 
     interface Callback {
-        fun fromFragment(
-            view: View,
-            model: CarouselItemModel
-        )
+        fun fromFragment(view: View, model: CarouselItemModel)
     }
 
     override fun getLayout(): Int {
@@ -88,12 +85,8 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
         checkbox_movies.isChecked = moviesChecked
         checkbox_tv.isChecked = tvChecked
 
-        checkbox_movies.setOnCheckedChangeListener { _, _ ->
-            presenter.checkboxChanged(MOVIE)
-        }
-        checkbox_tv.setOnCheckedChangeListener { _, _ ->
-            presenter.checkboxChanged(TV)
-        }
+        checkbox_movies.setOnCheckedChangeListener { _, _ -> presenter.checkboxChanged(MOVIE) }
+        checkbox_tv.setOnCheckedChangeListener { _, _ -> presenter.checkboxChanged(TV) }
     }
 
     override fun scrollTop() {

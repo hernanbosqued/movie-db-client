@@ -16,8 +16,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.You
 import kotlinx.android.synthetic.main.fragment_detail.*
 import javax.inject.Inject
 
-class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
-    DetailContract.View {
+class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.View {
 
     @Inject
     lateinit var presenter: DetailPresenter
@@ -30,11 +29,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val model: CarouselItemModel = arguments?.getSerializable("model") as CarouselItemModel
-        youtube.visibility = View.INVISIBLE
-        empty_view.visibility = View.VISIBLE
-
         presenter.bindModel(model)
         presenter.start()
     }
@@ -47,11 +42,6 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
     override fun onPause() {
         super.onPause()
         presenter.unbindView()
-    }
-
-    private fun prepareYoutube() {
-        lifecycle.addObserver(youtube)
-        youtube.enableAutomaticInitialization = true
     }
 
     override val dummyCallback: Callbacks
@@ -74,11 +64,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
     }
 
     override fun setRanking(ranking: String) {
-        this.ranking_text.text = Utils.getSpan(
-            getString(R.string.ranking),
-            ranking,
-            ContextCompat.getColor(requireContext(), R.color.colorAccent)
-        )
+        this.ranking_text.text = Utils.getSpan(getString(R.string.ranking), ranking, ContextCompat.getColor(requireContext(), R.color.colorAccent))
     }
 
     override fun showMessage(message: String) {
@@ -86,16 +72,29 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(),
     }
 
     override fun setVideo(data: VideoResultModel) {
-        if (data.site.equals("youtube", ignoreCase = true) && !data.key.isNullOrEmpty())
-            prepareYoutube()
-        youtube.visibility = View.VISIBLE
+        if (data.site.equals("youtube", ignoreCase = true) && !data.key.isNullOrEmpty()) {
+            lifecycle.addObserver(youtube)
+            youtube.enableAutomaticInitialization = true
+
+            youtube.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+                override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                    youTubePlayer.cueVideo(data.key!!, 0f)
+                    youTubePlayer.play()
+                }
+            })
+        }
+    }
+
+    override fun showEmpty() {
+        empty_view.visibility = View.VISIBLE
+    }
+
+    override fun hideEmpty() {
         empty_view.visibility = View.INVISIBLE
-        youtube.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
-            override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.cueVideo(data.key!!, 0f)
-                youTubePlayer.play()
-            }
-        })
+    }
+
+    override fun showVideo() {
+        youtube.visibility = View.VISIBLE
     }
 }
 

@@ -17,7 +17,11 @@ class DetailPresenter @Inject constructor(view: DetailContract.View) :
         view().setRanking(model().ranking!!)
 
         if (model().hasVideo) {
+            view().hideEmpty()
+            view().showVideo()
             client.videos(model().type!!, model().id, this)
+        } else {
+            view().showEmpty()
         }
     }
 
@@ -25,7 +29,7 @@ class DetailPresenter @Inject constructor(view: DetailContract.View) :
         view().setVideo(data.results!!.first())
     }
 
-    override fun onFail(errorModel: ErrorModel) {
-        view().showMessage(errorModel.code.toString() + " - " + errorModel.message)
+    override fun onFail(error: ErrorModel) {
+        view().showMessage(error.code.toString() + " - " + error.message)
     }
 }

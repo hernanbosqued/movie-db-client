@@ -10,6 +10,9 @@ class DetailContract {
         fun setRanking(ranking: String)
         fun showMessage(message: String)
         fun setVideo(data: VideoResultModel)
+        fun showEmpty()
+        fun hideEmpty()
+        fun showVideo()
     }
 
     interface Presenter {
