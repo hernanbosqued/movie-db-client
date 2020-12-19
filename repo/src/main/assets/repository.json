@@ -1,20 +1,25 @@
 {
   "results": [
     {
-      "method": "tvPopular"
+      "method": "tvPopular",
+      "info": false
     },
     {
-      "method": "moviesPopular"
+      "method": "moviesPopular",
+      "info": false
     },
     {
-      "method": "tvTopRated"
+      "method": "tvTopRated",
+      "info": false
     },
     {
-      "method": "moviesTopRated"
+      "method": "moviesTopRated",
+      "info": false
     },
     {
       "method": "searchBoth",
-      "query": "Depeche Mode video singles"
+      "query": "Depeche Mode video singles",
+      "info": false
     }
   ]
 }

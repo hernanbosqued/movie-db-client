@@ -8,12 +8,13 @@ class CarouselContract {
         fun showMessage(message: String)
         fun showProgress()
         fun hideProgress()
-        fun showEmpty()
         fun showEmpty(error:String)
         fun hideEmpty()
         fun showCarouselData(model: CarouselModel)
-        fun setCarouselInfo(title: String, page: Int, totalPages: Int, totalResults: Int, results: Int)
+        fun setInfo(title: String, page: Int, totalPages: Int, totalResults: Int, results: Int)
         fun addData(data: MutableList<CarouselItemModel>)
+        fun hideInfo()
+        fun showInfo()
     }
 
     interface Presenter {

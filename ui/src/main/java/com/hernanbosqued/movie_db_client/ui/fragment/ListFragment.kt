@@ -2,19 +2,17 @@ package com.hernanbosqued.movie_db_client.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import android.view.View.MeasureSpec
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.setMargins
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
-import com.hernanbosqued.movie_db_client.domain.orElse
-import com.hernanbosqued.movie_db_client.domain.then
+import com.hernanbosqued.movie_db_client.ui.CarouselFragment
 import com.hernanbosqued.movie_db_client.ui.CarouselListeners
-import com.hernanbosqued.movie_db_client.ui.CarouselView
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.contract.ListContract
 import com.hernanbosqued.movie_db_client.ui.presenter.ListPresenter
@@ -51,20 +49,19 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
     }
 
     override fun addCarousel(model: CarouselModel, onTop: Boolean) {
-        val carouselView = CarouselView(requireContext(), model, this)
-        val params = carouselView.layoutParams as ConstraintLayout.LayoutParams
-        params.setMargins(20)
+        val fragmentContainer = FrameLayout(requireContext())
+        fragmentContainer.id = View.generateViewId()
 
-        val index: Int = (onTop then 0 orElse -1)!!
-        container.addView(carouselView, index)
+        val params = FrameLayout.LayoutParams(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.setMargins(20, 20, 20, 20)
+        fragmentContainer.layoutParams = params
 
-        carouselView.measure(
-            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-        )
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.add(fragmentContainer.id, CarouselFragment(model, this), "carouselFragment${fragmentContainer.id}")
+        transaction.commit()
 
-        carouselView.translationY = (-carouselView.measuredHeight).toFloat()
-        carouselView.animate().translationY(0F)
+        val index = (if (onTop) 0 else -1)
+        container.addView(fragmentContainer, index)
 
         if (onTop) {
             scrollTop()

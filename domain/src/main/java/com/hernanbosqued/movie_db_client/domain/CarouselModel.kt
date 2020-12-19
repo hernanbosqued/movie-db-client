@@ -4,6 +4,7 @@ class CarouselModel {
 
     var method: String = ""
     var query: String = ""
+    val info: Boolean = false
     var page: Int = 0
     var results: Int = 0
     var totalPages: Int = 0

@@ -1,5 +1,6 @@
 package com.hernanbosqued.movie_db_client.ui.di
 
+import com.hernanbosqued.movie_db_client.ui.CarouselFragment
 import com.hernanbosqued.movie_db_client.ui.fragment.DetailFragment
 import com.hernanbosqued.movie_db_client.ui.fragment.ListFragment
 import dagger.Module
@@ -12,4 +13,7 @@ internal abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector(modules = [DetailFragmentModule::class])
     abstract fun detailFragment(): DetailFragment
+
+    @ContributesAndroidInjector(modules = [CarouselFragmentModule::class])
+    abstract fun carouselFragment(): CarouselFragment
 }
