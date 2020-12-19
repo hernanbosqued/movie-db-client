@@ -59,34 +59,12 @@ class CarouselView(context: Context, val model: CarouselModel, private val liste
         carousel.adapter = adapter
     }
 
-    override fun setCarouselInfo(
-        title: String,
-        page: Int,
-        totalPages: Int,
-        totalResults: Int,
-        results: Int
-    ) {
+    override fun setCarouselInfo(title: String, page: Int, totalPages: Int, totalResults: Int, results: Int) {
         title_text.text = title
-        page_text.text = Utils.getSpan(
-            context.getString(R.string.page),
-            page.toString(),
-            ContextCompat.getColor(context!!, R.color.colorAccent)
-        )
-        results_text.text = Utils.getSpan(
-            context.getString(R.string.results),
-            results.toString(),
-            ContextCompat.getColor(context!!, R.color.colorAccent)
-        )
-        total_pages_text.text = Utils.getSpan(
-            context.getString(R.string.total_pages),
-            totalPages.toString(),
-            ContextCompat.getColor(context!!, R.color.colorAccent)
-        )
-        total_results_text.text = Utils.getSpan(
-            context.getString(R.string.total_results),
-            totalResults.toString(),
-            ContextCompat.getColor(context!!, R.color.colorAccent)
-        )
+        page_text.text = Utils.getSpan(context.getString(R.string.page), page.toString(), ContextCompat.getColor(context!!, R.color.colorAccent))
+        results_text.text = Utils.getSpan(context.getString(R.string.results), results.toString(), ContextCompat.getColor(context!!, R.color.colorAccent))
+        total_pages_text.text = Utils.getSpan(context.getString(R.string.total_pages), totalPages.toString(), ContextCompat.getColor(context!!, R.color.colorAccent))
+        total_results_text.text = Utils.getSpan(context.getString(R.string.total_results), totalResults.toString(), ContextCompat.getColor(context!!, R.color.colorAccent))
     }
 
     override fun showCarouselData(model: CarouselModel) {

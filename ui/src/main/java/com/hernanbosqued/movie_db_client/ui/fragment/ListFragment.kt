@@ -21,8 +21,7 @@ import com.hernanbosqued.movie_db_client.ui.presenter.ListPresenter
 import kotlinx.android.synthetic.main.fragment_list.*
 import javax.inject.Inject
 
-class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener,
-    ListContract.View, CarouselListeners {
+class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
 
     @Inject
     lateinit var presenter: ListPresenter
