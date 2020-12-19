@@ -1,5 +1,6 @@
+rootProject.name = "movie db client"
+
 include ':tests'
 include ':domain'
 include ':repo'
-include ':ui'
-rootProject.name = "movie db client"
+apply from: 'ui/ui-settings.gradle'

@@ -1,0 +1,5 @@
+def rootDir = settingsDir
+def modulePrefix = ':'
+
+include modulePrefix + 'ui_impl'
+project(modulePrefix + 'ui_impl').projectDir = new File(rootDir, 'ui/impl')
