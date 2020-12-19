@@ -97,4 +97,3 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         youtube.visibility = View.VISIBLE
     }
 }
-
