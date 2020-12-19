@@ -1,5 +1,6 @@
 package com.hernanbosqued.movie_db_client.ui.di
 
+import com.hernanbosqued.movie_db_client.ui.CarouselClient
 import com.hernanbosqued.movie_db_client.ui.contract.DetailContract
 import com.hernanbosqued.movie_db_client.ui.fragment.DetailFragment
 import com.hernanbosqued.movie_db_client.ui.presenter.DetailPresenter
@@ -15,8 +16,8 @@ abstract class DetailFragmentModule {
 
     companion object {
         @Provides
-        fun provideDetailPresenter(view: DetailContract.View): DetailContract.Presenter {
-            return DetailPresenter(view)
+        fun provideDetailPresenter(view: DetailContract.View, client: CarouselClient): DetailContract.Presenter {
+            return DetailPresenter(view, client)
         }
     }
 }

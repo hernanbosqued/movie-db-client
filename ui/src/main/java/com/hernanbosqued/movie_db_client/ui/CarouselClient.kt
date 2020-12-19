@@ -3,7 +3,7 @@ package com.hernanbosqued.movie_db_client.ui
 import com.hernanbosqued.movie_db_client.domain.*
 import javax.inject.Inject
 
-class CarouselClient{
+class CarouselClient @Inject constructor() {
     @Inject
     lateinit var repository: Repository
 

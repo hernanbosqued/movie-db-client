@@ -5,10 +5,8 @@ import com.hernanbosqued.movie_db_client.ui.CarouselClient
 import com.hernanbosqued.movie_db_client.ui.contract.DetailContract
 import javax.inject.Inject
 
-class DetailPresenter @Inject constructor(view: DetailContract.View) :
+class DetailPresenter @Inject constructor(view: DetailContract.View, private val client: CarouselClient) :
     BasePresenter<CarouselItemModel, DetailContract.View>(CarouselItemModel(), view), DetailContract.Presenter, RepositoryCallback<ListModel<VideoResultModel>> {
-
-    private val client = CarouselClient()
 
     override fun start() {
         view().setTitle(model().title!!)

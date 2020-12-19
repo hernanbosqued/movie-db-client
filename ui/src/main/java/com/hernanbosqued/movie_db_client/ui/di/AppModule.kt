@@ -20,9 +20,6 @@ abstract class AppModule {
     @Binds
     abstract fun provideResources(impl: ResourcesRepositoryImpl): ResourcesRepository
 
-    @Binds
-    abstract fun provideClient(impl: CarouselClient): CarouselClient
-
     companion object {
         @kotlin.jvm.JvmStatic
         @Provides

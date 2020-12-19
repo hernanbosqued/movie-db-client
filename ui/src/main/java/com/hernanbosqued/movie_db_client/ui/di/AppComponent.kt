@@ -23,6 +23,8 @@ interface AppComponent : AndroidInjector<DaggerApplication> {
 
     fun inject(client: CarouselClient)
 
+    fun carouselClient(): CarouselClient
+
     @Component.Builder
     interface Builder {
         fun build(): AppComponent
