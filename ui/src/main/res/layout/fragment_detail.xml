@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
-        android:id="@+id/empty_view"
+        android:id="@+id/alert"
         style="@style/Text.Detail.Empty"
         android:layout_width="match_parent"
         android:layout_height="0dp"

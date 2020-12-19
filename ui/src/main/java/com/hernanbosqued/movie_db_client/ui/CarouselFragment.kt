@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.view.View.*
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -100,10 +99,6 @@ class CarouselFragment(val model: CarouselModel, private val listener: CarouselL
         adapter.add(data)
     }
 
-    override fun showMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
-    }
-
     override fun onLastItemReached() {
         presenter.load(false)
     }
@@ -116,14 +111,14 @@ class CarouselFragment(val model: CarouselModel, private val listener: CarouselL
         progress.visibility = INVISIBLE
     }
 
-    override fun showEmpty(error: String) {
-        empty_view.visibility = VISIBLE
+    override fun showMessage(message: String) {
+        alert.visibility = VISIBLE
         carousel.visibility = GONE
-        empty_view.text = error
+        alert.text = message
     }
 
-    override fun hideEmpty() {
+    override fun hideMessage() {
         carousel.visibility = VISIBLE
-        empty_view.visibility = INVISIBLE
+        alert.visibility = INVISIBLE
     }
 }

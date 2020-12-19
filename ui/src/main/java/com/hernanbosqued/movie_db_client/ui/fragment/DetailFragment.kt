@@ -86,11 +86,11 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
     }
 
     override fun showEmpty() {
-        empty_view.visibility = View.VISIBLE
+        alert.visibility = View.VISIBLE
     }
 
     override fun hideEmpty() {
-        empty_view.visibility = View.INVISIBLE
+        alert.visibility = View.INVISIBLE
     }
 
     override fun showVideo() {

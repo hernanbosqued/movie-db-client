@@ -39,8 +39,12 @@ class ResourcesRepositoryImpl @Inject constructor(private val context: Context) 
         return context.getString(R.string.search_tv)
     }
 
-    override fun getD(): String {
+    override fun ranking(): String {
         return context.getString(R.string.ranking)
+    }
+
+    override fun noResultsFound(): String {
+        return context.getString(R.string.no_results_found)
     }
 
     override fun getAccent(): Int {

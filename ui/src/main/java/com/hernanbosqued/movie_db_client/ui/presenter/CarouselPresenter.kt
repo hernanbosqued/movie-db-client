@@ -2,11 +2,12 @@ package com.hernanbosqued.movie_db_client.ui.presenter
 
 import com.hernanbosqued.movie_db_client.domain.CarouselClientCallback
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
+import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
 import com.hernanbosqued.movie_db_client.ui.CarouselClient
 import com.hernanbosqued.movie_db_client.ui.contract.CarouselContract
 import javax.inject.Inject
 
-class CarouselPresenter @Inject constructor(view: CarouselContract.View, private var client: CarouselClient) :
+class CarouselPresenter @Inject constructor(view: CarouselContract.View, private val client: CarouselClient, private val resources: ResourcesRepository) :
     BasePresenter<CarouselModel, CarouselContract.View>(CarouselModel(), view), CarouselContract.Presenter, CarouselClientCallback {
 
     override fun onOK(model: CarouselModel) {
@@ -54,15 +55,15 @@ class CarouselPresenter @Inject constructor(view: CarouselContract.View, private
     override fun onError(error: String) {
         view().hideProgress()
         view().hideInfo()
-        view().showEmpty(error)
+        view().showMessage(error)
         checkListContent()
     }
 
     private fun checkListContent() {
         if (model().list.isNullOrEmpty()) {
             view().hideInfo()
-            view().showEmpty("Empty")
+            view().showMessage(resources.noResultsFound())
         } else
-            view().hideEmpty()
+            view().hideMessage()
     }
 }
