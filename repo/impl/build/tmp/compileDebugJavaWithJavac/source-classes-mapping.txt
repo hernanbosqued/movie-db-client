@@ -1,4 +1,0 @@
-com/hernanbosqued/movie_db_client/repo/RepositoryImpl_Factory.java
- com.hernanbosqued.movie_db_client.repo.RepositoryImpl_Factory
-com/hernanbosqued/movie_db_client/repo/BuildConfig.java
- com.hernanbosqued.movie_db_client.repo.BuildConfig
