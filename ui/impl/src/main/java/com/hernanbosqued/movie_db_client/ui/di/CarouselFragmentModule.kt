@@ -1,7 +1,7 @@
 package com.hernanbosqued.movie_db_client.ui.di
 
 import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
-import com.hernanbosqued.movie_db_client.ui.CarouselClient
+import com.hernanbosqued.movie_db_client.ui.CarouselService
 import com.hernanbosqued.movie_db_client.ui.CarouselFragment
 import com.hernanbosqued.movie_db_client.ui.contract.CarouselContract
 import com.hernanbosqued.movie_db_client.ui.presenter.CarouselPresenter
@@ -17,8 +17,8 @@ abstract class CarouselFragmentModule {
 
     companion object {
         @Provides
-        fun provideCarouselPresenter(view: CarouselContract.View, client: CarouselClient, resources: ResourcesRepository): CarouselContract.Presenter {
-            return CarouselPresenter(view, client, resources)
+        fun provideCarouselPresenter(view: CarouselContract.View, service: CarouselService, resources: ResourcesRepository): CarouselContract.Presenter {
+            return CarouselPresenter(view, service, resources)
         }
     }
 }

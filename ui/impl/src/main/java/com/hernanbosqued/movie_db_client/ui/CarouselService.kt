@@ -3,7 +3,7 @@ package com.hernanbosqued.movie_db_client.ui
 import com.hernanbosqued.movie_db_client.domain.*
 import javax.inject.Inject
 
-class CarouselClient @Inject constructor(var repository: Repository, var resources: ResourcesRepository) {
+class CarouselService @Inject constructor(var repository: Repository, var resources: ResourcesRepository) {
 
     fun searchBoth(page: Int, query: String, callback: CarouselClientCallback) {
         repository.searchBoth(

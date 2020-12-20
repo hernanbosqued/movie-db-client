@@ -3,11 +3,11 @@ package com.hernanbosqued.movie_db_client.ui.presenter
 import com.hernanbosqued.movie_db_client.domain.CarouselClientCallback
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
-import com.hernanbosqued.movie_db_client.ui.CarouselClient
+import com.hernanbosqued.movie_db_client.ui.CarouselService
 import com.hernanbosqued.movie_db_client.ui.contract.CarouselContract
 import javax.inject.Inject
 
-class CarouselPresenter @Inject constructor(view: CarouselContract.View, private val client: CarouselClient, private val resources: ResourcesRepository) :
+class CarouselPresenter @Inject constructor(view: CarouselContract.View, private val service: CarouselService, private val resources: ResourcesRepository) :
     BasePresenter<CarouselModel, CarouselContract.View>(CarouselModel(), view), CarouselContract.Presenter, CarouselClientCallback {
 
     override fun onOK(model: CarouselModel) {
@@ -39,11 +39,11 @@ class CarouselPresenter @Inject constructor(view: CarouselContract.View, private
             }
 
             if (first || model.page < model.totalPages) {
-                val method = client.javaClass.methods.filterNotNull().find {
+                val method = service.javaClass.methods.filterNotNull().find {
                     model.method.contentEquals(it.name)
                 }
                 view().showProgress()
-                method?.invoke(client, model.page + 1, model.query, this)
+                method?.invoke(service, model.page + 1, model.query, this)
             }
         }
     }
