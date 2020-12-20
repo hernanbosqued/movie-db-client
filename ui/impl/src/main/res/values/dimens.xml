@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_text">6dp</dimen>
+    <dimen name="margin16">16dp</dimen>
+
+    <dimen name="font_size_14">14sp</dimen>
+    <dimen name="font_size_18">18sp</dimen>
+    <dimen name="font_size_22">20sp</dimen>
+    <dimen name="font_size_26">26sp</dimen>
+
+    <dimen name="rounded_size">10dp</dimen>
+    <dimen name="spacing_size">20dp</dimen>
+    <dimen name="recycler_height">250dp</dimen>
+</resources>
