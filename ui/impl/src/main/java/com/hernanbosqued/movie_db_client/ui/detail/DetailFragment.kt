@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.VideoResultModel
 import com.hernanbosqued.movie_db_client.repo.Constants
+import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.Utils
-import com.hernanbosqued.movie_db_client.ui.BaseFragment
+import com.hernanbosqued.movie_db_client.ui.databinding.FragmentDetailBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import kotlinx.android.synthetic.main.fragment_detail.*
@@ -18,7 +21,9 @@ import javax.inject.Inject
 class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.View {
 
     @Inject
-    lateinit var presenter: DetailPresenter
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    lateinit var viewModel: DetailViewModel
 
     interface Callbacks
 
@@ -26,21 +31,29 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         return R.layout.fragment_detail
     }
 
+    private val binding: FragmentDetailBinding by lazy {
+        DataBindingUtil.setContentView(this.requireActivity(), getLayout())
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val model: CarouselItemModel = arguments?.getSerializable("model") as CarouselItemModel
-        presenter.bindModel(model)
-        presenter.start()
+        //  presenter.bindModel(model)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
+
+        binding.viewModel = viewModel
+        viewModel.start(model)
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.bindView(this)
+        //      presenter.bindView(this)
     }
 
     override fun onPause() {
         super.onPause()
-        presenter.unbindView()
+        //     presenter.unbindView()
     }
 
     override val dummyCallback: Callbacks

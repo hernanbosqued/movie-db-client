@@ -1,9 +1,10 @@
 package com.hernanbosqued.movie_db_client.ui.di
 
+import androidx.lifecycle.ViewModel
 import com.hernanbosqued.movie_db_client.ui.CarouselService
 import com.hernanbosqued.movie_db_client.ui.detail.DetailContract
 import com.hernanbosqued.movie_db_client.ui.detail.DetailFragment
-import com.hernanbosqued.movie_db_client.ui.detail.DetailPresenter
+import com.hernanbosqued.movie_db_client.ui.detail.DetailViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -16,8 +17,8 @@ abstract class DetailFragmentModule {
 
     companion object {
         @Provides
-        fun provideDetailPresenter(view: DetailContract.View, service: CarouselService): DetailContract.Presenter {
-            return DetailPresenter(view, service)
+        fun provideDetailPresenter(view: DetailContract.View, service: CarouselService): ViewModel {
+            return DetailViewModel(service)
         }
     }
 }
