@@ -1,0 +1,9 @@
+def rootDir = settingsDir
+def modulePrefix = ':'
+
+include modulePrefix + 'repo_wiring'
+project(modulePrefix + 'repo_wiring').projectDir = new File(rootDir, 'repo/wiring')
+
+
+include modulePrefix + 'repo_impl'
+project(modulePrefix + 'repo_impl').projectDir = new File(rootDir, 'repo/impl')

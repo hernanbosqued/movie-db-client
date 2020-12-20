@@ -1,7 +1,6 @@
-include ':repo-wiring'
+apply from: 'repo/repo-settings.gradle'
 include ':tests'
 include ':domain'
-include ':repo'
 include ':ui'
 include ':base'
 rootProject.name = "movie db client"
