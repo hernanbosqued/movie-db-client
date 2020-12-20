@@ -3,6 +3,8 @@ package com.hernanbosqued.movie_db_client.ui.di
 import android.app.Application
 import com.hernanbosqued.movie_db_client.base.di.ContextModule
 import com.hernanbosqued.movie_db_client.repo.wiring.RepoModule
+import com.hernanbosqued.movie_db_client.ui.di.ViewModelFactoryModule
+import com.hernanbosqued.movie_db_client.ui.detail.DetailFragment
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

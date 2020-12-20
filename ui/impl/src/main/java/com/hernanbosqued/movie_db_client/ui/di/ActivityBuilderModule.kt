@@ -11,7 +11,7 @@ internal abstract class ActivityBuilderModule {
     @ContributesAndroidInjector(modules = [ListFragmentModule::class])
     abstract fun listFragment(): ListFragment
 
-    @ContributesAndroidInjector(modules = [DetailFragmentModule::class])
+    @ContributesAndroidInjector(modules = [AppModule::class])
     abstract fun detailFragment(): DetailFragment
 
     @ContributesAndroidInjector(modules = [CarouselFragmentModule::class])

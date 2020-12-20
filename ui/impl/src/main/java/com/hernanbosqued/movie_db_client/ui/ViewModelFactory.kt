@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.ui.di
+package com.hernanbosqued.movie_db_client.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,7 +7,7 @@ import javax.inject.Provider
 
 
 @Suppress("UNCHECKED_CAST")
-class DaggerViewModelFactory @Inject constructor(private val map: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) : ViewModelProvider.Factory {
+class ViewModelFactory @Inject constructor(private val map: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(viewModelClass: Class<T>): T {
 

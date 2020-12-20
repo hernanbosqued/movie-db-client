@@ -15,80 +15,78 @@ import com.hernanbosqued.movie_db_client.ui.Utils
 import com.hernanbosqued.movie_db_client.ui.databinding.FragmentDetailBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
-import kotlinx.android.synthetic.main.fragment_detail.*
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.View {
+class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var viewModel: DetailViewModel
 
-    interface Callbacks
-
-    override fun getLayout(): Int {
-        return R.layout.fragment_detail
-    }
+    private val compositeDisposable = CompositeDisposable()
 
     private val binding: FragmentDetailBinding by lazy {
         DataBindingUtil.setContentView(this.requireActivity(), getLayout())
     }
 
+    override fun getLayout(): Int {
+        return R.layout.fragment_detail
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val model: CarouselItemModel = arguments?.getSerializable("model") as CarouselItemModel
-        //  presenter.bindModel(model)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
+        registerObservers()
 
         binding.viewModel = viewModel
         viewModel.start(model)
     }
 
-    override fun onResume() {
-        super.onResume()
-        //      presenter.bindView(this)
+    private fun registerObservers() {
+        compositeDisposable.add(viewModel.state().subscribe(this::handleState))
     }
 
-    override fun onPause() {
-        super.onPause()
-        //     presenter.unbindView()
-    }
-
-    override val dummyCallback: Callbacks
-        get() = object : Callbacks {
+    override fun onDestroy() {
+        if (compositeDisposable.isDisposed.not()) {
+            compositeDisposable.dispose()
         }
-
-    override fun setTitle(name: String) {
-        title_text.text = name
+        super.onDestroy()
     }
 
-    override fun setOverview(overview: String) {
-        overview_text.text = overview
+    private fun handleState(state: DetailState) {
+        when (state) {
+            is DetailState.Ranking -> setRanking(state.ranking)
+            is DetailState.Poster -> setPoster(state.poster)
+            is DetailState.Video -> setVideo(state.data)
+            is DetailState.Message -> showMessage(state.message)
+        }
     }
 
-    override fun setPoster(posterPath: String?) {
+    private fun setPoster(posterPath: String?) {
         posterPath?.let {
             val absolutePath = Constants.IMAGE_BASE_URL + posterPath
-            Utils.setImage(poster_image, null, null, absolutePath, roundedCorners = false)
+            Utils.setImage(binding.posterImage, null, null, absolutePath, roundedCorners = false)
         }
     }
 
-    override fun setRanking(ranking: String) {
-        this.ranking_text.text = Utils.getSpan(getString(R.string.ranking), ranking, ContextCompat.getColor(requireContext(), R.color.colorAccent))
+    private fun setRanking(ranking: String) {
+        binding.rankingText.text = Utils.getSpan(getString(R.string.ranking), ranking, ContextCompat.getColor(requireContext(), R.color.colorAccent))
     }
 
-    override fun showMessage(message: String) {
+    private fun showMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun setVideo(data: VideoResultModel) {
+    private fun setVideo(data: VideoResultModel) {
         if (data.site.equals("youtube", ignoreCase = true) && !data.key.isNullOrEmpty()) {
-            lifecycle.addObserver(youtube)
-            youtube.enableAutomaticInitialization = true
+            lifecycle.addObserver(binding.youtube)
+            binding.youtube.enableAutomaticInitialization = true
 
-            youtube.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+            binding.youtube.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                 override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
                     youTubePlayer.cueVideo(data.key!!, 0f)
                     youTubePlayer.play()
@@ -97,15 +95,9 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>(), DetailContract.
         }
     }
 
-    override fun showEmpty() {
-        alert.visibility = View.VISIBLE
-    }
+    interface Callbacks
 
-    override fun hideEmpty() {
-        alert.visibility = View.INVISIBLE
-    }
-
-    override fun showVideo() {
-        youtube.visibility = View.VISIBLE
-    }
+    override val dummyCallback: Callbacks
+        get() = object : Callbacks {
+        }
 }
