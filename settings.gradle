@@ -3,4 +3,4 @@ include ':tests'
 include ':domain'
 include ':ui'
 include ':base'
-rootProject.name = "movie db client"
+rootProject.name = "movie_db_client"
