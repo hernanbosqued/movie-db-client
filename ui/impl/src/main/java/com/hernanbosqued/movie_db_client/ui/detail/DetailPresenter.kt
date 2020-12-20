@@ -1,8 +1,8 @@
-package com.hernanbosqued.movie_db_client.ui.presenter
+package com.hernanbosqued.movie_db_client.ui.detail
 
 import com.hernanbosqued.movie_db_client.domain.*
 import com.hernanbosqued.movie_db_client.ui.CarouselService
-import com.hernanbosqued.movie_db_client.ui.contract.DetailContract
+import com.hernanbosqued.movie_db_client.ui.BasePresenter
 import javax.inject.Inject
 
 class DetailPresenter @Inject constructor(view: DetailContract.View, private val service: CarouselService) :

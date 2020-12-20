@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.ui.carousel
 
 import android.annotation.SuppressLint
 import android.view.MotionEvent.ACTION_CANCEL
@@ -8,6 +8,10 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.repo.Constants
+import com.hernanbosqued.movie_db_client.ui.BaseViewHolder
+import com.hernanbosqued.movie_db_client.ui.ItemListener
+import com.hernanbosqued.movie_db_client.ui.R
+import com.hernanbosqued.movie_db_client.ui.Utils
 import kotlinx.android.synthetic.main.layout_item.view.no_image
 import kotlinx.android.synthetic.main.layout_item.view.poster
 import kotlinx.android.synthetic.main.layout_item.view.progress

@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.ui.carousel
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -10,9 +10,8 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
-import com.hernanbosqued.movie_db_client.ui.contract.CarouselContract
-import com.hernanbosqued.movie_db_client.ui.fragment.BaseFragment
-import com.hernanbosqued.movie_db_client.ui.presenter.CarouselPresenter
+import com.hernanbosqued.movie_db_client.ui.*
+import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import kotlinx.android.synthetic.main.layout_carrousel.*
 import javax.inject.Inject
 
@@ -30,7 +29,7 @@ class CarouselFragment(val model: CarouselModel, private val listener: CarouselL
     }
 
     override val dummyCallback: Callbacks
-        get() = object : CarouselFragment.Callbacks {
+        get() = object : Callbacks {
         }
 
     private val adapter = ItemsAdapter(this, listener)

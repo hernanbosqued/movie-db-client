@@ -1,10 +1,10 @@
-package com.hernanbosqued.movie_db_client.ui.presenter
+package com.hernanbosqued.movie_db_client.ui.carousel
 
 import com.hernanbosqued.movie_db_client.domain.CarouselClientCallback
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
 import com.hernanbosqued.movie_db_client.ui.CarouselService
-import com.hernanbosqued.movie_db_client.ui.contract.CarouselContract
+import com.hernanbosqued.movie_db_client.ui.BasePresenter
 import javax.inject.Inject
 
 class CarouselPresenter @Inject constructor(view: CarouselContract.View, private val service: CarouselService, private val resources: ResourcesRepository) :

@@ -1,9 +1,9 @@
-package com.hernanbosqued.movie_db_client.ui.presenter
+package com.hernanbosqued.movie_db_client.ui.list
 
 import com.hernanbosqued.movie_db_client.domain.*
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
-import com.hernanbosqued.movie_db_client.ui.contract.ListContract
+import com.hernanbosqued.movie_db_client.ui.BasePresenter
 import javax.inject.Inject
 
 class ListPresenter @Inject constructor(view: ListContract.View, private val repository: Repository, val resources: ResourcesRepository) :

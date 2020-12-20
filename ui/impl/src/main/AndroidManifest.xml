@@ -19,7 +19,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ListActivity"
+            android:name=".list.ListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailActivity"
+            android:name=".detail.DetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
     </application>

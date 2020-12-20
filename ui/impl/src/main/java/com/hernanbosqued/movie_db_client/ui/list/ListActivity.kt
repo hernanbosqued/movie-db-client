@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.ui.list
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
-import com.hernanbosqued.movie_db_client.ui.fragment.ListFragment
-import kotlinx.android.synthetic.main.layout_item.view.poster
+import com.hernanbosqued.movie_db_client.ui.detail.DetailActivity
+import kotlinx.android.synthetic.main.layout_item.view.*
 
 class ListActivity : AppCompatActivity(), ListFragment.Callback {
 

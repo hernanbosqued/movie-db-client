@@ -1,8 +1,8 @@
 package com.hernanbosqued.movie_db_client.ui.di
 
-import com.hernanbosqued.movie_db_client.ui.CarouselFragment
-import com.hernanbosqued.movie_db_client.ui.fragment.DetailFragment
-import com.hernanbosqued.movie_db_client.ui.fragment.ListFragment
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselFragment
+import com.hernanbosqued.movie_db_client.ui.detail.DetailFragment
+import com.hernanbosqued.movie_db_client.ui.list.ListFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

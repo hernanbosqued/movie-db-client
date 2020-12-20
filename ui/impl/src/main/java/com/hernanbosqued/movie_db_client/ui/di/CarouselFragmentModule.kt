@@ -2,9 +2,9 @@ package com.hernanbosqued.movie_db_client.ui.di
 
 import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
 import com.hernanbosqued.movie_db_client.ui.CarouselService
-import com.hernanbosqued.movie_db_client.ui.CarouselFragment
-import com.hernanbosqued.movie_db_client.ui.contract.CarouselContract
-import com.hernanbosqued.movie_db_client.ui.presenter.CarouselPresenter
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselFragment
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselContract
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselPresenter
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

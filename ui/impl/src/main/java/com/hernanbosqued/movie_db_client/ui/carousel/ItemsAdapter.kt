@@ -1,9 +1,12 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.ui.carousel
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
+import com.hernanbosqued.movie_db_client.ui.ItemListener
+import com.hernanbosqued.movie_db_client.ui.R
+import com.hernanbosqued.movie_db_client.ui.ScrollListener
 
 class ItemsAdapter(private val carouselListener: ScrollListener, private val listener: ItemListener) : RecyclerView.Adapter<ItemViewHolder>() {
 
