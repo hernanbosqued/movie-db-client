@@ -5,10 +5,6 @@ import javax.inject.Inject
 
 class CarouselClient @Inject constructor(var repository: Repository, var resources: ResourcesRepository) {
 
-    init {
-     //   MyApp.component.inject(this)
-    }
-
     fun searchBoth(page: Int, query: String, callback: CarouselClientCallback) {
         repository.searchBoth(
             page,

@@ -2,6 +2,7 @@ package com.hernanbosqued.movie_db_client.ui.di
 
 import android.app.Application
 import com.hernanbosqued.movie_db_client.base.di.ContextModule
+import com.hernanbosqued.movie_db_client.repo.wiring.RepoModule
 import com.hernanbosqued.movie_db_client.ui.CarouselClient
 import dagger.BindsInstance
 import dagger.Component
@@ -11,18 +12,17 @@ import dagger.android.DaggerApplication
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [
-    AndroidInjectionModule::class,
-    ContextModule::class,
-    AppModule::class,
-    ActivityBuilderModule::class])
+@Component(
+    modules = [
+        AndroidInjectionModule::class,
+        ContextModule::class,
+        RepoModule::class,
+        AppModule::class,
+        ActivityBuilderModule::class]
+)
 interface AppComponent : AndroidInjector<DaggerApplication> {
 
     override fun inject(application: DaggerApplication)
-
-    fun inject(client: CarouselClient)
-
-    fun carouselClient(): CarouselClient
 
     @Component.Builder
     interface Builder {

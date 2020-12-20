@@ -6,7 +6,7 @@ import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
 import com.hernanbosqued.movie_db_client.ui.contract.ListContract
 import javax.inject.Inject
 
-class ListPresenter @Inject constructor(view: ListContract.View, val repository: Repository, val resources: ResourcesRepository) :
+class ListPresenter @Inject constructor(view: ListContract.View, private val repository: Repository, val resources: ResourcesRepository) :
     BasePresenter<ArrayList<CarouselModel>, ListContract.View>(ArrayList(), view), ListContract.Presenter, RepositoryCallback<CarouselListModel> {
 
     private var searchSelection = setOf(TV, MOVIE)
