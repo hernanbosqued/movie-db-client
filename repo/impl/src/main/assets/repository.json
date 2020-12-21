@@ -8,17 +8,13 @@
       "method": "moviesPopular",
       "info": false
     },
-    {
-      "method": "tvTopRated",
-      "info": false
-    },
+
     {
       "method": "moviesTopRated",
       "info": false
     },
     {
-      "method": "searchBoth",
-      "query": "Depeche Mode video singles",
+      "method": "tvTopRated",
       "info": false
     }
   ]
