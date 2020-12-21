@@ -131,5 +131,3 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
             override fun fromFragment(view: View, model: CarouselItemModel) {}
         }
 }
-
-

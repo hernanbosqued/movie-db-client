@@ -3,10 +3,12 @@ package com.hernanbosqued.movie_db_client.ui.carousel
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,12 +16,13 @@ import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.ui.*
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutCarrouselBinding
+import dagger.android.support.DaggerFragment
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 @SuppressLint("ViewConstructor")
 class CarouselFragment(val model: CarouselModel, private val listener: CarouselListeners) :
-    BaseFragment<CarouselFragment.Callbacks>(), ScrollListener, LifecycleObserver {
+    DaggerFragment(), ScrollListener, LifecycleObserver {
 
     @Inject
     lateinit var viewModel: CarouselViewModel
@@ -29,15 +32,14 @@ class CarouselFragment(val model: CarouselModel, private val listener: CarouselL
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val binding: LayoutCarrouselBinding by lazy {
-        DataBindingUtil.setContentView(this.requireActivity(), getLayout())
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.layout_carrousel
-    }
+    lateinit var binding: LayoutCarrouselBinding
 
     private val adapter = ItemsAdapter(this, listener)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = LayoutCarrouselBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -100,10 +102,4 @@ class CarouselFragment(val model: CarouselModel, private val listener: CarouselL
         binding.carousel.visibility = GONE
         binding.alert.text = message
     }
-
-    interface Callbacks
-
-    override val dummyCallback: Callbacks
-        get() = object : Callbacks {
-        }
 }
