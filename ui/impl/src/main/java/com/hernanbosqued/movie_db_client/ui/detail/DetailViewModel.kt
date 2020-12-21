@@ -3,7 +3,6 @@ package com.hernanbosqued.movie_db_client.ui.detail
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.hernanbosqued.movie_db_client.domain.*
 import com.hernanbosqued.movie_db_client.ui.CarouselService
 import com.hernanbosqued.movie_db_client.ui.di.AppComponent
@@ -11,7 +10,6 @@ import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultModel>> {
@@ -21,7 +19,8 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
 
     private val state = BehaviorSubject.create<DetailState>()
     val model = ObservableField<CarouselItemModel>()
-    val hasVideo = ObservableBoolean(false)
+    val showVideo = ObservableBoolean(false)
+    val showAlert = ObservableBoolean(false)
 
     init {
         ComponentHolder.component<AppComponent>().inject(this)
@@ -31,10 +30,8 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
         model.set(param)
     }
 
-    fun start() = viewModelScope.launch {
+    fun start() {
         model.get()?.let { model ->
-            hasVideo.set(model.hasVideo)
-
             model.path?.let {
                 state.onNext(DetailState.Poster(it))
             }
@@ -42,7 +39,6 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
             model.ranking?.let {
                 state.onNext(DetailState.Ranking(it))
             }
-
             if (model.hasVideo) {
                 service.videos(model.type!!, model.id, this@DetailViewModel)
             }
@@ -50,11 +46,18 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
     }
 
     override fun onSuccess(data: ListModel<VideoResultModel>) {
-        state.onNext(DetailState.Video(data.results!!.first()))
+        data.results?.let { results ->
+            if (results.isNotEmpty()) {
+                state.onNext(DetailState.Video(results.first()))
+                showVideo.set(true)
+            } else {
+                showAlert.set(true)
+            }
+        }
     }
 
     override fun onFail(error: ErrorModel) {
-        hasVideo.set(false)
+        showAlert.set(true)
         state.onNext(DetailState.Message(error.code.toString() + " - " + error.message))
     }
 
