@@ -18,7 +18,6 @@ import com.hernanbosqued.movie_db_client.ui.*
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutCarrouselBinding
 import io.reactivex.disposables.CompositeDisposable
 
-@SuppressLint("ViewConstructor")
 class CarouselFragment(val model: CarouselModel, private val listener: CarouselListeners) :
     BaseFragment<CarouselFragment.Callbacks>(), ScrollListener, LifecycleObserver {
 

@@ -13,9 +13,9 @@ import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE
 import com.hernanbosqued.movie_db_client.ui.BaseFragment
-import com.hernanbosqued.movie_db_client.ui.carousel.CarouselListeners
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselFragment
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselListeners
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutListBinding
 import io.reactivex.disposables.CompositeDisposable
 
@@ -31,7 +31,6 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
         binding = LayoutListBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun getLayout(): Int {
         return R.layout.layout_list
