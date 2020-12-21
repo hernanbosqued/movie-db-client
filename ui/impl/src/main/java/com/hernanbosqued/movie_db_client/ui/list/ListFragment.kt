@@ -24,9 +24,6 @@ import javax.inject.Inject
 
 class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener, CarouselListeners {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
     private val viewModel: ListViewModel by viewModels()
 
     private val compositeDisposable = CompositeDisposable()

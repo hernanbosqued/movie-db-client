@@ -15,22 +15,4 @@ abstract class AppModule {
 
     @Binds
     abstract fun provideResources(impl: ResourcesRepositoryImpl): ResourcesRepository
-
-    @Binds
-    abstract fun provideViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
-
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(DetailViewModel::class)
-//    abstract fun detailViewModel(impl: DetailViewModel): ViewModel
-
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(ListViewModel::class)
-//    abstract fun listViewModel(impl: ListViewModel): ViewModel
-
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(CarouselViewModel::class)
-//    abstract fun carouselViewModel(impl: CarouselViewModel): ViewModel
 }
