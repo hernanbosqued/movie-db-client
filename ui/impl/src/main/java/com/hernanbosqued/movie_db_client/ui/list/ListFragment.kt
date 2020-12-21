@@ -5,30 +5,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE
 import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import com.hernanbosqued.movie_db_client.ui.R
-import com.hernanbosqued.movie_db_client.ui.carousel.CarouselFragment
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselListeners
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselView
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutListBinding
+import com.hernanbosqued.movie_db_client.ui.di.AppComponent
+import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
 class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener, CarouselListeners {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: ListViewModel by viewModels()
 
     private val compositeDisposable = CompositeDisposable()
 
-    private lateinit var binding: LayoutListBinding
+    private val binding: LayoutListBinding by lazy {
+        LayoutListBinding.inflate(LayoutInflater.from(context), null, false)
+    }
+
+    init {
+        ComponentHolder.component<AppComponent>().inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = LayoutListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -64,19 +76,13 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
     }
 
     private fun addCarousel(model: CarouselModel, onTop: Boolean) {
-        val fragmentContainer = FrameLayout(requireContext())
-        fragmentContainer.id = View.generateViewId()
-
-        val params = FrameLayout.LayoutParams(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val view = CarouselView(requireContext(), model, this)
+        val params = ConstraintLayout.LayoutParams(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         params.setMargins(20, 20, 20, 20)
-        fragmentContainer.layoutParams = params
-
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.add(fragmentContainer.id, CarouselFragment(model, this), "carouselFragment${fragmentContainer.id}")
-        transaction.commit()
+        view.layoutParams = params
 
         val index = (if (onTop) 0 else -1)
-        binding.container.addView(fragmentContainer, index)
+        binding.container.addView(view, index)
 
         if (onTop) {
             scrollTop()

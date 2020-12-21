@@ -3,6 +3,7 @@ package com.hernanbosqued.movie_db_client.ui.carousel
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.hernanbosqued.movie_db_client.domain.CarouselClientCallback
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
@@ -12,6 +13,7 @@ import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CarouselViewModel @Inject constructor() : ViewModel(), CarouselClientCallback {
@@ -37,7 +39,7 @@ class CarouselViewModel @Inject constructor() : ViewModel(), CarouselClientCallb
         load(carouselModel.get()!!, false)
     }
 
-    fun load(model: CarouselModel, first: Boolean) {
+    fun load(model: CarouselModel, first: Boolean) = viewModelScope.launch {
         carouselModel.set(model)
         showInfo.set(model.info)
         if (first || model.page < model.totalPages) {
@@ -45,7 +47,7 @@ class CarouselViewModel @Inject constructor() : ViewModel(), CarouselClientCallb
                 model.method.contentEquals(it.name)
             }
             showProgress.set(true)
-            method?.invoke(service, model.page + 1, model.query, this)
+            method?.invoke(service, model.page + 1, model.query, this@CarouselViewModel)
         }
     }
 

@@ -2,7 +2,7 @@
   "results": [
     {
       "method": "tvPopular",
-      "info": true
+      "info": false
     },
     {
       "method": "moviesPopular",

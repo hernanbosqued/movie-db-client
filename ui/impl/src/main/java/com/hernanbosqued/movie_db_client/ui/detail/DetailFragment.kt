@@ -1,7 +1,9 @@
 package com.hernanbosqued.movie_db_client.ui.detail
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -13,6 +15,7 @@ import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.Utils
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutDetailBinding
+import com.hernanbosqued.movie_db_client.ui.databinding.LayoutListBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import io.reactivex.disposables.CompositeDisposable
@@ -24,7 +27,11 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
     private val compositeDisposable = CompositeDisposable()
 
     private val binding: LayoutDetailBinding by lazy {
-        DataBindingUtil.setContentView(this.requireActivity(), getLayout())
+        LayoutDetailBinding.inflate(LayoutInflater.from(context), null, false)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return binding.root
     }
 
     override fun getLayout(): Int {

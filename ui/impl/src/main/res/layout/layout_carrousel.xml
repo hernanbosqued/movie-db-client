@@ -12,8 +12,7 @@
             type="com.hernanbosqued.movie_db_client.ui.carousel.CarouselViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/root"
+    <merge
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -112,5 +111,5 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </merge>
 </layout>
