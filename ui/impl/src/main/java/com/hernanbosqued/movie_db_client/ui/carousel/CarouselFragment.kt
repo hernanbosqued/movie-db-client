@@ -43,8 +43,8 @@ class CarouselFragment(val model: CarouselModel, private val listener: CarouselL
         super.onViewCreated(view, savedInstanceState)
         prepareRecyclerView()
 
-        this.view?.background = ContextCompat.getDrawable(requireContext(), R.drawable.placeholder)
-        this.view?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.placeholder_light))
+        binding.root.background = ContextCompat.getDrawable(requireContext(), R.drawable.placeholder)
+        binding.root.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.placeholder_light))
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(CarouselViewModel::class.java)
         registerObservers()
