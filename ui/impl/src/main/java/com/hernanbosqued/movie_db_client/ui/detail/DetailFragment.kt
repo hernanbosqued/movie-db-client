@@ -31,21 +31,16 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val model = arguments?.getSerializable("model") as CarouselItemModel
+        binding.viewModel = viewModel
+        viewModel.setModel(model)
         return binding.root
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.layout_detail
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val model: CarouselItemModel = arguments?.getSerializable("model") as CarouselItemModel
-
         registerObservers()
-
-        binding.viewModel = viewModel
-        viewModel.start(model)
+        viewModel.start()
     }
 
     private fun registerObservers() {

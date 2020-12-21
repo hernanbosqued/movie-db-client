@@ -14,7 +14,6 @@ import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE
 import com.hernanbosqued.movie_db_client.ui.BaseFragment
-import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselListeners
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselView
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutListBinding
@@ -33,7 +32,7 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
     private val compositeDisposable = CompositeDisposable()
 
     private val binding: LayoutListBinding by lazy {
-        LayoutListBinding.inflate(LayoutInflater.from(context), null, false)
+        LayoutListBinding.inflate(LayoutInflater.from(context), null, true)
     }
 
     init {
@@ -42,10 +41,6 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return binding.root
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.layout_list
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

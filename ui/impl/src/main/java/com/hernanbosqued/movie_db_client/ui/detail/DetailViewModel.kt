@@ -27,20 +27,25 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
         ComponentHolder.component<AppComponent>().inject(this)
     }
 
-    fun start(param: CarouselItemModel) = viewModelScope.launch {
+    fun setModel(param: CarouselItemModel) {
         model.set(param)
-        hasVideo.set(param.hasVideo)
+    }
 
-        param.path?.let {
-            state.onNext(DetailState.Poster(it))
-        }
+    fun start() = viewModelScope.launch {
+        model.get()?.let { model ->
+            hasVideo.set(model.hasVideo)
 
-        param.ranking?.let {
-            state.onNext(DetailState.Ranking(it))
-        }
+            model.path?.let {
+                state.onNext(DetailState.Poster(it))
+            }
 
-        if (param.hasVideo) {
-            service.videos(param.type!!, param.id, this@DetailViewModel)
+            model.ranking?.let {
+                state.onNext(DetailState.Ranking(it))
+            }
+
+            if (model.hasVideo) {
+                service.videos(model.type!!, model.id, this@DetailViewModel)
+            }
         }
     }
 

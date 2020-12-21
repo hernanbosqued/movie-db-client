@@ -10,15 +10,9 @@ import androidx.fragment.app.Fragment
 @Suppress("UNCHECKED_CAST")
 abstract class BaseFragment<FRAGMENT_CALLBACK> : Fragment() {
 
-    abstract fun getLayout(): Int
-
     var callback: FRAGMENT_CALLBACK? = null
 
     abstract val dummyCallback: FRAGMENT_CALLBACK
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getLayout(), container, false)
-    }
 
     override fun onAttach(context: Context) {
         try {
