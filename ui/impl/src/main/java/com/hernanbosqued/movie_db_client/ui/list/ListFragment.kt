@@ -7,25 +7,27 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
-import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
-import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
-import com.hernanbosqued.movie_db_client.ui.carousel.CarouselFragment
+import com.hernanbosqued.movie_db_client.domain.MEDIATYPE
+import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import com.hernanbosqued.movie_db_client.ui.CarouselListeners
 import com.hernanbosqued.movie_db_client.ui.R
-import com.hernanbosqued.movie_db_client.ui.BaseFragment
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselFragment
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list.*
 import javax.inject.Inject
 
-class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener, ListContract.View, CarouselListeners {
+class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener, CarouselListeners {
 
     @Inject
-    lateinit var presenter: ListPresenter
+    lateinit var viewModel: ListViewModel
 
-    interface Callback {
-        fun fromFragment(view: View, model: CarouselItemModel)
-    }
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val compositeDisposable = CompositeDisposable()
 
     override fun getLayout(): Int {
         return R.layout.fragment_list
@@ -34,20 +36,32 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prepareSearchView()
-        presenter.start()
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ListViewModel::class.java)
+        registerObservers()
+        viewModel.start()
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.bindView(this)
+    private fun registerObservers() {
+        compositeDisposable.add(viewModel.state().subscribe(this::handleState))
     }
 
-    override fun onPause() {
-        super.onPause()
-        presenter.unbindView()
+    private fun handleState(state: ListState) {
+        when (state) {
+            is ListState.Search -> changeSearch(state.movies, state.tv)
+            is ListState.Carousel -> addCarousel(state.model, state.onTop)
+            is ListState.Message -> showMessage(state.message)
+        }
     }
 
-    override fun addCarousel(model: CarouselModel, onTop: Boolean) {
+    private fun changeSearch(moviesChecked: Boolean, tvChecked: Boolean) {
+        checkbox_movies.isChecked = moviesChecked
+        checkbox_tv.isChecked = tvChecked
+
+        checkbox_movies.setOnCheckedChangeListener { _, _ -> viewModel.checkboxChanged(MEDIATYPE.MOVIE) }
+        checkbox_tv.setOnCheckedChangeListener { _, _ -> viewModel.checkboxChanged(MEDIATYPE.TV) }
+    }
+
+    private fun addCarousel(model: CarouselModel, onTop: Boolean) {
         val fragmentContainer = FrameLayout(requireContext())
         fragmentContainer.id = View.generateViewId()
 
@@ -76,15 +90,7 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
         showMessage(model.title)
     }
 
-    override fun initialSelection(moviesChecked: Boolean, tvChecked: Boolean) {
-        checkbox_movies.isChecked = moviesChecked
-        checkbox_tv.isChecked = tvChecked
-
-        checkbox_movies.setOnCheckedChangeListener { _, _ -> presenter.checkboxChanged(MOVIE) }
-        checkbox_tv.setOnCheckedChangeListener { _, _ -> presenter.checkboxChanged(TV) }
-    }
-
-    override fun scrollTop() {
+    private fun scrollTop() {
         scroll_view.smoothScrollTo(0, 0)
     }
 
@@ -96,7 +102,7 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
 
     override fun onQueryTextSubmit(query: String): Boolean {
         search_view.clearFocus()
-        presenter.processQuery(query)
+        viewModel.processQuery(query)
         return false
     }
 
@@ -105,8 +111,19 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
         return false
     }
 
-    override fun showMessage(message: String) {
+    private fun showMessage(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDestroy() {
+        if (compositeDisposable.isDisposed.not()) {
+            compositeDisposable.dispose()
+        }
+        super.onDestroy()
+    }
+
+    interface Callback {
+        fun fromFragment(view: View, model: CarouselItemModel)
     }
 
     override val dummyCallback: Callback

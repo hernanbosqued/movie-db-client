@@ -8,7 +8,7 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 internal abstract class ActivityBuilderModule {
-    @ContributesAndroidInjector(modules = [ListFragmentModule::class])
+    @ContributesAndroidInjector(modules = [AppModule::class])
     abstract fun listFragment(): ListFragment
 
     @ContributesAndroidInjector(modules = [AppModule::class])

@@ -23,7 +23,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var viewModel: DetailViewModel
+    private lateinit var viewModel: DetailViewModel
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -48,13 +48,6 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
 
     private fun registerObservers() {
         compositeDisposable.add(viewModel.state().subscribe(this::handleState))
-    }
-
-    override fun onDestroy() {
-        if (compositeDisposable.isDisposed.not()) {
-            compositeDisposable.dispose()
-        }
-        super.onDestroy()
     }
 
     private fun handleState(state: DetailState) {
@@ -93,6 +86,13 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
                 }
             })
         }
+    }
+
+    override fun onDestroy() {
+        if (compositeDisposable.isDisposed.not()) {
+            compositeDisposable.dispose()
+        }
+        super.onDestroy()
     }
 
     interface Callbacks
