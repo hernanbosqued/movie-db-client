@@ -1,10 +1,6 @@
 package com.hernanbosqued.movie_db_client.ui
 
 import android.content.Context
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 @Suppress("UNCHECKED_CAST")

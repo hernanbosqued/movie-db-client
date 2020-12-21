@@ -3,6 +3,7 @@ package com.hernanbosqued.movie_db_client.ui.detail
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.hernanbosqued.movie_db_client.domain.*
 import com.hernanbosqued.movie_db_client.ui.CarouselService
 import com.hernanbosqued.movie_db_client.ui.di.AppComponent
@@ -10,6 +11,7 @@ import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultModel>> {
@@ -30,7 +32,7 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
         model.set(param)
     }
 
-    fun start() {
+    fun start() = viewModelScope.launch {
         model.get()?.let { model ->
             model.path?.let {
                 state.onNext(DetailState.Poster(it))
