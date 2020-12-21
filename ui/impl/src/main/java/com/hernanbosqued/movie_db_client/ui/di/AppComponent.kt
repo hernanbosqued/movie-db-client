@@ -1,30 +1,26 @@
 package com.hernanbosqued.movie_db_client.ui.di
 
 import android.app.Application
-import com.hernanbosqued.movie_db_client.base.di.ContextModule
 import com.hernanbosqued.movie_db_client.repo.wiring.RepoModule
-import com.hernanbosqued.movie_db_client.ui.di.ViewModelFactoryModule
-import com.hernanbosqued.movie_db_client.ui.detail.DetailFragment
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselViewModel
+import com.hernanbosqued.movie_db_client.ui.detail.DetailViewModel
+import com.hernanbosqued.movie_db_client.ui.list.ListViewModel
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
-        AndroidInjectionModule::class,
-        ContextModule::class,
-        ViewModelFactoryModule::class,
         RepoModule::class,
-        AppModule::class,
-        ActivityBuilderModule::class]
+        AppModule::class]
 )
-interface AppComponent : AndroidInjector<DaggerApplication> {
+interface AppComponent {
 
-    override fun inject(application: DaggerApplication)
+    fun inject(viewModel: CarouselViewModel)
+    fun inject(viewModel: DetailViewModel)
+    fun inject(viewModel: ListViewModel)
 
     @Component.Builder
     interface Builder {

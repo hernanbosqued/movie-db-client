@@ -2,26 +2,34 @@ package com.hernanbosqued.movie_db_client.ui.list
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.hernanbosqued.movie_db_client.domain.*
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.MOVIE
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE.TV
-import com.hernanbosqued.movie_db_client.ui.detail.DetailState
+import com.hernanbosqued.movie_db_client.ui.di.AppComponent
+import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ListViewModel @Inject constructor(private val repository: Repository, val resources: ResourcesRepository) :
-    ViewModel(), RepositoryCallback<CarouselListModel> {
+class ListViewModel : ViewModel(), RepositoryCallback<CarouselListModel> {
+
+    @Inject
+    lateinit var repository: Repository
+
+    @Inject
+    lateinit var resources: ResourcesRepository
 
     private val state = BehaviorSubject.create<ListState>()
     val model = ObservableField<ArrayList<CarouselModel>>()
 
     private var searchSelection = setOf(TV, MOVIE)
 
-    fun start() = viewModelScope.launch {
+    init {
+        ComponentHolder.component<AppComponent>().inject(this)
+    }
+
+    fun start() {
         repository.carouselList(this@ListViewModel)
         state.onNext(ListState.Search(searchSelection[MOVIE].isChecked(), searchSelection[TV].isChecked()))
     }

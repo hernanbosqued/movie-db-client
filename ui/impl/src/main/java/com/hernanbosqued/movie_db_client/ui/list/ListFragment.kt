@@ -7,6 +7,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
@@ -15,17 +16,14 @@ import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import com.hernanbosqued.movie_db_client.ui.CarouselListeners
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselFragment
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list.*
 import javax.inject.Inject
 
 class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener, CarouselListeners {
 
-    @Inject
-    lateinit var viewModel: ListViewModel
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: ListViewModel by viewModels()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -36,7 +34,6 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prepareSearchView()
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ListViewModel::class.java)
         registerObservers()
         viewModel.start()
     }

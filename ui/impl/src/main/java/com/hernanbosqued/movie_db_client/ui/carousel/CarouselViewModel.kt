@@ -7,13 +7,20 @@ import com.hernanbosqued.movie_db_client.domain.CarouselClientCallback
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
 import com.hernanbosqued.movie_db_client.ui.CarouselService
+import com.hernanbosqued.movie_db_client.ui.di.AppComponent
+import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
-class CarouselViewModel @Inject constructor(private val service: CarouselService, private val resources: ResourcesRepository) :
-    ViewModel(), CarouselClientCallback {
+class CarouselViewModel @Inject constructor() : ViewModel(), CarouselClientCallback {
+
+    @Inject
+    lateinit var service: CarouselService
+
+    @Inject
+    lateinit var resources: ResourcesRepository
 
     private val state = BehaviorSubject.create<CarouselState>()
 
@@ -21,6 +28,10 @@ class CarouselViewModel @Inject constructor(private val service: CarouselService
     val showInfo = ObservableBoolean(false)
     val showProgress = ObservableBoolean(false)
     val showMessage = ObservableBoolean(false)
+
+    init {
+        ComponentHolder.component<AppComponent>().inject(this)
+    }
 
     fun loadMore() {
         load(carouselModel.get()!!, false)

@@ -1,5 +1,7 @@
 package com.hernanbosqued.movie_db_client.ui.di
 
+import android.app.Application
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
 import com.hernanbosqued.movie_db_client.ui.ResourcesRepositoryImpl
@@ -13,20 +15,23 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class AppModule {
     @Binds
+    abstract fun provideContext(impl: Application): Context
+
+    @Binds
     abstract fun provideResources(impl: ResourcesRepositoryImpl): ResourcesRepository
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(DetailViewModel::class)
-    abstract fun detailViewModel(impl: DetailViewModel): ViewModel
+//    @Binds
+//    @IntoMap
+//    @ViewModelKey(DetailViewModel::class)
+//    abstract fun detailViewModel(impl: DetailViewModel): ViewModel
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(ListViewModel::class)
-    abstract fun listViewModel(impl: ListViewModel): ViewModel
+//    @Binds
+//    @IntoMap
+//    @ViewModelKey(ListViewModel::class)
+//    abstract fun listViewModel(impl: ListViewModel): ViewModel
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(CarouselViewModel::class)
-    abstract fun carouselViewModel(impl: CarouselViewModel): ViewModel
+//    @Binds
+//    @IntoMap
+//    @ViewModelKey(CarouselViewModel::class)
+//    abstract fun carouselViewModel(impl: CarouselViewModel): ViewModel
 }

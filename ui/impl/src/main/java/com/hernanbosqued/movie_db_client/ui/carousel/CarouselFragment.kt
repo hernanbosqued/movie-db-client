@@ -9,6 +9,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.ui.*
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutCarrouselBinding
+import com.hernanbosqued.movie_db_client.ui.di.DaggerAppComponent
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -23,11 +25,7 @@ import javax.inject.Inject
 class CarouselFragment(val model: CarouselModel, private val listener: CarouselListeners) :
     BaseFragment<CarouselFragment.Callbacks>(), ScrollListener, LifecycleObserver {
 
-    @Inject
-    lateinit var viewModel: CarouselViewModel
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: CarouselViewModel by viewModels()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -52,7 +50,7 @@ class CarouselFragment(val model: CarouselModel, private val listener: CarouselL
         binding.root.background = ContextCompat.getDrawable(requireContext(), R.drawable.placeholder)
         binding.root.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.placeholder_light))
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CarouselViewModel::class.java)
+         // viewModel = ViewModelProvider(this, viewModelFactory).get(CarouselViewModel::class.java)
         registerObservers()
 
         binding.viewModel = viewModel

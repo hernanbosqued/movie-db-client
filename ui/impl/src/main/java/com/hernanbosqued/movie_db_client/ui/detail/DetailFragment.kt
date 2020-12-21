@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.VideoResultModel
@@ -12,6 +13,7 @@ import com.hernanbosqued.movie_db_client.repo.Constants
 import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.Utils
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselViewModel
 import com.hernanbosqued.movie_db_client.ui.databinding.FragmentDetailBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
@@ -20,10 +22,7 @@ import javax.inject.Inject
 
 class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel: DetailViewModel by viewModels()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -39,7 +38,7 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
         super.onViewCreated(view, savedInstanceState)
         val model: CarouselItemModel = arguments?.getSerializable("model") as CarouselItemModel
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
+       // viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
         registerObservers()
 
         binding.viewModel = viewModel

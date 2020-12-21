@@ -6,17 +6,26 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hernanbosqued.movie_db_client.domain.*
 import com.hernanbosqued.movie_db_client.ui.CarouselService
+import com.hernanbosqued.movie_db_client.ui.di.AppComponent
+import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DetailViewModel @Inject constructor(private val service: CarouselService) : ViewModel(), RepositoryCallback<ListModel<VideoResultModel>> {
+class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultModel>> {
+
+    @Inject
+    lateinit var service: CarouselService
 
     private val state = BehaviorSubject.create<DetailState>()
     val model = ObservableField<CarouselItemModel>()
     val hasVideo = ObservableBoolean(false)
+
+    init {
+        ComponentHolder.component<AppComponent>().inject(this)
+    }
 
     fun start(param: CarouselItemModel) = viewModelScope.launch {
         model.set(param)
