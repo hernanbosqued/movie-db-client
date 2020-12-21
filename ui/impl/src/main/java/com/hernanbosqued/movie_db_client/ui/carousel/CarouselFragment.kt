@@ -11,15 +11,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.ui.*
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutCarrouselBinding
-import com.hernanbosqued.movie_db_client.ui.di.DaggerAppComponent
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
 
 @SuppressLint("ViewConstructor")
 class CarouselFragment(val model: CarouselModel, private val listener: CarouselListeners) :
@@ -29,10 +26,10 @@ class CarouselFragment(val model: CarouselModel, private val listener: CarouselL
 
     private val compositeDisposable = CompositeDisposable()
 
-    private lateinit var binding: LayoutCarrouselBinding
+   private lateinit var binding: LayoutCarrouselBinding
 
     override fun getLayout(): Int {
-        return -1
+        return R.layout.layout_carrousel
     }
 
     private val adapter = ItemsAdapter(this, listener)
@@ -42,7 +39,6 @@ class CarouselFragment(val model: CarouselModel, private val listener: CarouselL
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prepareRecyclerView()
@@ -50,7 +46,6 @@ class CarouselFragment(val model: CarouselModel, private val listener: CarouselL
         binding.root.background = ContextCompat.getDrawable(requireContext(), R.drawable.placeholder)
         binding.root.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.placeholder_light))
 
-         // viewModel = ViewModelProvider(this, viewModelFactory).get(CarouselViewModel::class.java)
         registerObservers()
 
         binding.viewModel = viewModel

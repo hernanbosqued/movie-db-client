@@ -1,6 +1,7 @@
 package com.hernanbosqued.movie_db_client.ui.list
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -8,7 +9,6 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE
@@ -16,10 +16,8 @@ import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import com.hernanbosqued.movie_db_client.ui.CarouselListeners
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselFragment
-import com.hernanbosqued.movie_db_client.ui.carousel.CarouselViewModel
+import com.hernanbosqued.movie_db_client.ui.databinding.LayoutListBinding
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.fragment_list.*
-import javax.inject.Inject
 
 class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener, CarouselListeners {
 
@@ -27,8 +25,16 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
 
     private val compositeDisposable = CompositeDisposable()
 
+    private lateinit var binding: LayoutListBinding
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = LayoutListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+
     override fun getLayout(): Int {
-        return R.layout.fragment_list
+        return R.layout.layout_list
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,11 +57,11 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
     }
 
     private fun changeSearch(moviesChecked: Boolean, tvChecked: Boolean) {
-        checkbox_movies.isChecked = moviesChecked
-        checkbox_tv.isChecked = tvChecked
+        binding.checkboxMovies.isChecked = moviesChecked
+        binding.checkboxTv.isChecked = tvChecked
 
-        checkbox_movies.setOnCheckedChangeListener { _, _ -> viewModel.checkboxChanged(MEDIATYPE.MOVIE) }
-        checkbox_tv.setOnCheckedChangeListener { _, _ -> viewModel.checkboxChanged(MEDIATYPE.TV) }
+        binding.checkboxMovies.setOnCheckedChangeListener { _, _ -> viewModel.checkboxChanged(MEDIATYPE.MOVIE) }
+        binding.checkboxTv.setOnCheckedChangeListener { _, _ -> viewModel.checkboxChanged(MEDIATYPE.TV) }
     }
 
     private fun addCarousel(model: CarouselModel, onTop: Boolean) {
@@ -71,7 +77,7 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
         transaction.commit()
 
         val index = (if (onTop) 0 else -1)
-        container.addView(fragmentContainer, index)
+        binding.container.addView(fragmentContainer, index)
 
         if (onTop) {
             scrollTop()
@@ -88,17 +94,17 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
     }
 
     private fun scrollTop() {
-        scroll_view.smoothScrollTo(0, 0)
+        binding.scrollView.smoothScrollTo(0, 0)
     }
 
     private fun prepareSearchView() {
-        search_view.isIconified = true
-        search_view.clearFocus()
-        search_view.setOnQueryTextListener(this)
+        binding.searchView.isIconified = true
+        binding.searchView.clearFocus()
+        binding.searchView.setOnQueryTextListener(this)
     }
 
     override fun onQueryTextSubmit(query: String): Boolean {
-        search_view.clearFocus()
+        binding.searchView.clearFocus()
         viewModel.processQuery(query)
         return false
     }
