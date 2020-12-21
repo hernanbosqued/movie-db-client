@@ -1,4 +1,4 @@
-package com.hernanbosqued.movie_db_client.ui
+package com.hernanbosqued.movie_db_client.ui.carousel
 
 import android.view.View
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel

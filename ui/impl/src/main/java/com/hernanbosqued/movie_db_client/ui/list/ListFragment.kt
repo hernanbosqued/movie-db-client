@@ -13,7 +13,7 @@ import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE
 import com.hernanbosqued.movie_db_client.ui.BaseFragment
-import com.hernanbosqued.movie_db_client.ui.CarouselListeners
+import com.hernanbosqued.movie_db_client.ui.carousel.CarouselListeners
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselFragment
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutListBinding

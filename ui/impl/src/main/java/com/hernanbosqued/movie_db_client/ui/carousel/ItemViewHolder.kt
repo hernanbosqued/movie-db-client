@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.repo.Constants
 import com.hernanbosqued.movie_db_client.ui.BaseViewHolder
-import com.hernanbosqued.movie_db_client.ui.ItemListener
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.Utils
 import kotlinx.android.synthetic.main.layout_item.view.no_image
