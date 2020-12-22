@@ -6,6 +6,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.os.Handler
+import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -21,6 +23,12 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+
+const val DURATION = 100
+
+inline fun runWithDelay(delay: Int, crossinline block: () -> Unit) {
+    Handler(Looper.getMainLooper()).postDelayed({ block() }, delay.toLong())
+}
 
 object Utils {
 

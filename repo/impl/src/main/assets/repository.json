@@ -16,6 +16,11 @@
     {
       "method": "tvTopRated",
       "info": false
+    },
+    {
+      "method": "searchMovies",
+      "query": "depeche mode singles",
+      "info": false
     }
   ]
 }

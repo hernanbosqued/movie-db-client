@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hernanbosqued.movie_db_client.domain.*
 import com.hernanbosqued.movie_db_client.ui.CarouselService
+import com.hernanbosqued.movie_db_client.ui.DURATION
 import com.hernanbosqued.movie_db_client.ui.di.AppComponent
 import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
+import com.hernanbosqued.movie_db_client.ui.runWithDelay
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -22,7 +24,7 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
     private val state = BehaviorSubject.create<DetailState>()
     val model = ObservableField<CarouselItemModel>()
     val showVideo = ObservableBoolean(false)
-    val showAlert = ObservableBoolean(false)
+    val showAlert = ObservableBoolean(true)
 
     init {
         ComponentHolder.component<AppComponent>().inject(this)
@@ -52,8 +54,9 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
             if (results.isNotEmpty()) {
                 state.onNext(DetailState.Video(results.first()))
                 showVideo.set(true)
-            } else {
-                showAlert.set(true)
+                runWithDelay(DURATION) {
+                    showAlert.set(false)
+                }
             }
         }
     }
@@ -65,5 +68,3 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
 
     fun state(): Observable<DetailState> = state.observeOn(Schedulers.trampoline())
 }
-
-
