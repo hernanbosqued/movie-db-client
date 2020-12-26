@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
 import com.hernanbosqued.movie_db_client.domain.CarouselModel
 import com.hernanbosqued.movie_db_client.domain.MEDIATYPE
@@ -17,10 +16,7 @@ import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselListeners
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselView
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutListBinding
-import com.hernanbosqued.movie_db_client.ui.di.AppComponent
-import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
 
 class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener, CarouselListeners {
 
@@ -30,10 +26,6 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
 
     private val binding: LayoutListBinding by lazy {
         LayoutListBinding.inflate(LayoutInflater.from(context), null, true)
-    }
-
-    init {
-        ComponentHolder.component<AppComponent>().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

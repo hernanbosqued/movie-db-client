@@ -19,7 +19,6 @@ import javax.inject.Singleton
 )
 interface AppComponent {
 
-    fun inject(viewModel: ListFragment)
     fun inject(viewModel: CarouselViewModel)
     fun inject(viewModel: DetailViewModel)
     fun inject(viewModel: ListViewModel)
