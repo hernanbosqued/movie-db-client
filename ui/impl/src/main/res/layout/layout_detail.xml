@@ -79,7 +79,7 @@
             android:layout_margin="@dimen/margin16"
             android:gravity="center"
             android:text="@string/no_video"
-            android:visibility="@{ viewModel.showAlert ? View.VISIBLE : View.INVISIBLE }"
+            android:visibility="@{ !viewModel.showVideo ? View.VISIBLE : View.INVISIBLE }"
             app:layout_constraintBottom_toBottomOf="@id/youtube"
             app:layout_constraintLeft_toLeftOf="@id/youtube"
             app:layout_constraintRight_toRightOf="@id/youtube"

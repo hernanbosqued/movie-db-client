@@ -2,6 +2,8 @@ package com.hernanbosqued.movie_db_client.ui.carousel
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hernanbosqued.movie_db_client.domain.CarouselClientCallback
@@ -10,9 +12,7 @@ import com.hernanbosqued.movie_db_client.domain.ResourcesRepository
 import com.hernanbosqued.movie_db_client.ui.CarouselService
 import com.hernanbosqued.movie_db_client.ui.di.AppComponent
 import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
+import com.hernanbosqued.movie_db_client.ui.postWithDelay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class CarouselViewModel @Inject constructor() : ViewModel(), CarouselClientCallb
     @Inject
     lateinit var resources: ResourcesRepository
 
-    private val state = BehaviorSubject.create<CarouselState>()
+    private val state = MutableLiveData<CarouselState>()
 
     private val carouselModel = ObservableField<CarouselModel>()
     val showInfo = ObservableBoolean(false)
@@ -60,8 +60,8 @@ class CarouselViewModel @Inject constructor() : ViewModel(), CarouselClientCallb
             list.addAll(param.list)
             results = list.size
 
-            state.onNext(CarouselState.Data(param.list))
-            state.onNext(CarouselState.Info(title, page, totalPages, totalResults, results))
+            state.postValue(CarouselState.Data(param.list))
+            state.postWithDelay(CarouselState.Info(title, page, totalPages, totalResults, results))
 
             checkListContent()
         }
@@ -71,7 +71,7 @@ class CarouselViewModel @Inject constructor() : ViewModel(), CarouselClientCallb
         if (carouselModel.get()?.list.isNullOrEmpty()) {
             showInfo.set(false)
             showMessage.set(true)
-            state.onNext(CarouselState.Message(resources.noResultsFound()))
+            state.postValue(CarouselState.Message(resources.noResultsFound()))
         } else
             showMessage.set(false)
     }
@@ -85,9 +85,9 @@ class CarouselViewModel @Inject constructor() : ViewModel(), CarouselClientCallb
         showProgress.set(false)
         showInfo.set(false)
         showMessage.set(true)
-        state.onNext(CarouselState.Message(error))
+        state.postValue(CarouselState.Message(error))
         checkListContent()
     }
 
-    fun state(): Observable<CarouselState> = state.observeOn(Schedulers.trampoline())
+    fun state(): LiveData<CarouselState> = state
 }

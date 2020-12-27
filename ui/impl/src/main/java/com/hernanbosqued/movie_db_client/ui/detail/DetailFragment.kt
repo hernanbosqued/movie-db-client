@@ -16,41 +16,37 @@ import com.hernanbosqued.movie_db_client.ui.Utils
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutDetailBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.layout_detail.*
 
 class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
 
     private val viewModel: DetailViewModel by viewModels()
-
-    private val compositeDisposable = CompositeDisposable()
 
     private val binding: LayoutDetailBinding by lazy {
         LayoutDetailBinding.inflate(LayoutInflater.from(context), null, false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val model = arguments?.getSerializable("model") as CarouselItemModel
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        viewModel.setModel(model)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val model = arguments?.getSerializable("model") as CarouselItemModel
         super.onViewCreated(view, savedInstanceState)
         registerObservers()
-        viewModel.start()
+        viewModel.model = model
     }
 
     private fun registerObservers() {
-        compositeDisposable.add(viewModel.state().subscribe(this::handleState))
-    }
-
-    private fun handleState(state: DetailState) {
-        when (state) {
-            is DetailState.Ranking -> setRanking(state.ranking)
-            is DetailState.Poster -> setPoster(state.poster)
-            is DetailState.Video -> setVideo(state.data)
-            is DetailState.Message -> showMessage(state.message)
+        viewModel.state().observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is DetailState.Ranking -> setRanking(state.ranking)
+                is DetailState.Poster -> setPoster(state.poster)
+                is DetailState.Video -> setVideo(state.data)
+                is DetailState.Message -> showMessage(state.message)
+            }
         }
     }
 
@@ -73,7 +69,6 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
         if (data.site.equals("youtube", ignoreCase = true) && !data.key.isNullOrEmpty()) {
             lifecycle.addObserver(binding.youtube)
             binding.youtube.enableAutomaticInitialization = true
-
             binding.youtube.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                 override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
                     youTubePlayer.cueVideo(data.key!!, 0f)
@@ -81,13 +76,6 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
                 }
             })
         }
-    }
-
-    override fun onDestroy() {
-        if (compositeDisposable.isDisposed.not()) {
-            compositeDisposable.dispose()
-        }
-        super.onDestroy()
     }
 
     interface Callbacks
