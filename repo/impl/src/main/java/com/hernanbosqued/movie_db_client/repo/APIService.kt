@@ -20,6 +20,8 @@ interface APIService {
     @GET("tv/top_rated")
     fun tvTopRated(@Query("page") page: Int, @Query("api_key") apiKey: String): Call<ListModel<TVResultModel>>
 
+    @GET("tv/{id}")
+    fun tvDetails(@Path("id") id: Int, @Query("api_key") apiKey: String): Call<TVDetailsModel>
 
     @GET("search/movie")
     fun searchMovies(@Query("page") page: Int, @Query("query") query: String?, @Query("api_key") apiKey: String): Call<ListModel<MovieResultModel>>

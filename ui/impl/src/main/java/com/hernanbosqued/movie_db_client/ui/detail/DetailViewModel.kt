@@ -11,7 +11,7 @@ import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import com.hernanbosqued.movie_db_client.ui.postWithDelay
 import javax.inject.Inject
 
-class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultModel>> {
+class DetailViewModel : ViewModel(), RepositoryCallback<TVDetailsModel> {
 
     @Inject
     lateinit var service: CarouselService
@@ -31,9 +31,11 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
                     state.postWithDelay(DetailState.Ranking(it))
                 }
 
-                if (model.hasVideo) {
-                    service.videos(model.type!!, model.id, this@DetailViewModel)
-                }
+                service.tvDetails(model.id, this@DetailViewModel)
+
+//                if (model.hasVideo) {
+//                    service.videos(model.type!!, model.id, this@DetailViewModel)
+//                }
             }
             field = model
         }
@@ -42,13 +44,13 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
         ComponentHolder.component<AppComponent>().inject(this)
     }
 
-    override fun onSuccess(data: ListModel<VideoResultModel>) {
-        data.results?.let { results ->
-            if (results.isNotEmpty()) {
-                showVideo.set(true)
-                state.postValue(DetailState.Video(results.first()))
-            }
-        }
+    override fun onSuccess(data: TVDetailsModel) {
+//        data.results?.let { results ->
+//            if (results.isNotEmpty()) {
+//                showVideo.set(true)
+//                state.postValue(DetailState.Video(results.first()))
+//            }
+//        }
     }
 
     override fun onFail(error: ErrorModel) {
