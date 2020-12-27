@@ -70,19 +70,5 @@
             android:layout_height="wrap_content"
             android:visibility="@{ viewModel.showVideo ? View.VISIBLE : View.INVISIBLE }"
             app:layout_constraintBottom_toBottomOf="parent" />
-
-        <TextView
-            android:id="@+id/alert"
-            style="@style/Text.Detail.Empty"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/margin16"
-            android:gravity="center"
-            android:text="@string/no_video"
-            android:visibility="@{ !viewModel.showVideo ? View.VISIBLE : View.INVISIBLE }"
-            app:layout_constraintBottom_toBottomOf="@id/youtube"
-            app:layout_constraintLeft_toLeftOf="@id/youtube"
-            app:layout_constraintRight_toRightOf="@id/youtube"
-            app:layout_constraintTop_toTopOf="@id/youtube" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

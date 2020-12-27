@@ -27,11 +27,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 
 fun <T> MutableLiveData<T>.postWithDelay(param: T) {
-    Handler(Looper.getMainLooper()).postDelayed({ this.value = param }, 300)
-}
-
-fun ObservableBoolean.setWithDelay(param: Boolean) {
-    Handler(Looper.getMainLooper()).postDelayed({ this.set(param) }, 300)
+    Handler(Looper.getMainLooper()).postDelayed({ this.value = param }, 10)
 }
 
 object Utils {

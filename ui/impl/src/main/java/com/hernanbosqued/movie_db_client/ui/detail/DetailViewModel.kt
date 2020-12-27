@@ -9,7 +9,6 @@ import com.hernanbosqued.movie_db_client.ui.CarouselService
 import com.hernanbosqued.movie_db_client.ui.di.AppComponent
 import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import com.hernanbosqued.movie_db_client.ui.postWithDelay
-import com.hernanbosqued.movie_db_client.ui.setWithDelay
 import javax.inject.Inject
 
 class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultModel>> {
@@ -46,15 +45,15 @@ class DetailViewModel : ViewModel(), RepositoryCallback<ListModel<VideoResultMod
     override fun onSuccess(data: ListModel<VideoResultModel>) {
         data.results?.let { results ->
             if (results.isNotEmpty()) {
-                showVideo.setWithDelay(true)
-                state.postWithDelay(DetailState.Video(results.first()))
+                showVideo.set(true)
+                state.postValue(DetailState.Video(results.first()))
             }
         }
     }
 
     override fun onFail(error: ErrorModel) {
-        showVideo.setWithDelay(false)
-        state.postWithDelay(DetailState.Message(error.code.toString() + " - " + error.message))
+        showVideo.set(false)
+        state.postValue(DetailState.Message(error.code.toString() + " - " + error.message))
     }
 
     fun state(): LiveData<DetailState> = state

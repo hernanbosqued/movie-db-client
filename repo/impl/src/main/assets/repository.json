@@ -6,7 +6,7 @@
     },
     {
       "method": "moviesPopular",
-      "info": false
+      "info": true
     },
 
     {
