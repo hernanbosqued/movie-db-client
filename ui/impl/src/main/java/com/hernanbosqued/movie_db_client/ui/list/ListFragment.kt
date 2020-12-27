@@ -16,13 +16,10 @@ import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselListeners
 import com.hernanbosqued.movie_db_client.ui.carousel.CarouselView
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutListBinding
-import io.reactivex.disposables.CompositeDisposable
 
 class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTextListener, CarouselListeners {
 
     private val viewModel: ListViewModel by viewModels()
-
-    private val compositeDisposable = CompositeDisposable()
 
     private val binding: LayoutListBinding by lazy {
         LayoutListBinding.inflate(LayoutInflater.from(context), null, true)
@@ -40,14 +37,12 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
     }
 
     private fun registerObservers() {
-        compositeDisposable.add(viewModel.state().subscribe(this::handleState))
-    }
-
-    private fun handleState(state: ListState) {
-        when (state) {
-            is ListState.Search -> changeSearch(state.movies, state.tv)
-            is ListState.Carousel -> addCarousel(state.model, state.onTop)
-            is ListState.Message -> showMessage(state.message)
+        viewModel.state().observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is ListState.Search -> changeSearch(state.movies, state.tv)
+                is ListState.Carousel -> addCarousel(state.model, state.onTop)
+                is ListState.Message -> showMessage(state.message)
+            }
         }
     }
 
@@ -105,13 +100,6 @@ class ListFragment : BaseFragment<ListFragment.Callback>(), SearchView.OnQueryTe
 
     private fun showMessage(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
-    }
-
-    override fun onDestroy() {
-        if (compositeDisposable.isDisposed.not()) {
-            compositeDisposable.dispose()
-        }
-        super.onDestroy()
     }
 
     interface Callback {
