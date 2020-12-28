@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:alpha=".5"
             android:transitionName="poster"
-            app:layout_constraintBottom_toTopOf="@id/youtube"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
 
@@ -45,30 +45,38 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_text" />
 
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scrollbars="vertical"
-            app:layout_constraintBottom_toTopOf="@id/youtube"
-            app:layout_constraintTop_toBottomOf="@+id/ranking_text">
-
-            <TextView
-                android:id="@+id/overview_text"
-                style="@style/Text.Item.Ranking"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin16"
-                android:text="@{ viewModel.model.overview }"
-                tools:text="@tools:sample/lorem/random" />
-        </ScrollView>
-
-
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-            android:id="@+id/youtube"
+        <TextView
+            android:id="@+id/overview"
+            style="@style/Text.Item.Ranking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{ viewModel.showVideo ? View.VISIBLE : View.INVISIBLE }"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:padding="@dimen/margin16"
+            android:scrollbars="vertical"
+            android:text="@{ viewModel.model.overview }"
+            app:layout_constraintTop_toBottomOf="@id/ranking_text"
+            tools:text="@tools:sample/lorem/random" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/overview"
+            app:tabBackground="@drawable/tab_background"
+            app:tabIndicatorColor="@null"
+            app:tabMode="scrollable"
+            android:visibility="gone"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/white" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/episodes"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/placeholder_dark"
+            android:padding="@dimen/margin16"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabs"
+            tools:listitem="@layout/layout_episode" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

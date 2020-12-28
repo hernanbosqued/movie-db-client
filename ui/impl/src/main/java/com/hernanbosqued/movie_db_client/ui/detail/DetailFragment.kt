@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
 import com.hernanbosqued.movie_db_client.domain.CarouselItemModel
-import com.hernanbosqued.movie_db_client.domain.VideoResultModel
+import com.hernanbosqued.movie_db_client.domain.EpisodeModel
+import com.hernanbosqued.movie_db_client.domain.SeasonModel
 import com.hernanbosqued.movie_db_client.repo.Constants
 import com.hernanbosqued.movie_db_client.ui.BaseFragment
 import com.hernanbosqued.movie_db_client.ui.R
 import com.hernanbosqued.movie_db_client.ui.Utils
 import com.hernanbosqued.movie_db_client.ui.databinding.LayoutDetailBinding
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import kotlinx.android.synthetic.main.layout_detail.*
 
 class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
@@ -26,6 +27,8 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
         LayoutDetailBinding.inflate(LayoutInflater.from(context), null, false)
     }
 
+    private val adapter = EpisodesAdapter()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -35,8 +38,17 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val model = arguments?.getSerializable("model") as CarouselItemModel
         super.onViewCreated(view, savedInstanceState)
+        prepareRecyclerView()
         registerObservers()
         viewModel.model = model
+    }
+
+    private fun prepareRecyclerView() {
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        layoutManager.isItemPrefetchEnabled = true
+        layoutManager.recycleChildrenOnDetach = true
+        binding.episodes.layoutManager = layoutManager
+        binding.episodes.adapter = adapter
     }
 
     private fun registerObservers() {
@@ -44,10 +56,37 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
             when (state) {
                 is DetailState.Ranking -> setRanking(state.ranking)
                 is DetailState.Poster -> setPoster(state.poster)
-                is DetailState.Video -> setVideo(state.data)
                 is DetailState.Message -> showMessage(state.message)
+                is DetailState.Seasons -> showSeasons(state.seasons)
+                is DetailState.Episodes -> showEpisodes(state.episodes)
             }
         }
+    }
+
+    private fun showSeasons(seasons: List<SeasonModel>) {
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                viewModel.seasonSelected(tab.tag as Int)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+            }
+        })
+
+        seasons.forEach { season ->
+            tabs.addTab(tabs.newTab().setText(season.name).setTag(season.seasonNumber))
+        }
+
+        tabs.getTabAt(0)?.select()
+    }
+
+    private fun showEpisodes(episodes: List<EpisodeModel>) {
+        adapter.replace(episodes)
+        binding.tabs.visibility = View.VISIBLE
+        binding.episodes.visibility = View.VISIBLE
     }
 
     private fun setPoster(posterPath: String?) {
@@ -63,19 +102,6 @@ class DetailFragment : BaseFragment<DetailFragment.Callbacks>() {
 
     private fun showMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
-
-    private fun setVideo(data: VideoResultModel) {
-        if (data.site.equals("youtube", ignoreCase = true) && !data.key.isNullOrEmpty()) {
-            lifecycle.addObserver(binding.youtube)
-            binding.youtube.enableAutomaticInitialization = true
-            binding.youtube.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
-                override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                    youTubePlayer.cueVideo(data.key!!, 0f)
-                    youTubePlayer.play()
-                }
-            })
-        }
     }
 
     interface Callbacks

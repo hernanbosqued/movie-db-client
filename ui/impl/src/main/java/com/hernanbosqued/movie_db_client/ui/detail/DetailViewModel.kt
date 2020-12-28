@@ -1,6 +1,5 @@
 package com.hernanbosqued.movie_db_client.ui.detail
 
-import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,31 +10,41 @@ import com.hernanbosqued.movie_db_client.ui.di.ComponentHolder
 import com.hernanbosqued.movie_db_client.ui.postWithDelay
 import javax.inject.Inject
 
-class DetailViewModel : ViewModel(), RepositoryCallback<TVDetailsModel> {
+class DetailViewModel : ViewModel() {
 
     @Inject
     lateinit var service: CarouselService
 
     private val state = MutableLiveData<DetailState>()
 
-    val showVideo = ObservableBoolean(false)
-
     var model: CarouselItemModel? = null
         set(model) {
             model?.let {
-                model.path?.let {
-                    state.postValue(DetailState.Poster(it))
+                model.path?.let { path ->
+                    state.postValue(DetailState.Poster(path))
                 }
 
-                model.ranking?.let {
-                    state.postWithDelay(DetailState.Ranking(it))
+                model.ranking?.let { ranking ->
+                    state.postWithDelay(DetailState.Ranking(ranking))
                 }
 
-                service.tvDetails(model.id, this@DetailViewModel)
+                when (MEDIATYPE.fromValue(it.type!!)) {
+                    MEDIATYPE.TV -> {
+                        service.tvDetails(model.id, object : RepositoryCallback<TVDetailsModel> {
+                            override fun onSuccess(data: TVDetailsModel) {
+                                data.seasons?.let { seasons ->
+                                    state.postValue(DetailState.Seasons(seasons))
+                                }
+                            }
 
-//                if (model.hasVideo) {
-//                    service.videos(model.type!!, model.id, this@DetailViewModel)
-//                }
+                            override fun onFail(error: ErrorModel) {
+                                state.postValue(DetailState.Message(error.code.toString() + " - " + error.message))
+                            }
+
+                        })
+                    }
+                    else -> Unit
+                }
             }
             field = model
         }
@@ -44,18 +53,17 @@ class DetailViewModel : ViewModel(), RepositoryCallback<TVDetailsModel> {
         ComponentHolder.component<AppComponent>().inject(this)
     }
 
-    override fun onSuccess(data: TVDetailsModel) {
-//        data.results?.let { results ->
-//            if (results.isNotEmpty()) {
-//                showVideo.set(true)
-//                state.postValue(DetailState.Video(results.first()))
-//            }
-//        }
-    }
+    fun seasonSelected(seasonNumber: Int) {
+        service.tvSeasonDetails(model!!.id, seasonNumber, object : RepositoryCallback<SeasonModel> {
+            override fun onSuccess(data: SeasonModel) {
+                data.episodes?.let {
+                    state.postValue(DetailState.Episodes(it))
+                }
+            }
 
-    override fun onFail(error: ErrorModel) {
-        showVideo.set(false)
-        state.postValue(DetailState.Message(error.code.toString() + " - " + error.message))
+            override fun onFail(error: ErrorModel) {
+            }
+        })
     }
 
     fun state(): LiveData<DetailState> = state

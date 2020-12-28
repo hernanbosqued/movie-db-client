@@ -33,6 +33,10 @@ class CarouselService @Inject constructor(var repository: Repository, var resour
         repository.tvDetails(id, callback)
     }
 
+    fun tvSeasonDetails(id: Int, seasonNumber: Int, callback: RepositoryCallback<SeasonModel>) {
+        repository.tvSeasonDetails(id, seasonNumber, callback)
+    }
+
     fun videos(type: String, id: Int, callback: RepositoryCallback<ListModel<VideoResultModel>>) {
         repository.videos(type, id, callback)
     }

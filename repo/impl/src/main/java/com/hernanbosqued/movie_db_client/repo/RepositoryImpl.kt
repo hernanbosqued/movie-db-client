@@ -53,6 +53,10 @@ class RepositoryImpl @Inject constructor(val context: Context) : Repository {
         service.tvDetails(id, Constants.API_KEY).enqueue(ServiceCallback(callback))
     }
 
+    override fun tvSeasonDetails(id: Int, seasonNumber: Int, callback: RepositoryCallback<SeasonModel>) {
+        service.tvSeasonDetails(id, seasonNumber, Constants.API_KEY).enqueue(ServiceCallback(callback))
+    }
+
     override fun videos(type: String, id: Int, callback: RepositoryCallback<ListModel<VideoResultModel>>) {
         service.videos(type, id, Constants.API_KEY).enqueue(ServiceCallback(callback))
     }

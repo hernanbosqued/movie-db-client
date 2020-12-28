@@ -2,7 +2,7 @@ package com.hernanbosqued.movie_db_client.domain
 
 import com.google.gson.annotations.SerializedName
 
-class SeasonModel {
+class EpisodeModel {
     @SerializedName(value = "air_date")
     val airDate: String = ""
 
@@ -23,7 +23,4 @@ class SeasonModel {
 
     @SerializedName(value = "season_number")
     val seasonNumber: Int = -1
-
-    @SerializedName(value = "episodes")
-    val episodes: List<EpisodeModel>? = null
 }

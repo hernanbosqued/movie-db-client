@@ -13,6 +13,7 @@ interface Repository {
     fun searchBoth(page: Int, query: String?, callback: RepositoryCallback<ListModel<ResultModel>>)
 
     fun tvDetails(id: Int, callback: RepositoryCallback<TVDetailsModel>)
+    fun tvSeasonDetails(id: Int, seasonNumber: Int, callback: RepositoryCallback<SeasonModel>)
 
     fun videos(type: String, id: Int, callback: RepositoryCallback<ListModel<VideoResultModel>>)
 }
